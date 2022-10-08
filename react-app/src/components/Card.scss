@@ -1,0 +1,48 @@
+.cards-wrapper {
+  width: 100%;
+  margin: 50px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4%;
+}
+
+.card {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 48%;
+  padding: 1rem 0;
+  box-shadow: 0 7px 5px #d1d1d1;
+  .card_title {
+    margin: 1rem 0;
+    height: 10%;
+  }
+  .card_img {
+    width: 100%;
+  }
+  .card_description {
+    margin: 1rem;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .cards-wrapper {
+    gap: 4%;
+  }
+  .card {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards-wrapper {
+    gap: 4%;
+  }
+  .card {
+    width: 22%;
+  }
+}
