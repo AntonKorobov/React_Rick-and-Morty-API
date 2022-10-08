@@ -4,13 +4,21 @@ import SearchBar from './SearchBar';
 
 export default class MainPage extends Component {
   state = {
-    searchBarInput: 'Search...',
+    searchBarInput: '',
   };
 
   handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+  componentDidMount(): void {
+    this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
+  }
+
+  componentWillUnmount(): void {
+    localStorage.setItem('searchBarInput', this.state.searchBarInput);
+  }
 
   render = () => {
     return (
