@@ -35,7 +35,6 @@ export default class MainPage extends Component {
         <div className="search-bar-wrapper">
           <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
         </div>
-
         <div className="cards-wrapper">{this.cardGenerator(CardData)}</div>
       </section>
     );
