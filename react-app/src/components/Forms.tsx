@@ -21,7 +21,12 @@ export default class Forms extends Component {
   handleChange = (event: { target: { name: string; value: string; checked?: boolean } }) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, value, checked } = event.target;
-    this.setState({ [name]: value });
+    if (name === 'category') {
+      this.setState({ category: checked });
+    } else {
+      this.setState({ [name]: value });
+    }
+
     console.log(this.state);
   };
 
@@ -32,11 +37,27 @@ export default class Forms extends Component {
         <form className="card-creator-form">
           <input
             type="text"
-            name="title"
+            name="Classics"
+            className="card-creator-form__title"
             value={this.state.title}
             placeholder="Title..."
             onChange={this.handleChange}
           />
+          <div className="ard-creator-form__category">
+            <input
+              type="checkbox"
+              name="category-Literary"
+              // category="Literary"
+              className="card-creator-form__category-checkbox"
+              onChange={this.handleChange}
+            />
+            <input
+              type="checkbox"
+              name="category-Classics"
+              className="card-creator-form__category-checkbox"
+              onChange={this.handleChange}
+            />
+          </div>
         </form>
       </section>
     );
