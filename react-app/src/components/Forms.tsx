@@ -18,10 +18,26 @@ export default class Forms extends Component {
     written: true, //toggle switch
   };
 
+  handleChange = (event: { target: { name: string; value: string; checked?: boolean } }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, value, checked } = event.target;
+    this.setState({ [name]: value });
+    console.log(this.state);
+  };
+
   render() {
     return (
       <section className="forms">
         <h1>Forms</h1>
+        <form className="card-creator-form">
+          <input
+            type="text"
+            name="title"
+            value={this.state.title}
+            placeholder="Title..."
+            onChange={this.handleChange}
+          />
+        </form>
       </section>
     );
   }
