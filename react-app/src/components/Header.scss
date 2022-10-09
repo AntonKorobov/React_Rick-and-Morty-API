@@ -1,0 +1,21 @@
+@import '_colors.module.scss';
+
+.header {
+  background-color: $grayColor;
+  padding: 2rem 0;
+}
+
+.nav__list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style-type: none;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: $whiteTextColor;
+  &:active {
+    color: $backgroundColor;
+  }
+}

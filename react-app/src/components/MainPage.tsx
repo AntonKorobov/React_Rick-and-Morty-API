@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import './MainPage.css';
+import './MainPage.scss';
 import SearchBar from './SearchBar';
 import CardData from '../date/CardData.json';
 import { CardInterface } from '../date/CardInterface';
@@ -31,8 +31,11 @@ export default class MainPage extends Component {
   render = () => {
     return (
       <section className="main-page">
-        <h1 className="main-page_h1">Main page</h1>
-        <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
+        <h1 className="main-page_h1 h1">Main page</h1>
+        <div className="search-bar-wrapper">
+          <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
+        </div>
+
         <div className="cards-wrapper">{this.cardGenerator(CardData)}</div>
       </section>
     );

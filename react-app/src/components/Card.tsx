@@ -4,7 +4,7 @@ import './Card.scss';
 
 export default function card(props: { info: CardInterface }) {
   return (
-    <div className="card">
+    <a href="#" className="card link" data-testid="card">
       <h2 className="card_title">{props.info.title}</h2>
       <img className="card_img" src={props.info.img} alt="" />
       <div className="card_description">
@@ -21,6 +21,6 @@ export default function card(props: { info: CardInterface }) {
           <b>Language:</b> {props.info.language}
         </p>
       </div>
-    </div>
+    </a>
   );
 }

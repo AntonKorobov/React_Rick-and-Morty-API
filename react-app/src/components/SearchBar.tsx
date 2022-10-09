@@ -1,4 +1,5 @@
 import React from 'react';
+import './SearchBar.scss';
 
 interface SearchBarProps {
   input: string | number;
@@ -17,9 +18,9 @@ export default function SearchBar(props: SearchBarProps) {
         onChange={props.handleChange}
       ></input>
       <button className="search-bar__submit-button" type="submit">
-        <i className="fa-solid fa-magnifying-glass"></i>
+        <img className="search-bar__img" src="magnifying-glass-solid.svg" alt="search button" />
       </button>
-      <h1>{props.input}</h1>
+      {/* <h1 className="search-bar__value">Value: {props.input}</h1> */}
     </form>
   );
 }
