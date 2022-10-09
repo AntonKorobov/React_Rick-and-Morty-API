@@ -11,6 +11,7 @@
     "language": "English",
     "coverType": "Hardcover",
     "img": "assets/Atlas_Shrugged.jpg",
+    "written": true,
     "id": "1"
   },
   {
@@ -25,6 +26,7 @@
     "language": "English",
     "coverType": "Hardcover",
     "img": "assets/1984.jpg",
+    "written": true,
     "id": "2"
   },
   {
@@ -39,6 +41,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Fahrenheit_451.jpg",
+    "written": true,
     "id": "3"
   },
   {
@@ -53,6 +56,7 @@
     "language": "German",
     "coverType": "Paperback",
     "img": "assets/Steppenwolf.jpg",
+    "written": true,
     "id": "4"
   },
   {
@@ -67,6 +71,7 @@
     "language": "Russian",
     "coverType": "Paperback",
     "img": "assets/The_Twelve_Chairs.jpg",
+    "written": false,
     "id": "5"
   },
   {
@@ -81,6 +86,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/City.jpg",
+    "written": true,
     "id": "6"
   },
   {
@@ -95,6 +101,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/The_Sane_Society.jpg",
+    "written": true,
     "id": "7"
   },
   {
@@ -109,6 +116,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/The_Three-Body_Problem.jpg",
+    "written": true,
     "id": "8"
   },
   {
@@ -123,6 +131,7 @@
     "language": "English",
     "coverType": "Prebound",
     "img": "assets/Cats_cradle.jpg",
+    "written": true,
     "id": "9"
   },
   {
@@ -137,6 +146,7 @@
     "language": "English",
     "coverType": "Hardcover",
     "img": "assets/Astrophysics_for_People_in_a_Hurry.jpg",
+    "written": true,
     "id": "10"
   },
   {
@@ -151,6 +161,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Altered_Carbon.jpg",
+    "written": true,
     "id": "11"
   },
   {
@@ -165,6 +176,7 @@
     "language": "Spanish",
     "coverType": "Paperback",
     "img": "assets/Sapiens.jpg",
+    "written": true,
     "id": "12"
   },
   {
@@ -179,6 +191,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Secondhand_Time.jpg",
+    "written": true,
     "id": "13"
   },
   {
@@ -193,6 +206,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Alindarkas_Children.jpg",
+    "written": false,
     "id": "14"
   },
   {
@@ -207,6 +221,7 @@
     "language": "Russian",
     "coverType": "Paperback",
     "img": "assets/Martin_Iden.jpg",
+    "written": true,
     "id": "15"
   },
   {
@@ -221,6 +236,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Howls_Moving_Castle.jpg",
+    "written": true,
     "id": "16"
   },
   {
@@ -235,6 +251,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Player_Piano.jpg",
+    "written": true,
     "id": "17"
   },
   {
@@ -249,6 +266,7 @@
     "language": "English",
     "coverType": "Hardcover",
     "img": "assets/Three_men_in_a_boat.jpg",
+    "written": true,
     "id": "18"
   },
   {
@@ -263,10 +281,11 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/The_Dark_Tower_1.jpg",
+    "written": true,
     "id": "19"
   },
   {
-    "title": "The Dark Tower I: The Gunslinger",
+    "title": "All the Light we can'not see",
     "author": "Anthony Doerr",
     "publisher": "Scribner Book Company",
     "category": ["Historical - General", "Literary"],
@@ -277,6 +296,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/All_the_Light_We_Cannot_See.jpg",
+    "written": true,
     "id": "20"
   },
   {
@@ -291,6 +311,7 @@
     "language": "Spanish",
     "coverType": "Paperback",
     "img": "assets/The_Goldfinch.jpg",
+    "written": true,
     "id": "21"
   },
   {
@@ -305,6 +326,7 @@
     "language": "English",
     "coverType": "Paperback",
     "img": "assets/Harry_Potter_1.jpg",
+    "written": true,
     "id": "22"
   }
 ]

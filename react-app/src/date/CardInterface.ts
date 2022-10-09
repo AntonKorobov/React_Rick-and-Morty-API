@@ -10,5 +10,6 @@ export interface CardInterface {
   language: string;
   coverType: string;
   img: string;
+  written: boolean;
   id: string | number;
 }
