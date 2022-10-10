@@ -14,8 +14,8 @@ export default class Forms extends Component {
     publishDate: 0, //date input
     price: 0, //text input
     language: '', //drop-down list
-    coverType: '', //slider
-    img: '', //drop-down list
+    coverType: '', //drop-down list
+    img: '', //file upload
     id: '', //auto
     written: false, //toggle switch
   };
@@ -23,7 +23,6 @@ export default class Forms extends Component {
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-    console.log(this.state);
   };
 
   handleChangeCheckbox = (event: { target: { name: string; checked: boolean } }) => {
@@ -45,6 +44,8 @@ export default class Forms extends Component {
   };
 
   render() {
+    console.log(this.state);
+
     return (
       <section className="forms">
         <h1>Forms</h1>
@@ -55,6 +56,22 @@ export default class Forms extends Component {
             className="card-creator-form__title"
             value={this.state.title}
             placeholder="Title..."
+            onChange={this.handleChangeInput}
+          />
+          <input
+            type="text"
+            name="author"
+            className="card-creator-form__author"
+            value={this.state.author}
+            placeholder="Author..."
+            onChange={this.handleChangeInput}
+          />
+          <input
+            type="text"
+            name="publisher"
+            className="card-creator-form__publisher"
+            value={this.state.publisher}
+            placeholder="Publisher..."
             onChange={this.handleChangeInput}
           />
           <div className="card-creator-form__category">
@@ -87,6 +104,55 @@ export default class Forms extends Component {
               checked={this.state.category.includes('Psychological')}
             />
           </div>
+          <textarea
+            name="description"
+            className="card-creator-form__description"
+            value={this.state.description}
+            placeholder="Description..."
+            onChange={this.handleChangeInput}
+          />
+          <input
+            type="number"
+            name="price"
+            className="card-creator-form__price"
+            value={this.state.price}
+            onChange={this.handleChangeInput}
+            min="1"
+            max="10000"
+          />
+          <select
+            name="language"
+            className="card-creator-form__language"
+            value={this.state.language}
+            placeholder="Language..."
+            onChange={this.handleChangeInput}
+          >
+            <option value="English">English</option>
+            <option value="German">German</option>
+            <option value="Russian">Russian</option>
+            <option value="Spanish">Spanish</option>
+          </select>
+          <select
+            name="coverType"
+            className="card-creator-form__coverType"
+            value={this.state.coverType}
+            placeholder="CoverType..."
+            onChange={this.handleChangeInput}
+          >
+            <option value="Paperback">Paperback</option>
+            <option value="Hardcover">Hardcover</option>
+            <option value="Prebound">Prebound</option>
+          </select>
+          <label className="card-creator-form__written-switch switch">
+            <input
+              className="switch__input"
+              type="checkbox"
+              name="written"
+              defaultChecked={false} //uncontrolled
+              onChange={this.handleChangeInput}
+            />
+            <span className="switch__slider"></span>
+          </label>
         </form>
       </section>
     );
