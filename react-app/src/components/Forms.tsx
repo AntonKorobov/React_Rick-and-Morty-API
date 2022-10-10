@@ -1,6 +1,7 @@
 import { CardInterface } from 'date/CardInterface';
 import React, { Component } from 'react';
 import Checkbox from './Checkbox';
+import FileUpload from './FileUpload';
 import './Form.scss';
 
 export default class Forms extends Component {
@@ -153,6 +154,7 @@ export default class Forms extends Component {
             />
             <span className="switch__slider"></span>
           </label>
+          <FileUpload />
         </form>
       </section>
     );
