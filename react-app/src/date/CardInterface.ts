@@ -11,5 +11,21 @@ export interface CardInterface {
   coverType: string;
   img: string;
   written: boolean;
-  id: string | number;
+  id: string;
 }
+
+// export type Category =
+//   | ''
+//   | 'Classics'
+//   | 'Literary'
+//   | 'Political'
+//   | 'Psychological'
+//   | 'Science Fiction'
+//   | 'Media Tie-In'
+//   | 'Action & Adventure'
+//   | 'Apocalyptic & Post-Apocalyptic'
+//   | 'Space Science'
+//   | 'Social History'
+//   | 'Political'
+//   | 'Humorous Stories'
+//   | 'Satire';

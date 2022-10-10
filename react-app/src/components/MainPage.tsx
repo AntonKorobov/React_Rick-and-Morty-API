@@ -3,7 +3,7 @@ import Card from './Card';
 import './MainPage.scss';
 import SearchBar from './SearchBar';
 import CardData from '../date/CardData.json';
-import { CardInterface } from '../date/CardInterface';
+import { CardInterface } from 'date/CardInterface';
 
 export default class MainPage extends Component {
   state = {
