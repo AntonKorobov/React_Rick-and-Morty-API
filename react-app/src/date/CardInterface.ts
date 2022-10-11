@@ -5,7 +5,7 @@ export interface CardInterface {
   category: string[];
   description: string;
   pages: number;
-  publishDate: number;
+  publishDate: string;
   price: number;
   language: string;
   coverType: string;

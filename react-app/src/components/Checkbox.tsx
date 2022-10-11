@@ -10,15 +10,15 @@ interface CheckboxProps {
 
 export default function Checkbox(props: CheckboxProps) {
   return (
-    <label className="checkbox-wrapper">
+    <label className={props.className}>
       <input
         type="checkbox"
         checked={props.checked}
         name={props.category}
-        className={props.className}
+        className={'checkbox__input'}
         onChange={props.handleChangeCheckbox}
       />
-      <span>{props.category}</span>
+      <span className="checkbox__label">{props.category}</span>
     </label>
   );
 }

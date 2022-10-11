@@ -6,19 +6,19 @@ import './Form.scss';
 
 export default class Forms extends Component {
   state: CardInterface = {
-    title: '', //text input
-    author: '', //text input
-    publisher: '', //text input
-    category: [], //checkbox
-    description: '', //text area
-    pages: 0, //text input
-    publishDate: 0, //date input
-    price: 0, //text input
-    language: '', //drop-down list
-    coverType: '', //drop-down list
-    img: '', //file upload
+    title: '',
+    author: '',
+    publisher: '',
+    category: [],
+    description: '',
+    pages: 0,
+    publishDate: '',
+    price: 0,
+    language: '',
+    coverType: '',
+    img: '',
     id: '', //auto
-    written: false, //toggle switch
+    written: false,
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
@@ -84,6 +84,20 @@ export default class Forms extends Component {
               onChange={this.handleChangeInput}
             />
           </label>
+          <label className="card-creator-form__publishDate input-element">
+            Publish date:
+            <input
+              type="date"
+              name="publishDate"
+              className="input-element__input"
+              value={this.state.publishDate}
+              placeholder="Publish date..."
+              onChange={this.handleChangeInput}
+              min="1900-01-01"
+              max="2022-12-31"
+            />
+          </label>
+
           <label className="card-creator-form__pages input-element">
             Pages:
             <input
@@ -137,45 +151,39 @@ export default class Forms extends Component {
               <option value="Prebound">Prebound</option>
             </select>
           </label>
-          <label className="card-creator-form__written-switch switch">
-            <input
-              className="switch__input"
-              type="checkbox"
-              name="written"
-              defaultChecked={false} //uncontrolled
-              onChange={this.handleChangeInput}
-            />
-            <span className="switch__slider"></span>
-          </label>
+          <div className="card-creator-form__written-switch">
+            <p className="switch__label">Written: </p>
+            <label className="switch">
+              <input
+                className="switch__input"
+                type="checkbox"
+                name="written"
+                defaultChecked={false} //uncontrolled
+                onChange={this.handleChangeInput}
+              />
+              <span className="switch__slider"></span>
+            </label>
+          </div>
           <div className="card-creator-form__category">
-            <Checkbox
-              className={'card-creator-form__category-checkbox'}
-              category={'Classics'}
-              handleChangeCheckbox={this.handleChangeCheckbox}
-              id={this.state.id}
-              checked={this.state.category.includes('Classics')}
-            />
-            <Checkbox
-              className={'card-creator-form__category-checkbox'}
-              category={'Literary'}
-              handleChangeCheckbox={this.handleChangeCheckbox}
-              id={this.state.id}
-              checked={this.state.category.includes('Literary')}
-            />
-            <Checkbox
-              className={'card-creator-form__category-checkbox'}
-              category={'Political'}
-              handleChangeCheckbox={this.handleChangeCheckbox}
-              id={this.state.id}
-              checked={this.state.category.includes('Political')}
-            />
-            <Checkbox
-              className={'card-creator-form__category-checkbox'}
-              category={'Psychological'}
-              handleChangeCheckbox={this.handleChangeCheckbox}
-              id={this.state.id}
-              checked={this.state.category.includes('Psychological')}
-            />
+            {[
+              'Classics',
+              'Literary',
+              'Political',
+              'Psychological',
+              'Science Fiction',
+              'Action & Adventure',
+              'Space Science',
+              'Social History',
+            ].map((element) => (
+              <Checkbox
+                className={'card-creator-form__category-checkbox'}
+                category={element}
+                handleChangeCheckbox={this.handleChangeCheckbox}
+                id={this.state.id}
+                checked={this.state.category.includes(element)}
+                key={element}
+              />
+            ))}
           </div>
           <textarea
             name="description"
