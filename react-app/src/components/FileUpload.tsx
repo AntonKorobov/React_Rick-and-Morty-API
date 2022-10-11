@@ -22,8 +22,10 @@ export default class FileUpload extends Component {
         <p>Filename: {this.state.files !== null ? this.state.files.name : 'none'}</p>
         <p>File type: {this.state.files !== null ? this.state.files.type : 'none'}</p>
         <p>File size: {this.state.files !== null ? this.state.files.size : 'none'} bytes</p>
-        {/* {file && <ImageThumb image={file} />} */}
-        <img src={this.state.file !== null ? this.state.file : ''} alt={'just a picture'} />
+        <img
+          src={this.state.file !== null ? this.state.file.toString() : ''}
+          alt={'just a picture'}
+        />
       </div>
     );
   }
