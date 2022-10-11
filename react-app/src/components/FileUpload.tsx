@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 
-export default class FileUpload extends Component {
-  state: { files: File | null; file: Blob | null } = {
+type MyProps = {
+  className: string;
+};
+type MyState = {
+  files: File | null;
+  file: string;
+};
+
+export default class FileUpload extends Component<MyProps, MyState> {
+  state: MyState = {
     files: null,
-    file: null,
+    file: '',
   };
 
   handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -17,12 +25,18 @@ export default class FileUpload extends Component {
 
   render() {
     return (
-      <div id="upload-box">
-        <input type="file" onChange={this.handleUpload} accept="image/png, image/jpeg" />
+      <div className={this.props.className + ' file-upload'}>
+        <input
+          className={this.props.className + ' file-upload__input'}
+          type="file"
+          onChange={this.handleUpload}
+          accept="image/png, image/jpeg"
+        />
         <p>Filename: {this.state.files !== null ? this.state.files.name : 'none'}</p>
         <p>File type: {this.state.files !== null ? this.state.files.type : 'none'}</p>
         <p>File size: {this.state.files !== null ? this.state.files.size : 'none'} bytes</p>
         <img
+          className={this.props.className + ' file-upload__file'}
           src={this.state.file !== null ? this.state.file.toString() : ''}
           alt={'just a picture'}
         />

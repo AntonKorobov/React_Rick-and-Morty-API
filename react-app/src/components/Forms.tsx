@@ -114,12 +114,21 @@ export default class Forms extends Component {
           />
           <input
             type="number"
+            name="pages"
+            className="card-creator-form__pages"
+            value={this.state.pages}
+            onChange={this.handleChangeInput}
+            min="1"
+            max="10000"
+          />
+          <input
+            type="number"
             name="price"
             className="card-creator-form__price"
             value={this.state.price}
             onChange={this.handleChangeInput}
             min="1"
-            max="10000"
+            max="1000"
           />
           <select
             name="language"
@@ -154,7 +163,7 @@ export default class Forms extends Component {
             />
             <span className="switch__slider"></span>
           </label>
-          <FileUpload />
+          <FileUpload className={'card-creator-form__img'} />
         </form>
       </section>
     );
