@@ -7,7 +7,7 @@ import './Form.scss';
 
 interface State {
   data: CardInterface;
-  cards: CardInterface[] | null;
+  cards: CardInterface[];
 }
 
 export default class Forms extends Component {
@@ -27,12 +27,16 @@ export default class Forms extends Component {
       id: '', //auto
       written: false,
     },
-    cards: null,
+    cards: [],
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
-    this.setState({ data: { [name]: value } });
+    this.setState((prevState: State) => {
+      const copiedDataObject = Object.assign({}, prevState.data);
+      copiedDataObject[name] = value;
+      return { data: copiedDataObject };
+    });
   };
 
   handleChangeCheckbox = (event: { target: { name: string; checked: boolean } }) => {
@@ -58,7 +62,9 @@ export default class Forms extends Component {
   };
 
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     // this.setState({ cards: event.currentTarget.elements });
+    this.state.cards.push(this.state.data);
     console.log(event.currentTarget.elements);
   };
 
@@ -214,8 +220,8 @@ export default class Forms extends Component {
           <button className="card-creator-form__submit-button" type="submit">
             Submit
           </button>
-          {this.state.cards !== null ? (
-            <Card info={this.state.data} />
+          {this.state.cards.length !== 0 ? (
+            <Card info={this.state.cards[0]} />
           ) : (
             <h2>Pleas submit form!</h2>
           )}

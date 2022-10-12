@@ -1,7 +1,5 @@
-// import { CardInterface } from 'date/CardInterface';
 import React, { Component } from 'react';
-// import Card from './Card';
-import CardCreationForm from './CardCreationForm';
+import CardCreationForm from './CardCreatorForm';
 
 export default class Forms extends Component {
   render() {
