@@ -45,7 +45,7 @@ export default class Forms extends Component {
       this.setState((prevState: State) => ({
         category: prevState.category
           .map((element) => {
-            if (element === name) return ''; //interface has empty element
+            if (element === name) return '';
             return element;
           })
           .filter((element) => element),
@@ -81,6 +81,19 @@ export default class Forms extends Component {
         },
       ],
       id: (Number(this.state.id) + 1).toString(),
+      title: '',
+      author: '',
+      publisher: '',
+      category: [],
+      description: '',
+      pages: 0,
+      publishDate: '',
+      price: 0,
+      language: 'English',
+      coverType: 'Paperback',
+      img: '',
+      written: false,
+      file: '',
     });
     // console.log(event.currentTarget.elements);
   };
