@@ -80,6 +80,7 @@ export default class Forms extends Component {
           written: this.state.written,
         },
       ],
+      id: (Number(this.state.id) + 1).toString(),
     });
     // console.log(event.currentTarget.elements);
   };
