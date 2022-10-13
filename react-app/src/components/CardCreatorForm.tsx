@@ -135,7 +135,7 @@ export default class Forms extends Component {
             name="title"
             className="input-element__input"
             value={this.state.title}
-            placeholder="Title..."
+            placeholder={this.state.errors.title ? 'Incorrect value' : 'Title...'}
             onChange={this.handleChangeInput}
           />
         </label>
@@ -146,7 +146,7 @@ export default class Forms extends Component {
             name="author"
             className="input-element__input"
             value={this.state.author}
-            placeholder="Author..."
+            placeholder={this.state.errors.title ? 'Incorrect value' : 'Author...'}
             onChange={this.handleChangeInput}
           />
         </label>
@@ -157,7 +157,7 @@ export default class Forms extends Component {
             name="publisher"
             className="input-element__input"
             value={this.state.publisher}
-            placeholder="Publisher..."
+            placeholder={this.state.errors.title ? 'Incorrect value' : 'Publisher...'}
             onChange={this.handleChangeInput}
           />
         </label>
