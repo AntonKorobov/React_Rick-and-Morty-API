@@ -5,66 +5,71 @@ import Checkbox from './Checkbox';
 import FileUpload from './FileUpload';
 import './Form.scss';
 
-interface State {
-  data: CardInterface;
+interface State extends CardInterface {
   cards: CardInterface[];
 }
 
 export default class Forms extends Component {
   state: State = {
-    data: {
-      title: '',
-      author: '',
-      publisher: '',
-      category: [],
-      description: '',
-      pages: 0,
-      publishDate: '',
-      price: 0,
-      language: 'English',
-      coverType: 'Paperback',
-      img: '',
-      id: '', //auto
-      written: false,
-    },
+    title: '',
+    author: '',
+    publisher: '',
+    category: [],
+    description: '',
+    pages: 0,
+    publishDate: '',
+    price: 0,
+    language: 'English',
+    coverType: 'Paperback',
+    img: '',
+    id: '', //auto
+    written: false,
     cards: [],
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
-    this.setState((prevState: State) => {
-      const copiedDataObject = Object.assign({}, prevState.data);
-      copiedDataObject[name] = value;
-      return { data: copiedDataObject };
-    });
+    this.setState({ [name]: value });
   };
 
   handleChangeCheckbox = (event: { target: { name: string; checked: boolean } }) => {
     const { name, checked } = event.target;
     if (checked) {
       this.setState((prevState: State) => ({
-        data: {
-          category: [name, ...prevState.data.category],
-        },
+        category: [name, ...prevState.category],
       }));
     } else {
       this.setState((prevState: State) => ({
-        data: {
-          category: prevState.data.category
-            .map((element) => {
-              if (element === name) return ''; //interface has empty element
-              return element;
-            })
-            .filter((element) => element),
-        },
+        category: prevState.category
+          .map((element) => {
+            if (element === name) return ''; //interface has empty element
+            return element;
+          })
+          .filter((element) => element),
       }));
     }
   };
 
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // this.setState({ cards: event.currentTarget.elements });
-    this.state.cards.push(this.state.data);
+    // this.setState((prevState) => {
+    //   cards: [...prevState, this.state];
+    // });
+    this.state.cards.push({
+      title: this.state.title,
+      author: this.state.author,
+      publisher: this.state.publisher,
+      category: this.state.category,
+      description: this.state.description,
+      pages: this.state.pages,
+      publishDate: this.state.publisher,
+      price: this.state.price,
+      language: this.state.language,
+      coverType: this.state.coverType,
+      img: this.state.img,
+      id: this.state.id,
+      written: this.state.written,
+    });
     console.log(event.currentTarget.elements);
   };
 
@@ -81,7 +86,7 @@ export default class Forms extends Component {
               type="text"
               name="title"
               className="input-element__input"
-              value={this.state.data.title}
+              value={this.state.title}
               placeholder="Title..."
               onChange={this.handleChangeInput}
             />
@@ -92,7 +97,7 @@ export default class Forms extends Component {
               type="text"
               name="author"
               className="input-element__input"
-              value={this.state.data.author}
+              value={this.state.author}
               placeholder="Author..."
               onChange={this.handleChangeInput}
             />
@@ -103,7 +108,7 @@ export default class Forms extends Component {
               type="text"
               name="publisher"
               className="input-element__input"
-              value={this.state.data.publisher}
+              value={this.state.publisher}
               placeholder="Publisher..."
               onChange={this.handleChangeInput}
             />
@@ -114,7 +119,7 @@ export default class Forms extends Component {
               type="date"
               name="publishDate"
               className="input-element__input"
-              value={this.state.data.publishDate}
+              value={this.state.publishDate}
               placeholder="Publish date..."
               onChange={this.handleChangeInput}
               min="1900-01-01"
@@ -128,7 +133,7 @@ export default class Forms extends Component {
               type="number"
               name="pages"
               className="input-element__input"
-              value={this.state.data.pages}
+              value={this.state.pages}
               onChange={this.handleChangeInput}
               min="1"
               max="10000"
@@ -140,7 +145,7 @@ export default class Forms extends Component {
               type="number"
               name="price"
               className="input-element__input"
-              value={this.state.data.price}
+              value={this.state.price}
               onChange={this.handleChangeInput}
               min="1"
               max="1000"
@@ -151,7 +156,7 @@ export default class Forms extends Component {
             <select
               name="language"
               className="input-element__select"
-              value={this.state.data.language}
+              value={this.state.language}
               placeholder="Language..."
               onChange={this.handleChangeInput}
             >
@@ -166,7 +171,7 @@ export default class Forms extends Component {
             <select
               name="coverType"
               className="input-element__select"
-              value={this.state.data.coverType}
+              value={this.state.coverType}
               placeholder="CoverType..."
               onChange={this.handleChangeInput}
             >
@@ -203,8 +208,8 @@ export default class Forms extends Component {
                 className={'card-creator-form__category-checkbox'}
                 category={element}
                 handleChangeCheckbox={this.handleChangeCheckbox}
-                id={this.state.data.id}
-                checked={this.state.data.category.includes(element)}
+                id={this.state.id}
+                checked={this.state.category.includes(element)}
                 key={element}
               />
             ))}
@@ -212,7 +217,7 @@ export default class Forms extends Component {
           <textarea
             name="description"
             className="card-creator-form__description"
-            value={this.state.data.description}
+            value={this.state.description}
             placeholder="Description..."
             onChange={this.handleChangeInput}
           />
