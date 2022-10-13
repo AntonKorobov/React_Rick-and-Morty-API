@@ -20,7 +20,6 @@ export default function SearchBar(props: SearchBarProps) {
       <button className="search-bar__submit-button" type="submit">
         <img className="search-bar__img" src="magnifying-glass-solid.svg" alt="search button" />
       </button>
-      {/* <h1 className="search-bar__value">Value: {props.input}</h1> */}
     </form>
   );
 }

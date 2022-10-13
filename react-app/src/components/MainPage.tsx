@@ -25,7 +25,7 @@ export default class MainPage extends Component {
   }
 
   componentWillUnmount(): void {
-    localStorage.setItem('searchBarInput', this.state.searchBarInput); //Delete?
+    localStorage.setItem('searchBarInput', this.state.searchBarInput);
   }
 
   render = () => {

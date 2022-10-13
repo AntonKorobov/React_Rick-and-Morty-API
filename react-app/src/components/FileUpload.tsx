@@ -9,7 +9,7 @@ export default class FileUpload extends Component<MyProps> {
   render() {
     return (
       <input
-        className={this.props.className + ' file-upload__input'}
+        className={this.props.className + '__input'}
         type="file"
         onChange={this.props.handleUpload}
         accept="image/png, image/jpeg"

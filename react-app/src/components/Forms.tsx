@@ -4,9 +4,10 @@ import CardCreationForm from './CardCreatorForm';
 export default class Forms extends Component {
   render() {
     return (
-      <div className="forms">
+      <section className="forms">
+        <h1>Forms</h1>
         <CardCreationForm />
-      </div>
+      </section>
     );
   }
 }

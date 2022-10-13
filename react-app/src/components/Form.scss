@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   max-width: 50%;
+  margin: 0 auto;
 }
 
 .card-creator-form__category {
@@ -14,10 +15,9 @@
   flex-wrap: wrap;
 }
 
-// .card-creator-form__description {
-//   min-width: 50rem;
-//   min-height: 10rem;
-// }
+.card-creator-form__description {
+  min-height: 10rem;
+}
 
 .input-element__select,
 .input-element__input,
@@ -80,4 +80,18 @@
 
 .switch__input:checked + .switch__slider:before {
   transform: translateX(1.1rem);
+}
+
+.card-creator-form__file-upload {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.file-upload__img {
+  max-width: 100%;
+}
+
+.card-creator-form__submit-button {
+  height: 4rem;
 }
