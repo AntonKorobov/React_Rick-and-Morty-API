@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Card from './Card';
 import Checkbox from './Checkbox';
 import FileUpload from './FileUpload';
+import CardData from '../date/CardData.json';
 import './Form.scss';
 
 interface State extends CardInterface {
@@ -23,7 +24,7 @@ export default class Forms extends Component {
     language: 'English',
     coverType: 'Paperback',
     img: '',
-    id: '', //auto
+    id: CardData[CardData.length - 1].id,
     written: false,
     file: '',
     cards: [],
@@ -75,7 +76,7 @@ export default class Forms extends Component {
           language: this.state.language,
           coverType: this.state.coverType,
           img: this.state.img,
-          id: this.state.id,
+          id: (Number(this.state.id) + 1).toString(),
           written: this.state.written,
         },
       ],
