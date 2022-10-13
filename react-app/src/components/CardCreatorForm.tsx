@@ -9,6 +9,7 @@ import './Form.scss';
 interface State extends CardInterface {
   cards: CardInterface[];
   file: string;
+  errors: { title: boolean; author: boolean; publisher: boolean };
 }
 
 const lastCardId = CardData[CardData.length - 1].id;
@@ -34,6 +35,7 @@ export default class Forms extends Component {
     file: '',
     cards: [],
     ...defaultFormValues,
+    errors: { title: false, author: false, publisher: false },
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
@@ -65,30 +67,59 @@ export default class Forms extends Component {
     }
   };
 
+  validation = (): boolean => {
+    let isValid = true;
+
+    if (!this.state.title) {
+      isValid = false;
+      this.setState((prevState: State) => {
+        prevState.errors.title = true;
+      });
+    }
+    if (!this.state.author) {
+      isValid = false;
+      this.setState((prevState: State) => {
+        prevState.errors.author = true;
+      });
+    }
+    if (!this.state.publisher) {
+      isValid = false;
+      this.setState((prevState: State) => {
+        prevState.errors.publisher = true;
+      });
+    }
+    return isValid;
+  };
+
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.setState({
-      cards: [
-        ...this.state.cards,
-        {
-          title: this.state.title,
-          author: this.state.author,
-          publisher: this.state.publisher,
-          category: this.state.category,
-          description: this.state.description,
-          pages: this.state.pages,
-          publishDate: this.state.publisher,
-          price: this.state.price,
-          language: this.state.language,
-          coverType: this.state.coverType,
-          img: this.state.img,
-          id: (Number(this.state.id) + 1).toString(),
-          written: this.state.written,
-        },
-      ],
-      id: (Number(this.state.id) + 1).toString(),
-    });
-    Object.assign(this.state, defaultFormValues);
+    if (this.validation()) {
+      this.setState({
+        cards: [
+          ...this.state.cards,
+          {
+            title: this.state.title,
+            author: this.state.author,
+            publisher: this.state.publisher,
+            category: this.state.category,
+            description: this.state.description,
+            pages: this.state.pages,
+            publishDate: this.state.publisher,
+            price: this.state.price,
+            language: this.state.language,
+            coverType: this.state.coverType,
+            img: this.state.img,
+            id: (Number(this.state.id) + 1).toString(),
+            written: this.state.written,
+          },
+        ],
+        id: (Number(this.state.id) + 1).toString(),
+        errors: { title: false, author: false, publisher: false }, //default values
+      });
+      Object.assign(this.state, defaultFormValues);
+    } else {
+      console.log('Form inputs incorrect');
+    }
     // console.log(event.currentTarget.elements);
   };
 
