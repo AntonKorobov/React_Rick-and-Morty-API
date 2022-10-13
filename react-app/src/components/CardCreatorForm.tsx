@@ -7,6 +7,7 @@ import './Form.scss';
 
 interface State extends CardInterface {
   cards: CardInterface[];
+  file: string;
 }
 
 export default class Forms extends Component {
@@ -24,6 +25,7 @@ export default class Forms extends Component {
     img: '',
     id: '', //auto
     written: false,
+    file: '',
     cards: [],
   };
 
@@ -50,27 +52,35 @@ export default class Forms extends Component {
     }
   };
 
+  handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
+    if (event.currentTarget.files !== null) {
+      this.setState({ img: URL.createObjectURL(event.currentTarget.files[0]) });
+    }
+  };
+
   onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // this.setState((prevState) => {
-    //   cards: [...prevState, this.state];
-    // });
-    this.state.cards.push({
-      title: this.state.title,
-      author: this.state.author,
-      publisher: this.state.publisher,
-      category: this.state.category,
-      description: this.state.description,
-      pages: this.state.pages,
-      publishDate: this.state.publisher,
-      price: this.state.price,
-      language: this.state.language,
-      coverType: this.state.coverType,
-      img: this.state.img,
-      id: this.state.id,
-      written: this.state.written,
+    this.setState({
+      cards: [
+        ...this.state.cards,
+        {
+          title: this.state.title,
+          author: this.state.author,
+          publisher: this.state.publisher,
+          category: this.state.category,
+          description: this.state.description,
+          pages: this.state.pages,
+          publishDate: this.state.publisher,
+          price: this.state.price,
+          language: this.state.language,
+          coverType: this.state.coverType,
+          img: this.state.img,
+          id: this.state.id,
+          written: this.state.written,
+        },
+      ],
     });
-    console.log(event.currentTarget.elements);
+    // console.log(event.currentTarget.elements);
   };
 
   render() {
@@ -221,15 +231,20 @@ export default class Forms extends Component {
             placeholder="Description..."
             onChange={this.handleChangeInput}
           />
-          <FileUpload className={'card-creator-form__img'} />
+          <div className={'card-creator-form__file-upload file-upload'}>
+            <FileUpload className={'file-upload__img'} handleUpload={this.handleUpload} />
+            <img className={'file-upload__file'} src={this.state.img} alt={'just a picture'} />
+          </div>
           <button className="card-creator-form__submit-button" type="submit">
             Submit
           </button>
-          {this.state.cards.length !== 0 ? (
-            <Card info={this.state.cards[0]} />
-          ) : (
-            <h2>Pleas submit form!</h2>
-          )}
+          <div className="cards-wrapper">
+            {this.state.cards.length !== 0 ? (
+              <Card info={this.state.cards[0]} />
+            ) : (
+              <h2>Pleas submit form!</h2>
+            )}
+          </div>
         </form>
       </section>
     );
