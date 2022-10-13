@@ -11,23 +11,29 @@ interface State extends CardInterface {
   file: string;
 }
 
+const lastCardId = CardData[CardData.length - 1].id;
+
+const defaultFormValues: CardInterface = {
+  title: '',
+  author: '',
+  publisher: '',
+  category: [],
+  description: '',
+  pages: 0,
+  publishDate: '',
+  price: 0,
+  language: 'English',
+  coverType: 'Paperback',
+  img: '',
+  id: lastCardId,
+  written: false,
+};
+
 export default class Forms extends Component {
   state: State = {
-    title: '',
-    author: '',
-    publisher: '',
-    category: [],
-    description: '',
-    pages: 0,
-    publishDate: '',
-    price: 0,
-    language: 'English',
-    coverType: 'Paperback',
-    img: '',
-    id: CardData[CardData.length - 1].id,
-    written: false,
     file: '',
     cards: [],
+    ...defaultFormValues,
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
@@ -81,20 +87,8 @@ export default class Forms extends Component {
         },
       ],
       id: (Number(this.state.id) + 1).toString(),
-      title: '',
-      author: '',
-      publisher: '',
-      category: [],
-      description: '',
-      pages: 0,
-      publishDate: '',
-      price: 0,
-      language: 'English',
-      coverType: 'Paperback',
-      img: '',
-      written: false,
-      file: '',
     });
+    Object.assign(this.state, defaultFormValues);
     // console.log(event.currentTarget.elements);
   };
 
