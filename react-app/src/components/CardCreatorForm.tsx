@@ -240,7 +240,7 @@ export default class Forms extends Component {
           </button>
           <div className="cards-wrapper">
             {this.state.cards.length !== 0 ? (
-              <Card info={this.state.cards[0]} />
+              this.state.cards.map((element) => <Card key={element.id} info={element} />)
             ) : (
               <h2>Pleas submit form!</h2>
             )}
