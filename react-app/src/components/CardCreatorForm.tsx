@@ -5,11 +5,12 @@ import Checkbox from './Checkbox';
 import FileUpload from './FileUpload';
 import CardData from '../date/CardData.json';
 import './Form.scss';
+import ModalWindow from './ModalWindow';
 
 interface State extends CardInterface {
   cards: CardInterface[];
   file: string;
-  errors: { title: boolean; author: boolean; publisher: boolean };
+  errors: { title: boolean; author: boolean; publisher: boolean; publishDate: boolean };
 }
 
 const lastCardId = CardData[CardData.length - 1].id;
@@ -35,7 +36,7 @@ export default class Forms extends Component {
     file: '',
     cards: [],
     ...defaultFormValues,
-    errors: { title: false, author: false, publisher: false },
+    errors: { title: false, author: false, publisher: false, publishDate: false },
   };
 
   handleChangeInput = (event: { target: { name: string; value: string } }) => {
@@ -73,19 +74,57 @@ export default class Forms extends Component {
     if (!this.state.title) {
       isValid = false;
       this.setState((prevState: State) => {
-        prevState.errors.title = true;
+        const errors = Object.assign({}, prevState.errors);
+        errors.title = true;
+        return { errors };
+      });
+    } else {
+      this.setState((prevState: State) => {
+        const errors = Object.assign({}, prevState.errors);
+        errors.title = false;
+        return { errors };
       });
     }
     if (!this.state.author) {
       isValid = false;
       this.setState((prevState: State) => {
-        prevState.errors.author = true;
+        const errors = Object.assign({}, prevState.errors);
+        errors.author = true;
+        return { errors };
+      });
+    } else {
+      this.setState((prevState: State) => {
+        const errors = Object.assign({}, prevState.errors);
+        errors.author = false;
+        return { errors };
       });
     }
     if (!this.state.publisher) {
       isValid = false;
       this.setState((prevState: State) => {
-        prevState.errors.publisher = true;
+        const errors = Object.assign({}, prevState.errors);
+        errors.publisher = true;
+        return { errors };
+      });
+    } else {
+      this.setState((prevState: State) => {
+        const errors = Object.assign({}, prevState.errors);
+        errors.publisher = false;
+        return { errors };
+      });
+    }
+    if (!this.state.publishDate) {
+      isValid = false;
+      this.setState((prevState: State) => {
+        const errors = Object.assign({}, prevState.errors);
+        errors.publishDate = true;
+        return { errors };
+      });
+    } else {
+      this.setState((prevState: State) => {
+        const errors = Object.assign({}, prevState.errors);
+        errors.publishDate = false;
+        return { errors };
       });
     }
     return isValid;
@@ -116,7 +155,7 @@ export default class Forms extends Component {
         id: (Number(this.state.id) + 1).toString(),
         errors: { title: false, author: false, publisher: false }, //default values
       });
-      Object.assign(this.state, defaultFormValues);
+      Object.assign(this.state, defaultFormValues); //!!!
     } else {
       console.log('Form inputs incorrect');
     }
@@ -135,9 +174,12 @@ export default class Forms extends Component {
             name="title"
             className="input-element__input"
             value={this.state.title}
-            placeholder={this.state.errors.title ? 'Incorrect value' : 'Title...'}
+            placeholder={'Title...'}
             onChange={this.handleChangeInput}
           />
+          {this.state.errors.title && (
+            <ModalWindow className="input-element__modal-window" message="Incorrect value" />
+          )}
         </label>
         <label className="card-creator-form__author input-element">
           Author:
@@ -146,9 +188,12 @@ export default class Forms extends Component {
             name="author"
             className="input-element__input"
             value={this.state.author}
-            placeholder={this.state.errors.title ? 'Incorrect value' : 'Author...'}
+            placeholder={'Author...'}
             onChange={this.handleChangeInput}
           />
+          {this.state.errors.author && (
+            <ModalWindow className="input-element__modal-window" message="Incorrect value" />
+          )}
         </label>
         <label className="card-creator-form__publisher input-element">
           Publisher:
@@ -157,9 +202,12 @@ export default class Forms extends Component {
             name="publisher"
             className="input-element__input"
             value={this.state.publisher}
-            placeholder={this.state.errors.title ? 'Incorrect value' : 'Publisher...'}
+            placeholder={'Publisher...'}
             onChange={this.handleChangeInput}
           />
+          {this.state.errors.publisher && (
+            <ModalWindow className="input-element__modal-window" message="Incorrect value" />
+          )}
         </label>
         <label className="card-creator-form__publishDate input-element">
           Publish date:
@@ -173,6 +221,9 @@ export default class Forms extends Component {
             min="1900-01-01"
             max="2022-12-31"
           />
+          {this.state.errors.publishDate && (
+            <ModalWindow className="input-element__modal-window" message="Incorrect value" />
+          )}
         </label>
 
         <label className="card-creator-form__pages input-element">
@@ -183,7 +234,7 @@ export default class Forms extends Component {
             className="input-element__input"
             value={this.state.pages}
             onChange={this.handleChangeInput}
-            min="1"
+            min="0"
             max="10000"
           />
         </label>
@@ -195,7 +246,7 @@ export default class Forms extends Component {
             className="input-element__input"
             value={this.state.price}
             onChange={this.handleChangeInput}
-            min="1"
+            min="0"
             max="1000"
           />
         </label>
