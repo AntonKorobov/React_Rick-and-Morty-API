@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardInterface } from '../date/CardInterface';
+import { CardInterface } from '../../data/CardInterface';
 import './Card.scss';
 
 export default function card(props: { info: CardInterface }) {

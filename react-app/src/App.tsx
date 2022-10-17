@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.scss';
 import Header from 'components/Header';
-import AboutUs from 'components/AboutUs';
-import Page404 from 'components/Page404';
+import AboutUs from 'pages/AboutUs';
+import Page404 from 'pages/Page404';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from 'components/MainPage';
+import MainPage from 'pages/MainPage';
 
 function App() {
   return (

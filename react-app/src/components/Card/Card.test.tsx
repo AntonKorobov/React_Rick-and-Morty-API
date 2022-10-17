@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card from './Card';
-import CardData from '../date/CardData.json';
+import Card from '.';
+import CardData from '../../data/CardData.json';
 
 test('render one card', () => {
   render(<Card info={CardData[0]} />);

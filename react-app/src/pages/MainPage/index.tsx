@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Card from './Card';
+import Card from '../../components/Card';
 import './MainPage.scss';
-import SearchBar from './SearchBar';
-import CardData from '../date/CardData.json';
-import { CardInterface } from '../date/CardInterface';
+import SearchBar from '../../components/SearchBar';
+import CardData from '../../data/CardData.json';
+import { CardInterface } from '../../data/CardInterface';
 
 export default class MainPage extends Component {
   state = {
