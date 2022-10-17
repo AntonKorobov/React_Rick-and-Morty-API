@@ -10,10 +10,9 @@ describe('MainPage', () => {
     expect(screen.getByPlaceholderText(/Search.../i)).toBeInTheDocument();
     expect(screen.getByAltText(/search button/i)).toBeInTheDocument();
   });
-});
-
-test('renders cards', () => {
-  render(<MainPage />);
-  const cardName = screen.getByText(CardData[0].title);
-  expect(cardName).toBeInTheDocument();
+  test('renders cards', () => {
+    render(<MainPage />);
+    const cardName = screen.getByText(CardData[0].title);
+    expect(cardName).toBeInTheDocument();
+  });
 });
