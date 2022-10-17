@@ -30,12 +30,11 @@ export default class MainPage extends Component {
 
   render = () => {
     return (
-      <section className="main-page">
+      <section className="main-page" data-testid="main-page">
         <h1 className="main-page_h1 h1">Main page</h1>
         <div className="search-bar-wrapper">
           <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
         </div>
-
         <div className="cards-wrapper">{this.cardGenerator(CardData)}</div>
       </section>
     );
