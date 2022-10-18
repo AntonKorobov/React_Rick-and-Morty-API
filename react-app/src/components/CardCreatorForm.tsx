@@ -1,4 +1,4 @@
-import { CardInterface } from 'date/CardInterface';
+import { CardInterface } from 'data/CardInterface';
 import React, { Component } from 'react';
 import Card from './Card';
 import Checkbox from './Checkbox';

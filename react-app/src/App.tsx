@@ -1,14 +1,21 @@
 import React from 'react';
 import './App.scss';
 import Header from 'components/Header';
-import { Outlet } from 'react-router-dom';
+import AboutUs from 'pages/AboutUs';
+import Page404 from 'pages/Page404';
+import { Routes, Route } from 'react-router-dom';
+import MainPage from 'pages/MainPage';
 
 function App() {
   return (
     <div className="app">
       <Header />
       <div className="container">
-        <Outlet />
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/about_us" element={<AboutUs />}></Route>
+          <Route path="*" element={<Page404 />} />
+        </Routes>
       </div>
     </div>
   );
