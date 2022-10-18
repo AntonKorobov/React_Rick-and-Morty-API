@@ -2,15 +2,20 @@ import React, { Component } from 'react';
 import Card from '../../components/Card';
 import './MainPage.scss';
 import SearchBar from '../../components/SearchBar';
-import CardData from '../../data/CardData.json';
-import { CardInterface } from '../../data/CardInterface';
+import { APICharacterInterface, APISingleCharacterInterface } from 'data/APIInterface';
+
+interface State {
+  searchBarInput: string;
+  characters: APISingleCharacterInterface[];
+}
 
 export default class MainPage extends Component {
-  state = {
+  state: State = {
     searchBarInput: '',
+    characters: [],
   };
 
-  cardGenerator = (array: CardInterface[]): JSX.Element[] => {
+  cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);
   };
 
@@ -20,8 +25,20 @@ export default class MainPage extends Component {
     localStorage.setItem('searchBarInput', this.state.searchBarInput);
   };
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
+
+    // fetch(`https://rickandmortyapi.com/api/character/2`)
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
+    try {
+      const response = await fetch(`https://rickandmortyapi.com/api/character`);
+      const data: APICharacterInterface = await response.json();
+      this.setState({ characters: data.results });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentWillUnmount(): void {
@@ -35,7 +52,7 @@ export default class MainPage extends Component {
         <div className="search-bar-wrapper">
           <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
         </div>
-        <div className="cards-wrapper">{this.cardGenerator(CardData)}</div>
+        <div className="cards-wrapper">{this.cardGenerator(this.state.characters)}</div>
       </section>
     );
   };

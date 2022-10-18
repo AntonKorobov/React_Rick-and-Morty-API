@@ -327,13 +327,13 @@ export default class Forms extends Component {
         <button className="card-creator-form__submit-button" type="submit">
           Submit
         </button>
-        <div className="cards-wrapper">
+        {/* <div className="cards-wrapper">
           {this.state.cards.length !== 0 ? (
             this.state.cards.map((element) => <Card key={element.id} info={element} />)
           ) : (
             <h2>Please submit form!</h2>
           )}
-        </div>
+        </div> */}
       </form>
     );
   }

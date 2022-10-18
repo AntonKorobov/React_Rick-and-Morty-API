@@ -1,27 +1,24 @@
+import { APISingleCharacterInterface } from 'data/APIInterface';
 import React from 'react';
-import { CardInterface } from '../../data/CardInterface';
 import './Card.scss';
 
-export default function card(props: { info: CardInterface }) {
+export default function card(props: { info: APISingleCharacterInterface }) {
   return (
     <a href="#" className="card link">
-      <h2 className="card__title">{props.info.title}</h2>
-      <img className="card__img" src={props.info.img} alt="" />
+      <h2 className="card__title">{props.info.name}</h2>
+      <img className="card__img" src={props.info.image} alt="" />
       <div className="card__description">
         <p className="card__author">
-          <b>Author:</b> {props.info.author}
+          <b>status:</b> {props.info.status}
         </p>
         <p className="card__price">
-          <b>Price:</b> {props.info.price}
+          <b>species:</b> {props.info.species}
         </p>
         <p className="card__cover-type">
-          <b>Cover type:</b> {props.info.coverType}
+          <b>type:</b> {props.info.type}
         </p>
         <p className="card__language">
-          <b>Language:</b> {props.info.language}
-        </p>
-        <p className="card__written">
-          <b>Written:</b> {props.info.written ? 'Yes' : 'No'}
+          <b>gender:</b> {props.info.gender}
         </p>
       </div>
     </a>
