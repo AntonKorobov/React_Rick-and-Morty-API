@@ -1,11 +1,11 @@
 import { CardInterface } from 'data/CardInterface';
 import React, { Component } from 'react';
-import Card from './Card';
-import Checkbox from './Checkbox';
-import FileUpload from './FileUpload';
-import CardData from '../date/CardData.json';
-import './Form.scss';
-import ModalWindow from './ModalWindow';
+import Card from '../Card';
+import Checkbox from '../Checkbox';
+import FileUpload from '../FileUpload';
+import CardData from '../../data/CardData.json';
+import './CardCreatorForm.scss';
+import ModalWindow from '../ModalWindow';
 
 interface State extends CardInterface {
   cards: CardInterface[];
