@@ -1,4 +1,30 @@
 .modal-window {
-  background-color: red;
-  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.modal-window__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(100, 100, 100);
+  z-index: 100;
+  opacity: 0.8;
+}
+
+.modal-window__body {
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.2rem solid black;
+  z-index: 1000;
+  background-color: aliceblue;
 }
