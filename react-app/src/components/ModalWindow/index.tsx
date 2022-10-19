@@ -9,9 +9,14 @@ export default function ModalWindow(props: {
   return props.isVisible ? (
     <div className={props.className + ' modal-window'}>
       <div className="modal-window__background"></div>
-      <div className="modal-window__body">{props.children}</div>
+      <div className="modal-window__body">
+        <button className="modal-window__exit-button exit-button">
+          <img className="exit-button__img" src="xmark-solid.svg" alt="exit button" />
+        </button>
+        {props.children}
+      </div>
     </div>
   ) : (
-    <span></span>
+    <></>
   );
 }

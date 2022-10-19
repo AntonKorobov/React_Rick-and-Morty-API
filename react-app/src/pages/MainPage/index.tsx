@@ -139,11 +139,13 @@ export default class MainPage extends Component {
         />
         <div className="cards-wrapper">
           {!this.state.isLoaded ? (
-            <div>{'Loading...'}</div>
+            <div className="loading-message">{'Loading...'}</div>
           ) : (
             this.cardGenerator(this.state.characters)
           )}
-          {this.state.isLoadingError && <div>{'Error while loading. Sorry :('}</div>}
+          {this.state.isLoadingError && (
+            <div className="sorry-message">{`Sorry, we couldn't find any results :(`}</div>
+          )}
         </div>
         <Pagination
           currentPage={this.state.currentPage}

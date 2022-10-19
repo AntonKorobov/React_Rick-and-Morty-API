@@ -1,3 +1,5 @@
+@import '_colors.module.scss';
+
 .modal-window {
   position: fixed;
   top: 0;
@@ -20,11 +22,40 @@
 
 .modal-window__body {
   width: 60%;
+  height: 80%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 1rem;
   border: 0.2rem solid black;
   z-index: 1000;
-  background-color: aliceblue;
+  background-color: $backgroundColor;
+}
+
+.modal-window__exit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $backgroundColor;
+  border: none;
+}
+
+.exit-button__img {
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+}
+
+.modal-window__information {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-window__img {
+  display: block;
+  margin: 0 auto;
+  width: auto;
 }
