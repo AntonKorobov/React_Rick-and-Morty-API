@@ -10,6 +10,7 @@ interface State {
   characters: APISingleCharacterInterface[];
   currentPage: number;
   isLoaded: boolean;
+  isLoadingError: boolean;
 }
 
 export default class MainPage extends Component {
@@ -18,6 +19,7 @@ export default class MainPage extends Component {
     characters: [],
     currentPage: 1,
     isLoaded: false,
+    isLoadingError: false,
   };
 
   cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
@@ -42,38 +44,74 @@ export default class MainPage extends Component {
   };
 
   onPageChange = async (pageNumber: number) => {
-    this.setState({ isLoaded: false });
+    this.setState({ isLoaded: false, isLoadingError: false, characters: [] });
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`);
-      const data: APICharacterInterface = await response.json();
-      this.setState({ characters: data.results });
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${this.state.searchBarInput}`
+      );
+      if (response.status === 200) {
+        const data: APICharacterInterface = await response.json();
+        this.setState({ characters: data.results, isLoadingError: false });
+        console.log(data);
+      } else {
+        this.setState({ isLoaded: true, isLoadingError: true });
+      }
       setTimeout(() => {
         this.setState({ isLoaded: true });
       }, 1000);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  handleChange = (event: { target: { name: string; value: string } }) => {
+  handleChangeSearchBar = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
     localStorage.setItem('searchBarInput', this.state.searchBarInput);
   };
 
-  async componentDidMount(): Promise<void> {
-    this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
+  searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    localStorage.setItem('searchBarInput', this.state.searchBarInput); // !!!
+    this.setState({ isLoaded: false, isLoadingError: false, characters: [] });
     try {
       const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${this.state.currentPage}`
+        `https://rickandmortyapi.com/api/character/?name=${this.state.searchBarInput}`
       );
-      const data: APICharacterInterface = await response.json();
-      this.setState({ characters: data.results });
+      if (response.status === 200) {
+        const data: APICharacterInterface = await response.json();
+        this.setState({ characters: data.results, isLoadingError: false });
+        console.log(data);
+      } else {
+        this.setState({ isLoaded: true, isLoadingError: true });
+      }
       setTimeout(() => {
         this.setState({ isLoaded: true });
       }, 1000);
-      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async componentDidMount(): Promise<void> {
+    this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
+    this.setState({ isLoaded: false, isLoadingError: false, characters: [] });
+    try {
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${this.state.currentPage}&name=${
+          localStorage.getItem('searchBarInput') || '' //state is empty!!!???
+        }`
+      );
+      if (response.status === 200) {
+        const data: APICharacterInterface = await response.json();
+        this.setState({ characters: data.results, isLoadingError: false });
+        console.log(data);
+      } else {
+        this.setState({ isLoaded: true, isLoadingError: true });
+      }
+      setTimeout(() => {
+        this.setState({ isLoaded: true });
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +126,11 @@ export default class MainPage extends Component {
       <section className="main-page" data-testid="main-page">
         <h1 className="main-page_h1 h1">Main page</h1>
         <div className="search-bar-wrapper">
-          <SearchBar input={this.state.searchBarInput} handleChange={this.handleChange} />
+          <SearchBar
+            onSubmit={this.searchBarOnSubmit}
+            input={this.state.searchBarInput}
+            handleChange={this.handleChangeSearchBar}
+          />
         </div>
         <Pagination
           currentPage={this.state.currentPage}
@@ -96,7 +138,12 @@ export default class MainPage extends Component {
           nextPage={this.nextPage}
         />
         <div className="cards-wrapper">
-          {!this.state.isLoaded ? 'Loading...' : this.cardGenerator(this.state.characters)}
+          {!this.state.isLoaded ? (
+            <div>{'Loading...'}</div>
+          ) : (
+            this.cardGenerator(this.state.characters)
+          )}
+          {this.state.isLoadingError && <div>{'Error while loading. Sorry :('}</div>}
         </div>
         <Pagination
           currentPage={this.state.currentPage}
