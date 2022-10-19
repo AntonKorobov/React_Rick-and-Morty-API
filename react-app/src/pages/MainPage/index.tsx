@@ -91,6 +91,11 @@ export default class MainPage extends Component {
           nextPage={this.nextPage}
         />
         <div className="cards-wrapper">{this.cardGenerator(this.state.characters)}</div>
+        <Pagination
+          currentPage={this.state.currentPage}
+          prevPage={this.prevPage}
+          nextPage={this.nextPage}
+        />
       </section>
     );
   };
