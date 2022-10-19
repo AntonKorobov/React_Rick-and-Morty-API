@@ -9,6 +9,7 @@ interface State {
   searchBarInput: string;
   characters: APISingleCharacterInterface[];
   currentPage: number;
+  isLoaded: boolean;
 }
 
 export default class MainPage extends Component {
@@ -16,6 +17,7 @@ export default class MainPage extends Component {
     searchBarInput: '',
     characters: [],
     currentPage: 1,
+    isLoaded: false,
   };
 
   cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
@@ -40,10 +42,14 @@ export default class MainPage extends Component {
   };
 
   onPageChange = async (pageNumber: number) => {
+    this.setState({ isLoaded: false });
     try {
       const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`);
       const data: APICharacterInterface = await response.json();
       this.setState({ characters: data.results });
+      setTimeout(() => {
+        this.setState({ isLoaded: true });
+      }, 1000);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -58,16 +64,15 @@ export default class MainPage extends Component {
 
   async componentDidMount(): Promise<void> {
     this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
-
-    // fetch(`https://rickandmortyapi.com/api/character/?page=${this.state.currentPage}`)
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data));
     try {
       const response = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${this.state.currentPage}`
       );
       const data: APICharacterInterface = await response.json();
       this.setState({ characters: data.results });
+      setTimeout(() => {
+        this.setState({ isLoaded: true });
+      }, 1000);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -90,7 +95,9 @@ export default class MainPage extends Component {
           prevPage={this.prevPage}
           nextPage={this.nextPage}
         />
-        <div className="cards-wrapper">{this.cardGenerator(this.state.characters)}</div>
+        <div className="cards-wrapper">
+          {!this.state.isLoaded ? 'Loading...' : this.cardGenerator(this.state.characters)}
+        </div>
         <Pagination
           currentPage={this.state.currentPage}
           prevPage={this.prevPage}
