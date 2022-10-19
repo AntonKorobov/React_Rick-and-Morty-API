@@ -22,31 +22,35 @@ export default class Card extends Component<Props, State> {
 
   render() {
     return (
-      <a href="#" className="card link" onClick={this.onChangeModal}>
+      <button className="card link" onClick={this.onChangeModal}>
         <h2 className="card__name">{this.props.info.name}</h2>
         <img className="card__img" src={this.props.info.image} alt="" />
         {/* <div className="card__description"></div> */}
-        <ModalWindow isVisible={this.state.isModalVisible} className="card__modal">
+        <ModalWindow
+          isVisible={this.state.isModalVisible}
+          className="card__modal"
+          onChangeModal={this.onChangeModal}
+        >
           <div className="modal-window__information">
             <h2 className="modal-window__name">{this.props.info.name}</h2>
             <img className="modal-window__img" src={this.props.info.image} alt="" />
-            <div className="modal-window__description">
-              <p className="modal-window__status">
+            <ul className="modal-window__description">
+              <li className="modal-window__status">
                 <b>status:</b> {this.props.info.status}
-              </p>
-              <p className="modal-window__species">
+              </li>
+              <li className="modal-window__species">
                 <b>species:</b> {this.props.info.species}
-              </p>
-              <p className="modal-window__type">
+              </li>
+              <li className="modal-window__type">
                 <b>type:</b> {this.props.info.type}
-              </p>
-              <p className="modal-window__gender">
+              </li>
+              <li className="modal-window__gender">
                 <b>gender:</b> {this.props.info.gender}
-              </p>
-            </div>
+              </li>
+            </ul>
           </div>
         </ModalWindow>
-      </a>
+      </button>
     );
   }
 }
