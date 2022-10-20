@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.scss';
-import Header from 'components/Header';
-import AboutUs from 'pages/AboutUs';
-import Page404 from 'pages/Page404';
+import Header from 'components/Header/Header';
+import AboutUs from 'pages/About_Us/About_Us';
+import Page404 from 'pages/Page_404/Page_404';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from 'pages/MainPage';
-import Form from 'pages/Form';
+import MainPage from 'pages/Main_Page/Main_Page';
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
-          <Route path="/form" element={<Form />}></Route>
           <Route path="/about_us" element={<AboutUs />}></Route>
           <Route path="*" element={<Page404 />} />
         </Routes>

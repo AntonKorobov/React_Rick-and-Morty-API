@@ -1,5 +1,5 @@
-import ModalWindow from 'components/ModalWindow';
-import { APISingleCharacterInterface } from 'data/APIInterface';
+import ModalWindow from 'components/Modal_Window/Modal_Window';
+import { APISingleCharacterInterface } from 'data/API_Interface';
 import React, { Component } from 'react';
 import './Card.scss';
 
