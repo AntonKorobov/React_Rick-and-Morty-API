@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Card from '../../components/Card/Card';
+import { Card } from '../../components/Card/Card';
 import './MainPage.scss';
-import SearchBar from '../../components/Search_Bar/Search_Bar';
+import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APICharacterInterface, APISingleCharacterInterface } from 'data/API_Interface';
-import Pagination from 'components/Pagination/Pagination';
+import { Pagination } from 'components/Pagination/Pagination';
 
 interface State {
   searchBarInput: string;

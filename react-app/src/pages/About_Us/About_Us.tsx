@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AboutUS() {
+export function AboutUs() {
   return (
     <section>
       <h1>About us page</h1>

@@ -8,7 +8,7 @@ interface CheckboxProps {
   checked: boolean;
 }
 
-export default function Checkbox(props: CheckboxProps) {
+export function Checkbox(props: CheckboxProps) {
   return (
     <label className={props.className}>
       <input

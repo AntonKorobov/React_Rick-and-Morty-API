@@ -7,7 +7,7 @@ interface Props {
   prevPage: () => void;
 }
 
-export default function index(props: Props) {
+export function Pagination(props: Props) {
   return (
     <div className="pagination">
       <button

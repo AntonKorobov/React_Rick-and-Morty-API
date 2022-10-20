@@ -7,7 +7,7 @@ interface SearchBarProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export default function SearchBar(props: SearchBarProps) {
+export function SearchBar(props: SearchBarProps) {
   return (
     <form className="search-bar" action="/action_page.php" onSubmit={props.onSubmit}>
       <input

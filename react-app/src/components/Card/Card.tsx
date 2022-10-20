@@ -1,4 +1,4 @@
-import ModalWindow from 'components/Modal_Window/Modal_Window';
+import { ModalWindow } from 'components/Modal_Window/Modal_Window';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import React, { Component } from 'react';
 import './Card.scss';
@@ -11,7 +11,7 @@ interface State {
   isModalVisible: boolean;
 }
 
-export default class Card extends Component<Props, State> {
+export class Card extends Component<Props, State> {
   state = {
     isModalVisible: false,
   };

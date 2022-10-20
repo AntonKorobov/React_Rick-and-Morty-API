@@ -5,7 +5,7 @@ type MyProps = {
   handleUpload: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-export default class FileUpload extends Component<MyProps> {
+export class FileUpload extends Component<MyProps> {
   render() {
     return (
       <input

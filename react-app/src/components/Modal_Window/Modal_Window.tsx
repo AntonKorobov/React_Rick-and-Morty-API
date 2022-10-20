@@ -1,7 +1,7 @@
 import React from 'react';
 import './ModalWindow.scss';
 
-export default function ModalWindow(props: {
+export function ModalWindow(props: {
   isVisible: boolean;
   className: string;
   children: JSX.Element;
