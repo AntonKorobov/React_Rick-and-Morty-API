@@ -16,15 +16,18 @@ export default class Card extends Component<Props, State> {
     isModalVisible: false,
   };
 
-  onChangeModal = () => {
+  onChangeModal = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // doesn't work
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
   render() {
     return (
-      <button className="card link" onClick={this.onChangeModal}>
+      <div className="card" onClick={this.onChangeModal}>
         <h2 className="card__name">{this.props.info.name}</h2>
-        <img className="card__img" src={this.props.info.image} alt="" />
+        <button className="card__modal-button button">
+          <img className="card__img" src={this.props.info.image} alt="" />
+        </button>
         {/* <div className="card__description"></div> */}
         <ModalWindow
           isVisible={this.state.isModalVisible}
@@ -50,7 +53,7 @@ export default class Card extends Component<Props, State> {
             </ul>
           </div>
         </ModalWindow>
-      </button>
+      </div>
     );
   }
 }

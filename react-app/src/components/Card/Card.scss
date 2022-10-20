@@ -6,7 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4%;
+  gap: 2rem 4%;
 }
 
 .card {
@@ -26,6 +26,11 @@
 .card__name {
   margin: 1rem 0;
 }
+
+.card__modal-button {
+  border: none;
+}
+
 .card__img {
   width: 100%;
 }
@@ -36,7 +41,7 @@
 
 @media (min-width: 768px) {
   .cards-wrapper {
-    gap: 4%;
+    gap: 2rem 4%;
   }
   .card {
     width: 30%;
@@ -45,7 +50,7 @@
 
 @media (min-width: 1024px) {
   .cards-wrapper {
-    gap: 4%;
+    gap: 2rem 4%;
   }
   .card {
     width: 22%;
