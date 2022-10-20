@@ -5,7 +5,7 @@ export function ModalWindow(props: {
   isVisible: boolean;
   className: string;
   children: JSX.Element;
-  onChangeModal: (event: React.MouseEvent<HTMLElement>) => void;
+  onChangeModal: () => void;
 }) {
   return props.isVisible ? (
     <div className={props.className + ' modal-window'} onClick={(event) => event.stopPropagation()}>
