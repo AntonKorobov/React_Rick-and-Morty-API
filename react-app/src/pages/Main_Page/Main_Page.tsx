@@ -1,126 +1,117 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from '../../components/Card/Card';
 import './MainPage.scss';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APICharacterInterface, APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 
-interface State {
-  searchBarInput: string;
-  characters: APISingleCharacterInterface[];
-  currentPage: number;
-  isLoaded: boolean;
-  isLoadingError: boolean;
-}
+export function MainPage() {
+  const [searchBarInput, setSearchBarInput] = useState('');
+  const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoadingError, setIsLoadingError] = useState(false);
 
-export default class MainPage extends Component {
-  state: State = {
-    searchBarInput: '',
-    characters: [],
-    currentPage: 1,
-    isLoaded: false,
-    isLoadingError: false,
-  };
+  const apiGetCharacter = async (name: string, page = 1) => {
+    setIsLoaded(false);
+    setIsLoadingError(false);
+    setCharacters([]);
 
-  apiGetCharacter = async (name: string, page = 1) => {
-    this.setState({ isLoaded: false, isLoadingError: false, characters: [] });
     try {
       const response = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`
       );
       if (response.status === 200) {
         const data: APICharacterInterface = await response.json();
-        this.setState({ characters: data.results, isLoadingError: false });
+        setCharacters(data.results);
+        setIsLoadingError(false);
         console.log(data);
       } else {
-        this.setState({ isLoaded: true, isLoadingError: true });
+        setIsLoaded(true);
+        setIsLoadingError(true);
       }
       setTimeout(() => {
-        this.setState({ isLoaded: true });
+        setIsLoaded(true);
       }, 1000);
     } catch (error) {
       console.log(error);
     }
   };
 
-  cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
+  const cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);
   };
 
-  nextPage = () => {
-    this.setState((prevState: State) => {
-      return { currentPage: prevState.currentPage + 1 };
-    });
-    this.onPageChange(this.state.currentPage + 1);
+  const nextPage = () => {
+    setCurrentPage((prevValue) => prevValue + 1);
+    onPageChange(currentPage + 1);
   };
 
-  prevPage = () => {
-    if (this.state.currentPage === 1) this.onPageChange(this.state.currentPage);
+  const prevPage = () => {
+    if (currentPage === 1) onPageChange(currentPage);
     else {
-      this.setState((prevState: State) => {
-        return { currentPage: prevState.currentPage - 1 };
-      });
-      this.onPageChange(this.state.currentPage - 1);
+      setCurrentPage((prevValue) => prevValue - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
-  onPageChange = async (pageNumber: number) => {
-    this.apiGetCharacter(this.state.searchBarInput, pageNumber);
+  const onPageChange = async (pageNumber: number) => {
+    apiGetCharacter(searchBarInput, pageNumber);
   };
 
-  handleChangeSearchBar = (event: { target: { name: string; value: string } }) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-    localStorage.setItem('searchBarInput', this.state.searchBarInput);
+  const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
+    setSearchBarInput(event.target.value);
+    localStorage.setItem('searchBarInput', searchBarInput);
   };
 
-  searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('searchBarInput', this.state.searchBarInput); //!!!
-    this.apiGetCharacter(this.state.searchBarInput);
+    localStorage.setItem('searchBarInput', searchBarInput);
+    apiGetCharacter(searchBarInput);
   };
 
-  async componentDidMount(): Promise<void> {
-    this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
-    this.apiGetCharacter(localStorage.getItem('searchBarInput') || '', this.state.currentPage);
-  }
+  // const async componentDidMount(): Promise<void> {
+  //   this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
+  //   this.apiGetCharacter(localStorage.getItem('searchBarInput') || '', this.state.currentPage);
+  // }
 
-  componentWillUnmount(): void {
-    localStorage.setItem('searchBarInput', this.state.searchBarInput);
-  }
+  // const componentWillUnmount(): void {
+  //   localStorage.setItem('searchBarInput', this.state.searchBarInput);
+  // }
 
-  render = () => {
-    return (
-      <section className="main-page" data-testid="main-page">
-        <h1 className="main-page_h1 h1">Main page</h1>
-        <div className="search-bar-wrapper">
-          <SearchBar
-            onSubmit={this.searchBarOnSubmit}
-            input={this.state.searchBarInput}
-            handleChange={this.handleChangeSearchBar}
-          />
-        </div>
-        <Pagination
-          currentPage={this.state.currentPage}
-          prevPage={this.prevPage}
-          nextPage={this.nextPage}
+  useEffect(() => {
+    setSearchBarInput(localStorage.getItem('searchBarInput') || '');
+    async function fetchData() {
+      await apiGetCharacter(localStorage.getItem('searchBarInput') || '', currentPage);
+    }
+    fetchData(); //useless?
+    return () => {
+      localStorage.setItem('searchBarInput', searchBarInput);
+    };
+  }, []);
+
+  return (
+    <section className="main-page" data-testid="main-page">
+      <h1 className="main-page_h1 h1">Main page</h1>
+      <div className="search-bar-wrapper">
+        <SearchBar
+          onSubmit={searchBarOnSubmit}
+          input={searchBarInput}
+          handleChange={handleChangeSearchBar}
         />
-        <div className="cards-wrapper">
-          {!this.state.isLoaded ? (
-            <div className="loading-message">{'Loading...'}</div>
-          ) : (
-            this.cardGenerator(this.state.characters)
-          )}
-          {this.state.isLoadingError && (
-            <div className="sorry-message">{`Sorry, we couldn't find any results :(`}</div>
-          )}
-        </div>
-        <Pagination
-          currentPage={this.state.currentPage}
-          prevPage={this.prevPage}
-          nextPage={this.nextPage}
-        />
-      </section>
-    );
-  };
+      </div>
+      <Pagination currentPage={currentPage} prevPage={prevPage} nextPage={nextPage} />
+      <div className="cards-wrapper">
+        {!isLoaded ? (
+          <div className="loading-message">{'Loading...'}</div>
+        ) : (
+          cardGenerator(characters)
+        )}
+        {isLoadingError && (
+          <div className="sorry-message">{`Sorry, we couldn't find any results :(`}</div>
+        )}
+      </div>
+      <Pagination currentPage={currentPage} prevPage={prevPage} nextPage={nextPage} />
+    </section>
+  );
 }
