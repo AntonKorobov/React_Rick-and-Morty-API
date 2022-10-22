@@ -70,25 +70,17 @@ export function MainPage() {
     apiGetCharacter(searchBarInput);
   };
 
-  // const async componentDidMount(): Promise<void> {
-  //   this.setState({ searchBarInput: localStorage.getItem('searchBarInput') || '' });
-  //   this.apiGetCharacter(localStorage.getItem('searchBarInput') || '', this.state.currentPage);
-  // }
-
-  // const componentWillUnmount(): void {
-  //   localStorage.setItem('searchBarInput', this.state.searchBarInput);
-  // }
+  useEffect(() => {
+    apiGetCharacter(localStorage.getItem('searchBarInput') || '', currentPage);
+  }, [currentPage]);
 
   useEffect(() => {
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
-    async function fetchData() {
-      await apiGetCharacter(localStorage.getItem('searchBarInput') || '', currentPage);
-    }
-    fetchData(); //useless?
-    return () => {
-      localStorage.setItem('searchBarInput', searchBarInput);
-    };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('searchBarInput', searchBarInput);
+  }, [searchBarInput]);
 
   return (
     <section className="main-page" data-testid="main-page">
