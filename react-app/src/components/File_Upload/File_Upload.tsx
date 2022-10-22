@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-type MyProps = {
+type FileUploadProps = {
   className: string;
   handleUpload: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-export class FileUpload extends Component<MyProps> {
-  render() {
-    return (
-      <input
-        className={this.props.className + '__input'}
-        type="file"
-        onChange={this.props.handleUpload}
-        accept="image/png, image/jpeg"
-      />
-    );
-  }
+export function FileUpload(props: FileUploadProps) {
+  return (
+    <input
+      className={props.className + '__input'}
+      type="file"
+      onChange={props.handleUpload}
+      accept="image/png, image/jpeg"
+    />
+  );
 }

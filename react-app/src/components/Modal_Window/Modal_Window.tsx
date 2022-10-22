@@ -1,12 +1,14 @@
 import React from 'react';
 import './ModalWindow.scss';
 
-export function ModalWindow(props: {
+interface ModalWindowProps {
   isVisible: boolean;
   className: string;
   children: JSX.Element;
   onChangeModal: () => void;
-}) {
+}
+
+export function ModalWindow(props: ModalWindowProps) {
   return props.isVisible ? (
     <div className={props.className + ' modal-window'} onClick={(event) => event.stopPropagation()}>
       <div className="modal-window__background" onClick={props.onChangeModal}></div>
