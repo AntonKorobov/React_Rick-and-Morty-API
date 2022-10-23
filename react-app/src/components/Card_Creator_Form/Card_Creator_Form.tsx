@@ -218,11 +218,8 @@ export class CardCreatorForm extends Component {
           Create character
         </button>
         <div className="cards-wrapper">
-          {this.state.cards.length !== 0 ? (
-            this.state.cards.map((element) => <Card key={element.id} info={element} />)
-          ) : (
-            <h2>Please submit form!</h2>
-          )}
+          {this.state.cards.length !== 0 &&
+            this.state.cards.map((element) => <Card key={element.id} info={element} />)}
         </div>
       </form>
     );

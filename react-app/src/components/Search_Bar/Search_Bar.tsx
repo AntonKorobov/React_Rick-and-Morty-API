@@ -17,6 +17,7 @@ export function SearchBar(props: SearchBarProps) {
         placeholder="Search....."
         name="searchBarInput"
         onChange={props.handleChange}
+        data-testid="search-bar"
       ></input>
       <button className="search-bar__submit-button" type="submit">
         <img className="search-bar__img" src="magnifying-glass-solid.svg" alt="search button" />

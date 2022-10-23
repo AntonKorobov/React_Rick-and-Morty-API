@@ -13,7 +13,7 @@ interface State {
   isLoadingError: boolean;
 }
 
-export default class MainPage extends Component {
+export class MainPage extends Component {
   state: State = {
     searchBarInput: '',
     characters: [],

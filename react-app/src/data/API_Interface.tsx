@@ -11,7 +11,7 @@ export interface APICharacterInterface {
 export interface APISingleCharacterInterface {
   id: number;
   name: string;
-  status: string; //switcher
+  status: string;
   species: string;
   type: string;
   gender: string;
