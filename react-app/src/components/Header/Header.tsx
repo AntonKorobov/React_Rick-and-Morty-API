@@ -13,6 +13,11 @@ export function Header() {
             </NavLink>
           </li>
           <li className="nav__item">
+            <NavLink className={'nav__link link'} to="/form">
+              Form
+            </NavLink>
+          </li>
+          <li className="nav__item">
             <NavLink className={'nav__link link'} to="/about_us">
               About us
             </NavLink>
