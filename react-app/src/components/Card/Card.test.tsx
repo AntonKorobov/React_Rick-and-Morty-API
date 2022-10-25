@@ -42,12 +42,6 @@ function myFetch() {
 
 global.fetch = myFetch as jest.Mock;
 
-// global.fetch = jest.fn(() =>
-//   Promise.resolve({
-//     json: () => Promise.resolve(testCharacter),
-//   })
-// ) as jest.Mock;
-
 describe('renders one card', () => {
   test('renders cards', async () => {
     const response = await fetch(`https://rickandmortyapi.com/api/character/?page=0`);
