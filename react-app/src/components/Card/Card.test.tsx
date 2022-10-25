@@ -34,16 +34,22 @@ const testCharacter: APICharacterInterface = {
   ],
 };
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
+function myFetch() {
+  return Promise.resolve({
     json: () => Promise.resolve(testCharacter),
-  })
-) as jest.Mock;
+  });
+}
+
+global.fetch = myFetch as jest.Mock;
+
+// global.fetch = jest.fn(() =>
+//   Promise.resolve({
+//     json: () => Promise.resolve(testCharacter),
+//   })
+// ) as jest.Mock;
 
 describe('renders one card', () => {
   test('renders cards', async () => {
-    //`https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`
-
     const response = await fetch(`https://rickandmortyapi.com/api/character/?page=0`);
     const data: APICharacterInterface = await response.json();
 

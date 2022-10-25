@@ -22,7 +22,7 @@ export class Card extends Component<Props, State> {
 
   render() {
     return (
-      <div className="card" onClick={this.onChangeModal}>
+      <div className="card" onClick={this.onChangeModal} data-testid="card">
         <h2 className="card__name">{this.props.info.name}</h2>
         <button className="card__modal-button button">
           <img className="card__img" src={this.props.info.image} alt="" />
