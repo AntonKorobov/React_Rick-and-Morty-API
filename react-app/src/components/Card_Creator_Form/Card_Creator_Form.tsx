@@ -1,5 +1,5 @@
 import { APISingleCharacterInterface } from '../../data/API_Interface';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Card } from '../Card/Card';
 import { FileUpload } from '../File_Upload/File_Upload';
 import './CardCreatorForm.scss';
@@ -13,8 +13,8 @@ interface ErrorsInterface {
 }
 
 interface State extends APISingleCharacterInterface {
-  cards: APISingleCharacterInterface[];
   file: string;
+  cards: APISingleCharacterInterface[];
   errors: ErrorsInterface;
   isSubmitActive: boolean;
   isSubmitDone: boolean;
@@ -49,30 +49,45 @@ const defaultErrorStatus: ErrorsInterface = {
   type: false,
 };
 
-export class CardCreatorForm extends Component {
-  state: State = {
-    file: '',
-    cards: [],
-    ...defaultFormValues,
-    errors: defaultErrorStatus,
-    isSubmitActive: false,
-    isSubmitDone: false,
-  };
+export function CardCreatorForm() {
+  // state: State = {
+  //   file: '',
+  //   cards: [],
+  //   ...defaultFormValues,
+  //   errors: defaultErrorStatus,
+  //   isSubmitActive: false,
+  //   isSubmitDone: false,
+  // };
 
-  handleChangeInput = (event: { target: { name: string; value: string } }) => {
+  const [file, setFile] = useState('');
+  const [cards, setCards] = useState<APISingleCharacterInterface[]>([]);
+  const [errors, setError] = useState<ErrorsInterface>(defaultErrorStatus);
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
+  const [isSubmitDone, setIsSubmitDone] = useState(false);
+  const [cardInformation, setCardInformation] =
+    useState<APISingleCharacterInterface>(defaultFormValues);
+
+  const handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
-    this.setState({ isSubmitActive: true });
-    this.setState({ errors: defaultErrorStatus });
+
+    // this.setState({ [name]: value });
+    setCardInformation((prevInfo: APISingleCharacterInterface) => {
+      const newInfo = Object.assign({}, prevInfo);
+      newInfo[name as keyof APISingleCharacterInterface] = value;
+      return { newInfo };
+    });
+    // { [name as keyof APISingleCharacterInterface]: value }
+    setIsSubmitActive(true);
+    setError(defaultErrorStatus);
   };
 
-  handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
     if (event.currentTarget.files !== null) {
       this.setState({ image: URL.createObjectURL(event.currentTarget.files[0]) });
     }
   };
 
-  validation = (): boolean => {
+  const validation = (): boolean => {
     let isValid = true;
 
     for (const key in defaultErrorStatus) {
@@ -94,7 +109,7 @@ export class CardCreatorForm extends Component {
     return isValid;
   };
 
-  onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (this.validation()) {
       this.setState({
@@ -124,104 +139,102 @@ export class CardCreatorForm extends Component {
     this.setState({ isSubmitActive: false });
   };
 
-  render() {
-    console.log(this.state);
+  console.log(this.state);
 
-    return (
-      <form className="card-creator-form" onSubmit={this.onSubmitHandler}>
-        <label className="card-creator-form__name input-element">
-          Name:
-          <input
-            type="text"
-            name="name"
-            className="input-element__input"
-            value={this.state.name}
-            placeholder={'Name...'}
-            onChange={this.handleChangeInput}
-          />
-          {this.state.errors.name && (
-            <ValidationMessage className="input-element" message="Incorrect value" />
-          )}
-        </label>
-        <label className="card-creator-form__status input-element">
-          Status:
-          <input
-            type="text"
-            name="status"
-            className="input-element__input"
-            value={this.state.status}
-            placeholder={'Status...'}
-            onChange={this.handleChangeInput}
-          />
-          {this.state.errors.status && (
-            <ValidationMessage className="input-element" message="Incorrect value" />
-          )}
-        </label>
-        <label className="card-creator-form__species input-element">
-          Species:
-          <input
-            type="text"
-            name="species"
-            className="input-element__input"
-            value={this.state.species}
-            placeholder={'Species...'}
-            onChange={this.handleChangeInput}
-          />
-          {this.state.errors.species && (
-            <ValidationMessage className="input-element" message="Incorrect value" />
-          )}
-        </label>
-        <label className="card-creator-form__type input-element">
-          Type:
-          <input
-            type="text"
-            name="type"
-            className="input-element__input"
-            value={this.state.type}
-            placeholder={'Type...'}
-            onChange={this.handleChangeInput}
-          />
-          {this.state.errors.type && (
-            <ValidationMessage className="input-element" message="Incorrect value" />
-          )}
-        </label>
-        <label className="card-creator-form__gender input-element">
-          Gender:
-          <select
-            name="gender"
-            className="input-element__select"
-            value={this.state.gender}
-            placeholder="Gender..."
-            onChange={this.handleChangeInput}
-          >
-            <option value="Unknown">Unknown</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </label>
-        <div className={'card-creator-form__file-upload file-upload'}>
-          <FileUpload className={'file-upload'} handleUpload={this.handleUpload} />
-          <img className={'file-upload__img'} src={this.state.image} alt={'character image'} />
-        </div>
-        {this.state.isSubmitDone && (
-          <ValidationMessage
-            className="input-element"
-            message="Card has been created!"
-            isPositive={true}
-          />
+  return (
+    <form className="card-creator-form" onSubmit={this.onSubmitHandler}>
+      <label className="card-creator-form__name input-element">
+        Name:
+        <input
+          type="text"
+          name="name"
+          className="input-element__input"
+          value={this.state.name}
+          placeholder={'Name...'}
+          onChange={this.handleChangeInput}
+        />
+        {this.state.errors.name && (
+          <ValidationMessage className="input-element" message="Incorrect value" />
         )}
-        <button
-          className="card-creator-form__submit-button"
-          type="submit"
-          disabled={!this.state.isSubmitActive}
+      </label>
+      <label className="card-creator-form__status input-element">
+        Status:
+        <input
+          type="text"
+          name="status"
+          className="input-element__input"
+          value={this.state.status}
+          placeholder={'Status...'}
+          onChange={this.handleChangeInput}
+        />
+        {this.state.errors.status && (
+          <ValidationMessage className="input-element" message="Incorrect value" />
+        )}
+      </label>
+      <label className="card-creator-form__species input-element">
+        Species:
+        <input
+          type="text"
+          name="species"
+          className="input-element__input"
+          value={this.state.species}
+          placeholder={'Species...'}
+          onChange={this.handleChangeInput}
+        />
+        {this.state.errors.species && (
+          <ValidationMessage className="input-element" message="Incorrect value" />
+        )}
+      </label>
+      <label className="card-creator-form__type input-element">
+        Type:
+        <input
+          type="text"
+          name="type"
+          className="input-element__input"
+          value={this.state.type}
+          placeholder={'Type...'}
+          onChange={this.handleChangeInput}
+        />
+        {this.state.errors.type && (
+          <ValidationMessage className="input-element" message="Incorrect value" />
+        )}
+      </label>
+      <label className="card-creator-form__gender input-element">
+        Gender:
+        <select
+          name="gender"
+          className="input-element__select"
+          value={this.state.gender}
+          placeholder="Gender..."
+          onChange={this.handleChangeInput}
         >
-          Create character
-        </button>
-        <div className="cards-wrapper">
-          {this.state.cards.length !== 0 &&
-            this.state.cards.map((element) => <Card key={element.id} info={element} />)}
-        </div>
-      </form>
-    );
-  }
+          <option value="Unknown">Unknown</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </label>
+      <div className={'card-creator-form__file-upload file-upload'}>
+        <FileUpload className={'file-upload'} handleUpload={this.handleUpload} />
+        <img className={'file-upload__img'} src={this.state.image} alt={'character image'} />
+      </div>
+      {this.state.isSubmitDone && (
+        <ValidationMessage
+          className="input-element"
+          message="Card has been created!"
+          isPositive={true}
+        />
+      )}
+      <button
+        className="card-creator-form__submit-button"
+        type="submit"
+        disabled={!this.state.isSubmitActive}
+      >
+        Create character
+      </button>
+      <div className="cards-wrapper">
+        {this.state.cards.length !== 0 &&
+          this.state.cards.map((element) => <Card key={element.id} info={element} />)}
+      </div>
+    </form>
+  );
 }
