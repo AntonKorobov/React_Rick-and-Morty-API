@@ -13,6 +13,15 @@ describe('Routing', () => {
     );
     expect(screen.getByTestId(/main-page/i)).toBeInTheDocument();
   });
+  test('renders forms-page', () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+    userEvent.click(screen.getByText(/form/i));
+    expect(screen.getByText(/forms page/i)).toBeInTheDocument();
+  });
   test('renders about-page', () => {
     render(
       <BrowserRouter>
