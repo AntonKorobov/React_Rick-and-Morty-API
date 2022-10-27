@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Card } from '../../components/Card/Card';
 import './MainPage.scss';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
-import { APICharacterInterface, APISingleCharacterInterface } from 'data/API_Interface';
+import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
+import { API } from 'api/API';
 
 export function MainPage() {
   const [searchBarInput, setSearchBarInput] = useState('');
@@ -12,30 +13,23 @@ export function MainPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const apiGetCharacter = async (name: string, page = 1) => {
+  const updateCards = async (name: string, page = 1) => {
     setIsLoaded(false);
     setIsLoadingError(false);
     setCharacters([]);
 
-    try {
-      const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`
-      );
-      if (response.status === 200) {
-        const data: APICharacterInterface = await response.json();
-        setCharacters(data.results);
-        setIsLoadingError(false);
-        console.log(data);
-      } else {
-        setIsLoaded(true);
-        setIsLoadingError(true);
-      }
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    } catch (error) {
-      console.log(error);
+    const data = await API.getCharacter(name, page);
+    if (data) {
+      setCharacters(data.results);
+      setIsLoadingError(false);
+      console.log(data);
+    } else {
+      setIsLoaded(true);
+      setIsLoadingError(true);
     }
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
   };
 
   const cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
@@ -56,7 +50,7 @@ export function MainPage() {
   };
 
   const onPageChange = async (pageNumber: number) => {
-    apiGetCharacter(searchBarInput, pageNumber);
+    updateCards(searchBarInput, pageNumber);
   };
 
   const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
@@ -67,11 +61,11 @@ export function MainPage() {
   const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('searchBarInput', searchBarInput);
-    apiGetCharacter(searchBarInput);
+    updateCards(searchBarInput);
   };
 
   useEffect(() => {
-    apiGetCharacter(localStorage.getItem('searchBarInput') || '', currentPage);
+    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
   }, [currentPage]);
 
   useEffect(() => {
