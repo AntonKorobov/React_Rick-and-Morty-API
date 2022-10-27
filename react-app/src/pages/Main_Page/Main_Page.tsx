@@ -22,7 +22,7 @@ export function MainPage() {
     if (data) {
       setCharacters(data.results);
       setIsLoadingError(false);
-      console.log(data);
+      console.log(data.results);
     } else {
       setIsLoaded(true);
       setIsLoadingError(true);
@@ -66,9 +66,6 @@ export function MainPage() {
 
   useEffect(() => {
     updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
-  }, [currentPage]);
-
-  useEffect(() => {
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
   }, []);
 
