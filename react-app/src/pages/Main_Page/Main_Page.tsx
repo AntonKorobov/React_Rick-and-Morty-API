@@ -13,6 +13,8 @@ export function MainPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
+  const startPage = 1;
+
   const updateCards = async (name: string, page = 1) => {
     setIsLoaded(false);
     setIsLoadingError(false);
@@ -65,7 +67,7 @@ export function MainPage() {
   };
 
   useEffect(() => {
-    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
+    updateCards(localStorage.getItem('searchBarInput') || '', startPage);
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
   }, []);
 
