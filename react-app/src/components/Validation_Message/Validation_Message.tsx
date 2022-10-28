@@ -18,6 +18,7 @@ export function ValidationMessage(
         ' validation-message ' +
         (props.isPositive ? 'validation-message_positive' : 'validation-message_negative')
       }
+      data-testid="validation-message"
     >
       {props.message}
     </div>

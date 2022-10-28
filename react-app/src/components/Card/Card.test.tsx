@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 import { APICharacterInterface } from 'data/API_Interface';
 import { API } from 'api/API';
+import userEvent from '@testing-library/user-event';
 
 const testCharacter: APICharacterInterface = {
   info: {
@@ -27,7 +28,7 @@ const testCharacter: APICharacterInterface = {
         name: '',
         url: '',
       },
-      image: '',
+      image: 'https://www.example.com/image-600.png',
       episode: ['', ''],
       url: '',
       created: '',
@@ -68,5 +69,12 @@ describe('renders one card', () => {
     const cardImg = screen.getByRole('img');
     expect(cardImg).toHaveAttribute('src');
     expect(cardImg).toHaveAttribute('alt');
+  });
+  test('modal window apers when img has clicked', async () => {
+    render(await renderCard());
+    const cardImg = screen.getByRole('img');
+    expect(screen.queryByTestId('modal-window')).not.toBeInTheDocument();
+    userEvent.click(cardImg);
+    expect(screen.getByTestId('modal-window')).toBeInTheDocument();
   });
 });

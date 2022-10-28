@@ -18,6 +18,12 @@ describe('Forms', () => {
     userEvent.click(screen.getByText('Create character'));
     expect(screen.queryByTestId('card')).not.toBeInTheDocument();
   });
+  test('shows validation message after submit form, if required inputs are empty', () => {
+    render(<Forms />);
+    userEvent.type(screen.getByLabelText('Name:'), 'name');
+    userEvent.click(screen.getByText('Create character'));
+    expect(screen.queryAllByTestId('validation-message').length).toBeGreaterThan(0);
+  });
   test('creates card after submit form, if all required inputs filled', () => {
     const name = 'name';
     const status = 'status';

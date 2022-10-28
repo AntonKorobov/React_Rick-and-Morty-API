@@ -10,7 +10,11 @@ interface ModalWindowProps {
 
 export function ModalWindow(props: ModalWindowProps) {
   return props.isVisible ? (
-    <div className={props.className + ' modal-window'} onClick={(event) => event.stopPropagation()}>
+    <div
+      className={props.className + ' modal-window'}
+      onClick={(event) => event.stopPropagation()}
+      data-testid="modal-window"
+    >
       <div className="modal-window__background" onClick={props.onChangeModal}></div>
       <div className="modal-window__body">
         <button
