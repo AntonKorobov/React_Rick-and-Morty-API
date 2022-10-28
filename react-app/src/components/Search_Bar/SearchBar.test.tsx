@@ -46,9 +46,9 @@ describe('SearchBar', () => {
     expect(screen.getByDisplayValue('')).toBeInTheDocument();
   });
   test('renders search input with value from local storage', () => {
-    render(<MainPage />);
+    const { rerender } = render(<MainPage />);
     userEvent.type(screen.getByTestId('search-bar'), 'test');
-    render(<MainPage />);
+    rerender(<MainPage />);
     expect(screen.getByDisplayValue('test')).toBeInTheDocument();
   });
 });
