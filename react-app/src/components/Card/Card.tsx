@@ -15,7 +15,7 @@ export function Card(props: CardProps) {
   };
 
   return (
-    <div className="card" onClick={onChangeModal}>
+    <div className="card" onClick={onChangeModal} data-testid="card">
       <h2 className="card__name">{props.info.name}</h2>
       <button className="card__modal-button button">
         <img className="card__img" src={props.info.image} alt="" />
