@@ -7,16 +7,24 @@ import { Routes, Route } from 'react-router-dom';
 import { MainPage } from 'pages/Main_Page/Main_Page';
 import { Forms } from 'pages/Form/Forms';
 import { GlobalStateContext, GlobalStateDefaultValues } from 'context/GlobalStateContext';
+import { APISingleCharacterInterface } from 'data/API_Interface';
 
 export function App() {
   const [searchBarInput, setSearchBarInput] = useState('');
+  const [cards, setCards] = useState<APISingleCharacterInterface[]>([]);
 
   return (
     <div className="app">
       <Header />
       <div className="container">
         <GlobalStateContext.Provider
-          value={{ ...GlobalStateDefaultValues, searchBarInput, setSearchBarInput }}
+          value={{
+            ...GlobalStateDefaultValues,
+            searchBarInput,
+            setSearchBarInput,
+            cards,
+            setCards,
+          }}
         >
           <Routes>
             <Route path="/" element={<MainPage />}></Route>

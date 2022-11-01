@@ -3,6 +3,7 @@ import { GlobalStateInterface } from 'data/GlobalStateInterface';
 
 export const GlobalStateDefaultValues: GlobalStateInterface = {
   cards: [],
+  setCards: () => {},
   currentPage: 0,
   searchBarInput: '',
   setSearchBarInput: () => {},

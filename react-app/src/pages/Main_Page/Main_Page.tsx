@@ -71,7 +71,7 @@ export function MainPage() {
   useEffect(() => {
     updateCards(localStorage.getItem('searchBarInput') || '', startPage);
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
-  }, []);
+  }, [setSearchBarInput]);
 
   useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);

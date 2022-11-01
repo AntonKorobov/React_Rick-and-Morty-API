@@ -4,6 +4,7 @@ import { Card } from '../Card/Card';
 import { FileUpload } from '../File_Upload/File_Upload';
 import './CardCreatorForm.scss';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
+import { useGlobalStateContext } from 'context/GlobalStateContext';
 
 interface ErrorsInterface {
   name: boolean;
@@ -42,12 +43,13 @@ const defaultErrorStatus: ErrorsInterface = {
 };
 
 export function CardCreatorForm() {
-  const [cards, setCards] = useState<APISingleCharacterInterface[]>([]);
   const [errors, setError] = useState<ErrorsInterface>(defaultErrorStatus);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
   const [isSubmitDone, setIsSubmitDone] = useState(false);
   const [cardInformation, setCardInformation] =
     useState<APISingleCharacterInterface>(defaultFormValues);
+
+  const { cards, setCards } = useGlobalStateContext();
 
   const handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
@@ -61,13 +63,6 @@ export function CardCreatorForm() {
   };
 
   const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
-    // if (event.currentTarget.files !== null) {
-    //   setCardInformation((prevState) => ({
-    //     ...prevState,
-    //     image: URL.createObjectURL(event.currentTarget.files[0]), //!!! object can be null
-    //   }));
-    // }
-
     setCardInformation((prevState) => {
       if (event.currentTarget.files !== null) {
         return {
@@ -102,21 +97,19 @@ export function CardCreatorForm() {
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validation()) {
-      setCards((prevValue) => {
-        return [
-          ...prevValue,
-          {
-            ...defaultFormValues,
-            name: cardInformation.name,
-            status: cardInformation.status,
-            species: cardInformation.species,
-            type: cardInformation.type,
-            gender: cardInformation.gender,
-            image: cardInformation.image,
-            id: cardInformation.id + 1,
-          },
-        ];
-      });
+      setCards([
+        ...cards,
+        {
+          ...defaultFormValues,
+          name: cardInformation.name,
+          status: cardInformation.status,
+          species: cardInformation.species,
+          type: cardInformation.type,
+          gender: cardInformation.gender,
+          image: cardInformation.image,
+          id: cards.length === 0 ? 0 : cards[cards.length - 1].id + 1,
+        },
+      ]);
       setCardInformation((prevState) => ({
         ...prevState,
         id: cardInformation.id + 1,
