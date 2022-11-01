@@ -17,13 +17,14 @@ export function MainPage() {
   const { searchBarInput, setSearchBarInput } = useGlobalStateContext();
   const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
   const { currentPage, setCurrentPage } = useGlobalStateContext();
+  const { filters } = useGlobalStateContext();
 
   const updateCards = async (name: string, page = currentPage) => {
     setIsLoaded(false);
     setIsLoadingError(false);
     setCharacters([]);
 
-    const data = await API.getCharacter(name, page);
+    const data = await API.getCharacter(name, page, filters.status, filters.gender);
     if (data) {
       setCharacters(data.results);
       setIsLoadingError(false);
