@@ -1,4 +1,4 @@
-import { APISingleCharacterInterface } from './API_Interface';
+import { APISingleCharacterInterface, FiltersInterface } from './API_Interface';
 
 export interface GlobalStateInterface {
   cards: APISingleCharacterInterface[];
@@ -10,4 +10,6 @@ export interface GlobalStateInterface {
   sortingType: string;
   maxPageNumber: number;
   setMaxPageNumber: (value: number) => void;
+  filters: FiltersInterface;
+  setFilters: (value: FiltersInterface) => void;
 }

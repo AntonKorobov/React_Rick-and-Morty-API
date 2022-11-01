@@ -11,6 +11,11 @@ export const GlobalStateDefaultValues: GlobalStateInterface = {
   sortingType: '',
   maxPageNumber: 1,
   setMaxPageNumber: () => {},
+  filters: {
+    status: '',
+    gender: '',
+  },
+  setFilters: () => {},
 };
 
 export const GlobalStateContext = createContext<GlobalStateInterface>(GlobalStateDefaultValues);

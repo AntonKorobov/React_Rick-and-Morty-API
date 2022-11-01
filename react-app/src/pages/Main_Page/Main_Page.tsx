@@ -6,7 +6,8 @@ import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { API } from 'api/API';
 import { useGlobalStateContext } from 'context/GlobalStateContext';
-import { PageSelector } from 'components/Page_selector/Page_Selector';
+import { PageSelector } from 'components/Page_Selector/Page_Selector';
+import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
 export function MainPage() {
   const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
@@ -96,6 +97,7 @@ export function MainPage() {
         nextPage={nextPage}
       />
       <PageSelector />
+      <SortingSelectors />
       <div className="cards-wrapper">
         {!isLoaded ? (
           <div className="loading-message">{'Loading...'}</div>

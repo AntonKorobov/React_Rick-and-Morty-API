@@ -16,9 +16,9 @@ const testCharacter: APICharacterInterface = {
     {
       id: 0,
       name: 'Test-name',
-      status: 'Test-status',
+      status: 'unknown',
       species: 'Test-species',
-      type: 'Test-type',
+      type: 'unknown',
       gender: 'Test-gender',
       origin: {
         name: '',
