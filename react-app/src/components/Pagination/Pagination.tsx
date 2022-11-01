@@ -3,6 +3,7 @@ import './Pagination.scss';
 
 interface Props {
   currentPage: number;
+  maxPageNumber: number;
   nextPage: () => void;
   prevPage: () => void;
 }
@@ -16,7 +17,9 @@ export function Pagination(props: Props) {
       >
         PREV
       </button>
-      <p className="pagination__page-number">{props.currentPage}</p>
+      <p className="pagination__page-number">
+        {props.currentPage}/{props.maxPageNumber}
+      </p>
       <button
         className="pagination__button pagination__button-right-button"
         onClick={props.nextPage}

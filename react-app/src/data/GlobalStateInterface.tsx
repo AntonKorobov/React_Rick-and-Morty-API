@@ -4,8 +4,10 @@ export interface GlobalStateInterface {
   cards: APISingleCharacterInterface[];
   setCards: ([]: APISingleCharacterInterface[]) => void;
   currentPage: number;
+  setCurrentPage: (value: number) => void;
   searchBarInput: string;
   setSearchBarInput: (value: string) => void;
   sortingType: string;
-  cardsOnPage: number;
+  maxPageNumber: number;
+  setMaxPageNumber: (value: number) => void;
 }

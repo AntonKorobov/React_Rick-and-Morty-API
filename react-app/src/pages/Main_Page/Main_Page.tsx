@@ -9,15 +9,14 @@ import { useGlobalStateContext } from 'context/GlobalStateContext';
 
 export function MainPage() {
   const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
   const { searchBarInput, setSearchBarInput } = useGlobalStateContext();
+  const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
+  const { currentPage, setCurrentPage } = useGlobalStateContext();
 
-  const startPage = 1;
-
-  const updateCards = async (name: string, page = 1) => {
+  const updateCards = async (name: string, page = currentPage) => {
     setIsLoaded(false);
     setIsLoadingError(false);
     setCharacters([]);
@@ -26,6 +25,7 @@ export function MainPage() {
     if (data) {
       setCharacters(data.results);
       setIsLoadingError(false);
+      setMaxPageNumber(data.info.pages);
       console.log(data.results);
     } else {
       setIsLoaded(true);
@@ -41,14 +41,15 @@ export function MainPage() {
   };
 
   const nextPage = () => {
-    setCurrentPage((prevValue) => prevValue + 1);
-    onPageChange(currentPage + 1);
+    if (currentPage < maxPageNumber) {
+      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
+    }
   };
 
   const prevPage = () => {
-    if (currentPage === 1) onPageChange(currentPage);
-    else {
-      setCurrentPage((prevValue) => prevValue - 1);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
       onPageChange(currentPage - 1);
     }
   };
@@ -69,9 +70,9 @@ export function MainPage() {
   };
 
   useEffect(() => {
-    updateCards(localStorage.getItem('searchBarInput') || '', startPage);
+    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
-  }, [setSearchBarInput]);
+  }, [currentPage, setSearchBarInput]);
 
   useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);
@@ -87,7 +88,12 @@ export function MainPage() {
           handleChange={handleChangeSearchBar}
         />
       </div>
-      <Pagination currentPage={currentPage} prevPage={prevPage} nextPage={nextPage} />
+      <Pagination
+        currentPage={currentPage}
+        maxPageNumber={maxPageNumber}
+        prevPage={prevPage}
+        nextPage={nextPage}
+      />
       <div className="cards-wrapper">
         {!isLoaded ? (
           <div className="loading-message">{'Loading...'}</div>
@@ -98,7 +104,6 @@ export function MainPage() {
           <div className="sorry-message">{`Sorry, we couldn't find any results :(`}</div>
         )}
       </div>
-      <Pagination currentPage={currentPage} prevPage={prevPage} nextPage={nextPage} />
     </section>
   );
 }

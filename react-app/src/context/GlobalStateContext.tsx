@@ -4,11 +4,13 @@ import { GlobalStateInterface } from 'data/GlobalStateInterface';
 export const GlobalStateDefaultValues: GlobalStateInterface = {
   cards: [],
   setCards: () => {},
-  currentPage: 0,
+  currentPage: 1,
+  setCurrentPage: () => {},
   searchBarInput: '',
   setSearchBarInput: () => {},
   sortingType: '',
-  cardsOnPage: 20,
+  maxPageNumber: 1,
+  setMaxPageNumber: () => {},
 };
 
 export const GlobalStateContext = createContext<GlobalStateInterface>(GlobalStateDefaultValues);
