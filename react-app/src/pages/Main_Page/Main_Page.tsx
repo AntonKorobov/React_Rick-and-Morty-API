@@ -5,13 +5,15 @@ import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { API } from 'api/API';
+import { useGlobalStateContext } from 'context/GlobalStateContext';
 
 export function MainPage() {
-  const [searchBarInput, setSearchBarInput] = useState('');
   const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
+
+  const { searchBarInput, setSearchBarInput } = useGlobalStateContext();
 
   const startPage = 1;
 
