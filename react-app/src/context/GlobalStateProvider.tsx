@@ -10,6 +10,7 @@ export default function GlobalStateProvider(props: { children: JSX.Element }) {
   const [searchBarInput, setSearchBarInput] = useState('');
   const [cards, setCards] = useState<APISingleCharacterInterface[]>([]);
   const [maxPageNumber, setMaxPageNumber] = useState(20);
+  const [cardsOnPage, setCardsOnPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     status: '' as CharacterStatusType,
@@ -26,6 +27,8 @@ export default function GlobalStateProvider(props: { children: JSX.Element }) {
         setCards,
         currentPage,
         setCurrentPage,
+        cardsOnPage,
+        setCardsOnPage,
         maxPageNumber,
         setMaxPageNumber,
         filters,

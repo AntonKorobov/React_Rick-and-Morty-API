@@ -5,6 +5,8 @@ export interface GlobalStateInterface {
   setCards: ([]: APISingleCharacterInterface[]) => void;
   currentPage: number;
   setCurrentPage: (value: number) => void;
+  cardsOnPage: number;
+  setCardsOnPage: (value: number) => void;
   searchBarInput: string;
   setSearchBarInput: (value: string) => void;
   sortingType: string;

@@ -1,0 +1,17 @@
+.page-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.current-page-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-page-input__select {
+  width: 5rem;
+  height: 4rem;
+  font-size: 2rem;
+}

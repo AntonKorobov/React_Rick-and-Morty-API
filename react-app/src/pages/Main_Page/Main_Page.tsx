@@ -18,6 +18,7 @@ export function MainPage() {
   const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
   const { currentPage, setCurrentPage } = useGlobalStateContext();
   const { filters } = useGlobalStateContext();
+  const { cardsOnPage, setCardsOnPage } = useGlobalStateContext();
 
   const updateCards = async (name: string, page = currentPage) => {
     setIsLoaded(false);
@@ -45,19 +46,24 @@ export function MainPage() {
 
   const nextPage = () => {
     if (currentPage < maxPageNumber) {
-      setCurrentPage(currentPage + 1);
-      onPageChange(currentPage + 1);
+      if (cardsOnPage === 20) {
+        setCurrentPage(currentPage + 1);
+        onPageChange(currentPage + 1);
+      }
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      onPageChange(currentPage - 1);
+      if (cardsOnPage === 20) {
+        setCurrentPage(currentPage - 1);
+        onPageChange(currentPage - 1);
+      }
     }
   };
 
   const onPageChange = async (pageNumber: number) => {
+    console.log(cardsOnPage);
     updateCards(searchBarInput, pageNumber);
   };
 
@@ -73,9 +79,9 @@ export function MainPage() {
   };
 
   useEffect(() => {
-    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
+    updateCards(localStorage.getItem('searchBarInput') || '', currentPage); //!!!
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
-  }, [currentPage, setSearchBarInput]);
+  }, [setSearchBarInput]); //!!!
 
   useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);
