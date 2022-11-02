@@ -6,16 +6,16 @@ import './CardInfo.scss';
 export function CardInfo() {
   const { characters } = useGlobalStateContext();
   const { currentCharacterIndex } = useGlobalStateContext();
-
+  const { setCurrentPath } = useGlobalStateContext();
   const navigate = useNavigate();
 
   useEffect(() => {
+    setCurrentPath('Card information');
     if (!characters[currentCharacterIndex]) navigate('/main_page'); //!!! could be useless
   }, [characters, currentCharacterIndex, navigate]);
 
   return (
     <section className="card_info">
-      <h1 className="card_info__h1 h1">Card information</h1>
       <div className="modal-window__information">
         <h2 className="modal-window__name">{characters[currentCharacterIndex].name}</h2>
         <img

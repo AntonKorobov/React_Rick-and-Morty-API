@@ -26,6 +26,8 @@ export const GlobalStateDefaultValues: GlobalStateInterface = {
     gender: '',
   },
   setFilters: () => {},
+  currentPath: '',
+  setCurrentPath: () => {},
 };
 
 export const GlobalStateContext = createContext<GlobalStateInterface>(GlobalStateDefaultValues);
@@ -90,6 +92,13 @@ export function GlobalStateProvider(props: { children: JSX.Element }) {
     });
   };
 
+  const setCurrentPath = (value: string) => {
+    dispatch({
+      type: ActionCommandType.setCurrentPath,
+      payload: value,
+    });
+  };
+
   return (
     <GlobalStateContext.Provider
       value={{
@@ -102,6 +111,7 @@ export function GlobalStateProvider(props: { children: JSX.Element }) {
         setCardsOnPage,
         setMaxPageNumber,
         setFilters,
+        setCurrentPath,
       }}
     >
       {props.children}

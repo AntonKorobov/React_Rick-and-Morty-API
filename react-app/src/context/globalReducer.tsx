@@ -10,6 +10,7 @@ export enum ActionCommandType { //!!! upper case?
   setMaxPageNumber = 'setMaxPageNumber',
   setFilters = 'setFilters',
   setCurrentCharacterIndex = 'setCurrentCharacterIndex',
+  setCurrentPath = 'setCurrentPath',
 }
 
 export type ActionType =
@@ -44,6 +45,10 @@ export type ActionType =
   | {
       type: ActionCommandType.setFilters;
       payload: FiltersInterface;
+    }
+  | {
+      type: ActionCommandType.setCurrentPath;
+      payload: string;
     };
 
 export function globalReducer(
@@ -97,6 +102,11 @@ export function globalReducer(
       return {
         ...state,
         filters: action.payload,
+      };
+    case ActionCommandType.setCurrentPath:
+      return {
+        ...state,
+        currentPath: action.payload,
       };
     default:
       return state;

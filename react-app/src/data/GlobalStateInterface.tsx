@@ -18,4 +18,6 @@ export interface GlobalStateInterface {
   setMaxPageNumber: (value: number) => void;
   filters: FiltersInterface;
   setFilters: (value: FiltersInterface) => void;
+  currentPath: string;
+  setCurrentPath: (value: string) => void;
 }
