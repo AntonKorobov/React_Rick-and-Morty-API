@@ -11,10 +11,10 @@ import { CardInfo } from 'pages/Card_Info/Card_Info';
 
 export function App() {
   return (
-    <div className="app">
-      <Header />
-      <div className="container">
-        <GlobalStateProvider>
+    <GlobalStateProvider>
+      <div className="app">
+        <Header />
+        <div className="container">
           <Routes>
             <Route path="/" element={<MainPage />}></Route>
             <Route path="/form" element={<Forms />}></Route>
@@ -22,8 +22,8 @@ export function App() {
             <Route path="/card_info" element={<CardInfo />}></Route>
             <Route path="*" element={<Page404 />} />
           </Routes>
-        </GlobalStateProvider>
+        </div>
       </div>
-    </div>
+    </GlobalStateProvider>
   );
 }

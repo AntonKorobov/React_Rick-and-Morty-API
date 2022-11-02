@@ -11,6 +11,10 @@ export function CardInfo() {
 
   useEffect(() => {
     setCurrentPath('Card information');
+    return () => setCurrentPath('');
+  }, []);
+
+  useEffect(() => {
     if (!characters[currentCharacterIndex]) navigate('/main_page'); //!!! could be useless
   }, [characters, currentCharacterIndex, navigate]);
 

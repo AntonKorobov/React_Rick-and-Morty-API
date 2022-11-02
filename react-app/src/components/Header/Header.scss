@@ -12,10 +12,11 @@
   list-style-type: none;
 }
 
+.nav__item .active {
+  text-decoration: underline;
+}
+
 .nav__link {
   text-decoration: none;
   color: $whiteTextColor;
-  &:active {
-    color: $backgroundColor;
-  }
 }

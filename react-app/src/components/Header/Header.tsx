@@ -5,14 +5,14 @@ import './Header.scss';
 
 export function Header() {
   const { currentPath } = useGlobalStateContext();
-  console.log('sd' + currentPath); //!!! Header renders ones
+  console.log('current path' + currentPath);
 
   return (
     <header className="header">
       <nav className="header-nav nav">
         <ul className="nav__list">
           <li className="nav__item">
-            <NavLink className={'nav__link link'} to="/">
+            <NavLink end className={'nav__link link'} to="/">
               Main page
             </NavLink>
           </li>
@@ -26,14 +26,12 @@ export function Header() {
               About us
             </NavLink>
           </li>
-          {currentPath ? (
+          {currentPath === 'Card information' && (
             <li className="nav__item">
               <NavLink className={'nav__link link'} to="/card_info">
                 {currentPath}
               </NavLink>
             </li>
-          ) : (
-            <h1>No</h1>
           )}
         </ul>
       </nav>
