@@ -69,7 +69,6 @@ export function globalReducer(
     case ActionCommandType.setCurrentCharacterIndex:
       let cardIndex = 0;
       for (let i = 0; i < state.characters.length; i++) {
-        console.log('tick');
         if (state.characters[i].id === action.payload) {
           cardIndex = i;
           break;

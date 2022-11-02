@@ -1,9 +1,17 @@
 import { useGlobalStateContext } from 'context/GlobalStateContext';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './CardInfo.scss';
 
 export function CardInfo() {
   const { characters } = useGlobalStateContext();
   const { currentCharacterIndex } = useGlobalStateContext();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!characters[currentCharacterIndex]) navigate('/main_page'); //!!! could be useless
+  }, [characters, currentCharacterIndex, navigate]);
 
   return (
     <section className="card_info">
@@ -30,6 +38,9 @@ export function CardInfo() {
           </li>
         </ul>
       </div>
+      <button className="go-back-button button" onClick={() => navigate(-1)}>
+        Go back
+      </button>
     </section>
   );
 }
