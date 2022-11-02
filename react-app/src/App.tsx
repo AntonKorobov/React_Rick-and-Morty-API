@@ -6,7 +6,7 @@ import { Page404 } from 'pages/Page_404/Page_404';
 import { Routes, Route } from 'react-router-dom';
 import { MainPage } from 'pages/Main_Page/Main_Page';
 import { Forms } from 'pages/Form/Forms';
-import GlobalStateProvider from 'context/GlobalStateProvider';
+import { GlobalStateProvider } from 'context/GlobalStateContext';
 
 export function App() {
   return (

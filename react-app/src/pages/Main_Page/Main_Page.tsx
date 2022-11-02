@@ -83,7 +83,7 @@ export function MainPage() {
   useEffect(() => {
     updateCards(localStorage.getItem('searchBarInput') || '', currentPage); //!!!
     setSearchBarInput(localStorage.getItem('searchBarInput') || '');
-  }, [setSearchBarInput]); //!!!
+  }, [currentPage]); //!!!
 
   useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);
