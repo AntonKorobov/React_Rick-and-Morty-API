@@ -3,6 +3,8 @@ import { APISingleCharacterInterface, FiltersInterface } from './API_Interface';
 export interface GlobalStateInterface {
   cards: APISingleCharacterInterface[];
   setCards: ([]: APISingleCharacterInterface[]) => void;
+  characters: APISingleCharacterInterface[];
+  setCharacters: ([]: APISingleCharacterInterface[]) => void;
   currentPage: number;
   setCurrentPage: (value: number) => void;
   cardsOnPage: number;

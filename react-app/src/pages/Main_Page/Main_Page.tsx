@@ -10,7 +10,6 @@ import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
 export function MainPage() {
-  const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
@@ -18,7 +17,8 @@ export function MainPage() {
   const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
   const { currentPage, setCurrentPage } = useGlobalStateContext();
   const { filters } = useGlobalStateContext();
-  const { cardsOnPage, setCardsOnPage } = useGlobalStateContext();
+  const { cardsOnPage } = useGlobalStateContext();
+  const { characters, setCharacters } = useGlobalStateContext();
 
   const updateCards = async (name: string, page = currentPage) => {
     setIsLoaded(false);
@@ -49,6 +49,9 @@ export function MainPage() {
       if (cardsOnPage === 20) {
         setCurrentPage(currentPage + 1);
         onPageChange(currentPage + 1);
+      } else {
+        // 1(20), 2(20), 3(20), 4(20) - 4 pages
+        // 1(10), 2(10), 3(10), 4(10), 5(10), 6(10), 7(10), 8(10) - 8 pages
       }
     }
   };
@@ -63,7 +66,6 @@ export function MainPage() {
   };
 
   const onPageChange = async (pageNumber: number) => {
-    console.log(cardsOnPage);
     updateCards(searchBarInput, pageNumber);
   };
 

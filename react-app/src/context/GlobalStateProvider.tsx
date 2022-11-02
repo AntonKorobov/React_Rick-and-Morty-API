@@ -9,6 +9,7 @@ import { GlobalStateContext, GlobalStateDefaultValues } from './GlobalStateConte
 export default function GlobalStateProvider(props: { children: JSX.Element }) {
   const [searchBarInput, setSearchBarInput] = useState('');
   const [cards, setCards] = useState<APISingleCharacterInterface[]>([]);
+  const [characters, setCharacters] = useState<APISingleCharacterInterface[]>([]);
   const [maxPageNumber, setMaxPageNumber] = useState(20);
   const [cardsOnPage, setCardsOnPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +26,8 @@ export default function GlobalStateProvider(props: { children: JSX.Element }) {
         setSearchBarInput,
         cards,
         setCards,
+        characters,
+        setCharacters,
         currentPage,
         setCurrentPage,
         cardsOnPage,

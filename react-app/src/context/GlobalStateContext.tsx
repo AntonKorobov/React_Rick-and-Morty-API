@@ -4,6 +4,8 @@ import { GlobalStateInterface } from 'data/GlobalStateInterface';
 export const GlobalStateDefaultValues: GlobalStateInterface = {
   cards: [],
   setCards: () => {},
+  characters: [],
+  setCharacters: () => {},
   currentPage: 0,
   setCurrentPage: () => {},
   cardsOnPage: 0,
