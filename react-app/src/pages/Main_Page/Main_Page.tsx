@@ -91,7 +91,7 @@ export function MainPage() {
 
   return (
     <section className="main-page" data-testid="main-page">
-      <h1 className="main-page_h1 h1">Main page</h1>
+      <h1 className="main-page__h1 h1">Main page</h1>
       <div className="search-bar-wrapper">
         <SearchBar
           onSubmit={searchBarOnSubmit}

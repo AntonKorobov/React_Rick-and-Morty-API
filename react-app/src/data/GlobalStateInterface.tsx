@@ -5,6 +5,8 @@ export interface GlobalStateInterface {
   setCards: (value: APISingleCharacterInterface[]) => void;
   characters: APISingleCharacterInterface[];
   setCharacters: (value: APISingleCharacterInterface[]) => void;
+  currentCharacterIndex: number;
+  setCurrentCharacterIndex: (value: number) => void;
   currentPage: number;
   setCurrentPage: (value: number) => void;
   cardsOnPage: number;

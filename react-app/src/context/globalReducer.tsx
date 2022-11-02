@@ -9,6 +9,7 @@ export enum ActionCommandType { //!!! upper case?
   setCardsOnPage = 'setCardsOnPage',
   setMaxPageNumber = 'setMaxPageNumber',
   setFilters = 'setFilters',
+  setCurrentCharacterIndex = 'setCurrentCharacterIndex',
 }
 
 export type ActionType =
@@ -23,6 +24,10 @@ export type ActionType =
   | {
       type: ActionCommandType.setCharacters;
       payload: APISingleCharacterInterface[];
+    }
+  | {
+      type: ActionCommandType.setCurrentCharacterIndex;
+      payload: number;
     }
   | {
       type: ActionCommandType.setCurrentPage;
@@ -60,6 +65,19 @@ export function globalReducer(
       return {
         ...state,
         characters: action.payload,
+      };
+    case ActionCommandType.setCurrentCharacterIndex:
+      let cardIndex = 0;
+      for (let i = 0; i < state.characters.length; i++) {
+        console.log('tick');
+        if (state.characters[i].id === action.payload) {
+          cardIndex = i;
+          break;
+        }
+      }
+      return {
+        ...state,
+        currentCharacterIndex: cardIndex,
       };
     case ActionCommandType.setCurrentPage:
       return {

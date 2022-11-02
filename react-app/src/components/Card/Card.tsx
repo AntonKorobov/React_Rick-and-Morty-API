@@ -1,45 +1,26 @@
-import { ModalWindow } from 'components/Modal_Window/Modal_Window';
 import { APISingleCharacterInterface } from 'data/API_Interface';
-import React, { useState } from 'react';
+import React from 'react';
 import './Card.scss';
+import { Link } from 'react-router-dom';
+import { useGlobalStateContext } from 'context/GlobalStateContext';
 
 interface CardProps {
   info: APISingleCharacterInterface;
 }
 
 export function Card(props: CardProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const onChangeModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
+  const { setCurrentCharacterIndex } = useGlobalStateContext();
 
   return (
-    <div className="card" onClick={onChangeModal} data-testid="card">
+    <div className="card" data-testid="card">
       <h2 className="card__name">{props.info.name}</h2>
-      <button className="card__modal-button button">
-        <img className="card__img" src={props.info.image} alt="" />
-      </button>
-      <ModalWindow isVisible={isModalVisible} className="card__modal" onChangeModal={onChangeModal}>
-        <div className="modal-window__information">
-          <h2 className="modal-window__name">{props.info.name}</h2>
-          <img className="modal-window__img" src={props.info.image} alt="" />
-          <ul className="modal-window__description">
-            <li className="modal-window__status">
-              <b>status:</b> {props.info.status}
-            </li>
-            <li className="modal-window__species">
-              <b>species:</b> {props.info.species}
-            </li>
-            <li className="modal-window__type">
-              <b>type:</b> {props.info.type}
-            </li>
-            <li className="modal-window__gender">
-              <b>gender:</b> {props.info.gender}
-            </li>
-          </ul>
-        </div>
-      </ModalWindow>
+      <Link
+        className={'nav__link link'}
+        to="/card_info"
+        onClick={() => setCurrentCharacterIndex(props.info.id)}
+      >
+        <img className="card__img" src={props.info.image} alt="show more button" />
+      </Link>
     </div>
   );
 }

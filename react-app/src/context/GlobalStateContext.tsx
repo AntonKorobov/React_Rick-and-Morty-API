@@ -10,6 +10,8 @@ export const GlobalStateDefaultValues: GlobalStateInterface = {
   setCards: () => {},
   characters: [],
   setCharacters: () => {},
+  currentCharacterIndex: 0,
+  setCurrentCharacterIndex: () => {},
   currentPage: 1,
   setCurrentPage: () => {},
   cardsOnPage: 20,
@@ -53,6 +55,13 @@ export function GlobalStateProvider(props: { children: JSX.Element }) {
     });
   };
 
+  const setCurrentCharacterIndex = (value: number) => {
+    dispatch({
+      type: ActionCommandType.setCurrentCharacterIndex,
+      payload: value,
+    });
+  };
+
   const setCurrentPage = (value: number) => {
     dispatch({
       type: ActionCommandType.setCurrentPage,
@@ -88,6 +97,7 @@ export function GlobalStateProvider(props: { children: JSX.Element }) {
         setSearchBarInput,
         setCards,
         setCharacters,
+        setCurrentCharacterIndex,
         setCurrentPage,
         setCardsOnPage,
         setMaxPageNumber,
