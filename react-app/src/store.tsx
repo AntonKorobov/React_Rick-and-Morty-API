@@ -1,8 +1,18 @@
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
 import { APISingleCharacterInterface, FiltersInterface } from 'data/API_Interface';
-import { GlobalStateInterface } from 'data/GlobalStateInterface';
 
-export const GlobalStateDefaultValues: GlobalStateInterface = {
+export interface GlobalStateInterface {
+  cards: APISingleCharacterInterface[];
+  characters: APISingleCharacterInterface[];
+  currentCharacterIndex: number;
+  currentPage: number;
+  searchBarInput: string;
+  maxPageNumber: number;
+  filters: FiltersInterface;
+  currentPath: string;
+}
+
+export const initialGlobalState: GlobalStateInterface = {
   cards: [],
   characters: [],
   currentCharacterIndex: 0,
@@ -19,7 +29,7 @@ export const GlobalStateDefaultValues: GlobalStateInterface = {
 
 const globalStateSlice = createSlice({
   name: 'globalState',
-  initialState: GlobalStateDefaultValues,
+  initialState: initialGlobalState,
   reducers: {
     setSearchBarInput: (state, action: PayloadAction<string, string>) => {
       return {

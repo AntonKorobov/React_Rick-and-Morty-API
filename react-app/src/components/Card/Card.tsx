@@ -2,7 +2,6 @@ import { APISingleCharacterInterface } from 'data/API_Interface';
 import React from 'react';
 import './Card.scss';
 import { Link } from 'react-router-dom';
-// import { useGlobalStateContext } from 'context/GlobalStateContext';
 import { useDispatch } from 'react-redux';
 import { setCurrentCharacterIndex } from '../../store';
 
@@ -12,7 +11,6 @@ interface CardProps {
 
 export function Card(props: CardProps) {
   const dispatch = useDispatch();
-  // const { setCurrentCharacterIndex } = useGlobalStateContext();
 
   return (
     <div className="card" data-testid="card">
