@@ -5,7 +5,7 @@ import './PageSelector.scss';
 export function PageSelector() {
   const { currentPage, setCurrentPage } = useGlobalStateContext();
   const { maxPageNumber } = useGlobalStateContext();
-  const { cardsOnPage, setCardsOnPage } = useGlobalStateContext();
+  // const { cardsOnPage, setCardsOnPage } = useGlobalStateContext();
 
   return (
     <div className="page-selector">
@@ -28,7 +28,7 @@ export function PageSelector() {
           })}
         </select>
       </label>
-      <label className="current-page-input input-element">
+      {/* <label className="current-page-input input-element">
         Cards on page:
         <select
           name="cards-on-page"
@@ -54,7 +54,7 @@ export function PageSelector() {
             {1}
           </option>
         </select>
-      </label>
+      </label> */}
     </div>
   );
 }
