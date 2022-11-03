@@ -61,19 +61,13 @@ export function MainPage() {
   const nextPage = () => {
     if (currentPage < maxPageNumber) {
       dispatch(setCurrentPage(currentPage + 1));
-      onPageChange(currentPage + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       dispatch(setCurrentPage(currentPage - 1));
-      onPageChange(currentPage - 1);
     }
-  };
-
-  const onPageChange = async (pageNumber: number) => {
-    updateCards(searchBarInput, pageNumber);
   };
 
   const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
@@ -88,13 +82,16 @@ export function MainPage() {
   };
 
   useEffect(() => {
-    updateCards(localStorage.getItem('searchBarInput') || '', currentPage); //!!!
     dispatch(setSearchBarInput(localStorage.getItem('searchBarInput') || ''));
-  }, [currentPage]); //!!!
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);
   }, [searchBarInput]);
+
+  useEffect(() => {
+    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
+  }, [currentPage]);
 
   return (
     <section className="main-page" data-testid="main-page">
