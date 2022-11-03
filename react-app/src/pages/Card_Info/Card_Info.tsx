@@ -1,4 +1,3 @@
-import { useGlobalStateContext } from 'context/GlobalStateContext';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CardInfo.scss';
@@ -8,20 +7,20 @@ import { useSelector, useDispatch } from 'react-redux';
 export function CardInfo() {
   const dispatch = useDispatch();
   const currentCharacterIndex = useSelector((state: RootState) => state.currentCharacterIndex);
+  const characters = useSelector((state: RootState) => state.characters);
 
-  const { characters } = useGlobalStateContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    //!!!!
     dispatch(setCurrentPath('Card information'));
-    return () => dispatch(setCurrentPath(''));
+    return () => {
+      dispatch(setCurrentPath(''));
+    };
   }, []);
 
   useEffect(() => {
     if (!characters[currentCharacterIndex]) navigate('/main_page'); //!!! could be useless
   }, [characters, currentCharacterIndex, navigate]);
-  console.log(currentCharacterIndex);
 
   return (
     <section className="card_info">
