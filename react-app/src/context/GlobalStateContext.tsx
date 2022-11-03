@@ -24,6 +24,7 @@ export const GlobalStateDefaultValues: GlobalStateInterface = {
   filters: {
     status: '',
     gender: '',
+    species: '',
   },
   setFilters: () => {},
   currentPath: '',

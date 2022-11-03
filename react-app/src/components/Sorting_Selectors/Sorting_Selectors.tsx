@@ -7,6 +7,8 @@ import {
   CharacterGender,
   CharacterStatusType,
   CharacterGenderType,
+  CharacterSpeciesType,
+  CharacterSpecies,
 } from '../../data/API_Interface';
 
 export default function SortingSelectors() {
@@ -59,6 +61,27 @@ export default function SortingSelectors() {
           </option>
           <option className="input-element__option" value={CharacterGender.unknown}>
             {CharacterGender.unknown}
+          </option>
+        </select>
+      </label>
+      <label className="sorting-selectors__species input-element">
+        Species:
+        <select
+          name="character-species"
+          className="input-element__select current-page-input__select"
+          value={filters.species}
+          onChange={(event: { target: { name: string; value: string } }) =>
+            setFilters({ ...filters, species: event.target.value as CharacterSpeciesType })
+          }
+        >
+          <option className="input-element__option" value={''}>
+            {''}
+          </option>
+          <option className="input-element__option" value={CharacterSpecies.human}>
+            {CharacterSpecies.human}
+          </option>
+          <option className="input-element__option" value={CharacterSpecies.alien}>
+            {CharacterSpecies.alien}
           </option>
         </select>
       </label>

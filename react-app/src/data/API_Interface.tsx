@@ -31,6 +31,7 @@ export interface APISingleCharacterInterface {
 
 export type CharacterStatusType = 'alive' | 'dead' | 'unknown' | '';
 export type CharacterGenderType = 'male' | 'female' | 'unknown' | '';
+export type CharacterSpeciesType = 'Human' | 'Alien' | '';
 
 export const CharacterStatus: { [key: string]: CharacterStatusType } = {
   alive: 'alive',
@@ -44,7 +45,13 @@ export const CharacterGender: { [key: string]: CharacterGenderType } = {
   unknown: 'unknown',
 };
 
+export const CharacterSpecies: { [key: string]: CharacterSpeciesType } = {
+  human: 'Human',
+  alien: 'Alien',
+};
+
 export interface FiltersInterface {
   status: CharacterStatusType;
   gender: CharacterGenderType;
+  species: CharacterSpeciesType;
 }

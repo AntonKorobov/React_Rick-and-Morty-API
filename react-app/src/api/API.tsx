@@ -5,11 +5,12 @@ export class API {
     name: string,
     page: number,
     status = '',
-    gender = ''
+    gender = '',
+    species = ''
   ): Promise<APICharacterInterface | undefined> {
     try {
       const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}&status=${status}&gender=${gender}`
+        `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}&status=${status}&gender=${gender}&species=${species}`
       );
       if (response.status === 200) {
         const data: APICharacterInterface = await response.json();

@@ -25,7 +25,13 @@ export function MainPage() {
     setIsLoadingError(false);
     setCharacters([]);
 
-    const data = await API.getCharacter(name, page, filters.status, filters.gender);
+    const data = await API.getCharacter(
+      name,
+      page,
+      filters.status,
+      filters.gender,
+      filters.species
+    );
     if (data) {
       setCharacters(data.results);
       setIsLoadingError(false);
