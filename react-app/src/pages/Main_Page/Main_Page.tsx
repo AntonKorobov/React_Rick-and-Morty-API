@@ -5,30 +5,33 @@ import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { API } from 'api/API';
-import { useGlobalStateContext } from 'context/GlobalStateContext';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, setSearchBarInput } from '../../store';
+import {
+  RootState,
+  setSearchBarInput,
+  setCurrentPage,
+  setMaxPageNumber,
+  setCharacters,
+} from '../../store';
 
 export function MainPage() {
-  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
   const dispatch = useDispatch();
+  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
+  const currentPage = useSelector((state: RootState) => state.currentPage);
+  const maxPageNumber = useSelector((state: RootState) => state.maxPageNumber);
+  const characters = useSelector((state: RootState) => state.characters);
+  const filters = useSelector((state: RootState) => state.filters);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
-  const { currentPage, setCurrentPage } = useGlobalStateContext();
-  const { filters } = useGlobalStateContext();
-  const { cardsOnPage } = useGlobalStateContext();
-  const { characters, setCharacters } = useGlobalStateContext();
-
   const updateCards = async (name: string, page = currentPage) => {
     setIsLoaded(false);
     setIsLoadingError(false);
-    setCharacters([]);
+    dispatch(setCharacters([]));
 
     const data = await API.getCharacter(
       name,
@@ -38,9 +41,9 @@ export function MainPage() {
       filters.species
     );
     if (data) {
-      setCharacters(data.results);
+      dispatch(setCharacters(data.results));
       setIsLoadingError(false);
-      setMaxPageNumber(data.info.pages);
+      dispatch(setMaxPageNumber(data.info.pages));
       console.log(data.results);
     } else {
       setIsLoaded(true);
@@ -57,22 +60,15 @@ export function MainPage() {
 
   const nextPage = () => {
     if (currentPage < maxPageNumber) {
-      if (cardsOnPage === 20) {
-        setCurrentPage(currentPage + 1);
-        onPageChange(currentPage + 1);
-      } else {
-        // 1(20), 2(20), 3(20), 4(20) - 4 pages
-        // 1(10), 2(10), 3(10), 4(10), 5(10), 6(10), 7(10), 8(10) - 8 pages
-      }
+      dispatch(setCurrentPage(currentPage + 1));
+      onPageChange(currentPage + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      if (cardsOnPage === 20) {
-        setCurrentPage(currentPage - 1);
-        onPageChange(currentPage - 1);
-      }
+      dispatch(setCurrentPage(currentPage - 1));
+      onPageChange(currentPage - 1);
     }
   };
 
@@ -83,8 +79,6 @@ export function MainPage() {
   const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
     dispatch(setSearchBarInput(event.target.value));
     localStorage.setItem('searchBarInput', searchBarInput);
-
-    console.log(searchBarInput);
   };
 
   const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

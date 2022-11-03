@@ -4,7 +4,8 @@ import { Card } from '../Card/Card';
 import { FileUpload } from '../File_Upload/File_Upload';
 import './CardCreatorForm.scss';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
-import { useGlobalStateContext } from 'context/GlobalStateContext';
+import { RootState, setCards } from 'store';
+import { useSelector, useDispatch } from 'react-redux';
 
 interface ErrorsInterface {
   name: boolean;
@@ -50,7 +51,8 @@ export function CardCreatorForm() {
     useState<APISingleCharacterInterface>(defaultFormValues);
   const [imageFile, setImageFile] = useState('');
 
-  const { cards, setCards } = useGlobalStateContext();
+  const cards = useSelector((state: RootState) => state.cards);
+  const dispatch = useDispatch();
 
   const handleChangeInput = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
@@ -102,19 +104,21 @@ export function CardCreatorForm() {
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validation()) {
-      setCards([
-        ...cards,
-        {
-          ...defaultFormValues,
-          name: cardInformation.name,
-          status: cardInformation.status,
-          species: cardInformation.species,
-          type: cardInformation.type,
-          gender: cardInformation.gender,
-          image: imageFile,
-          id: cards.length === 0 ? 0 : cards[cards.length - 1].id + 1,
-        },
-      ]);
+      dispatch(
+        setCards([
+          ...cards,
+          {
+            ...defaultFormValues,
+            name: cardInformation.name,
+            status: cardInformation.status,
+            species: cardInformation.species,
+            type: cardInformation.type,
+            gender: cardInformation.gender,
+            image: imageFile,
+            id: cards.length === 0 ? 0 : cards[cards.length - 1].id + 1,
+          },
+        ])
+      );
       setCardInformation((prevState) => ({
         ...prevState,
         id: cardInformation.id + 1,

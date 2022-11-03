@@ -1,10 +1,11 @@
-import { useGlobalStateContext } from 'context/GlobalStateContext';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { RootState } from 'store';
 import './Header.scss';
 
 export function Header() {
-  const { currentPath } = useGlobalStateContext();
+  const currentPath = useSelector((state: RootState) => state.currentPath);
 
   return (
     <header className="header">

@@ -1,9 +1,12 @@
 import { useGlobalStateContext } from 'context/GlobalStateContext';
 import React from 'react';
 import './PageSelector.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, setCurrentPage } from '../../store';
 
 export function PageSelector() {
-  const { currentPage, setCurrentPage } = useGlobalStateContext();
+  const currentPage = useSelector((state: RootState) => state.currentPage);
+  const dispatch = useDispatch();
   const { maxPageNumber } = useGlobalStateContext();
   // const { cardsOnPage, setCardsOnPage } = useGlobalStateContext();
 
@@ -16,7 +19,7 @@ export function PageSelector() {
           className="input-element__select current-page-input__select"
           value={currentPage}
           onChange={(event: { target: { name: string; value: string } }) =>
-            setCurrentPage(Number(event.target.value))
+            dispatch(setCurrentPage(Number(event.target.value)))
           }
         >
           {[...Array(maxPageNumber).keys()].map((value, index) => {

@@ -2,14 +2,17 @@ import { APISingleCharacterInterface } from 'data/API_Interface';
 import React from 'react';
 import './Card.scss';
 import { Link } from 'react-router-dom';
-import { useGlobalStateContext } from 'context/GlobalStateContext';
+// import { useGlobalStateContext } from 'context/GlobalStateContext';
+import { useDispatch } from 'react-redux';
+import { setCurrentCharacterIndex } from '../../store';
 
 interface CardProps {
   info: APISingleCharacterInterface;
 }
 
 export function Card(props: CardProps) {
-  const { setCurrentCharacterIndex } = useGlobalStateContext();
+  const dispatch = useDispatch();
+  // const { setCurrentCharacterIndex } = useGlobalStateContext();
 
   return (
     <div className="card" data-testid="card">
@@ -17,7 +20,7 @@ export function Card(props: CardProps) {
       <Link
         className={'nav__link link'}
         to="/card_info"
-        onClick={() => setCurrentCharacterIndex(props.info.id)}
+        onClick={() => dispatch(setCurrentCharacterIndex(props.info.id))}
       >
         <img className="card__img" src={props.info.image} alt="show more button" />
       </Link>
