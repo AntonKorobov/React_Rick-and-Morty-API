@@ -5,7 +5,6 @@ import './Header.scss';
 
 export function Header() {
   const { currentPath } = useGlobalStateContext();
-  console.log('current path' + currentPath);
 
   return (
     <header className="header">

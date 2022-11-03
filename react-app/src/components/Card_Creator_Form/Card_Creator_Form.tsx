@@ -48,6 +48,7 @@ export function CardCreatorForm() {
   const [isSubmitDone, setIsSubmitDone] = useState(false);
   const [cardInformation, setCardInformation] =
     useState<APISingleCharacterInterface>(defaultFormValues);
+  const [imageFile, setImageFile] = useState('');
 
   const { cards, setCards } = useGlobalStateContext();
 
@@ -63,15 +64,19 @@ export function CardCreatorForm() {
   };
 
   const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
-    setCardInformation((prevState) => {
-      if (event.currentTarget.files !== null) {
-        return {
-          ...prevState,
-          image: URL.createObjectURL(event.currentTarget.files[0]),
-        };
-      }
-      return prevState;
-    });
+    console.log(event.currentTarget.files);
+    // setCardInformation((prevState) => { //!!! file disappeared after if check
+    //   if (event.currentTarget.files) {
+    //     return {
+    //       ...prevState,
+    //       image: URL.createObjectURL(event.currentTarget.files[0]),
+    //     };
+    //   }
+    //   return prevState;
+    // });
+    if (event.currentTarget.files) {
+      setImageFile(URL.createObjectURL(event.currentTarget.files[0]));
+    }
   };
 
   const validation = (): boolean => {
@@ -106,7 +111,7 @@ export function CardCreatorForm() {
           species: cardInformation.species,
           type: cardInformation.type,
           gender: cardInformation.gender,
-          image: cardInformation.image,
+          image: imageFile,
           id: cards.length === 0 ? 0 : cards[cards.length - 1].id + 1,
         },
       ]);
