@@ -9,11 +9,16 @@ import { useGlobalStateContext } from 'context/GlobalStateContext';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, setSearchBarInput } from '../../store';
+
 export function MainPage() {
+  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
+  const dispatch = useDispatch();
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const { searchBarInput, setSearchBarInput } = useGlobalStateContext();
   const { maxPageNumber, setMaxPageNumber } = useGlobalStateContext();
   const { currentPage, setCurrentPage } = useGlobalStateContext();
   const { filters } = useGlobalStateContext();
@@ -76,8 +81,10 @@ export function MainPage() {
   };
 
   const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
-    setSearchBarInput(event.target.value);
+    dispatch(setSearchBarInput(event.target.value));
     localStorage.setItem('searchBarInput', searchBarInput);
+
+    console.log(searchBarInput);
   };
 
   const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -88,7 +95,7 @@ export function MainPage() {
 
   useEffect(() => {
     updateCards(localStorage.getItem('searchBarInput') || '', currentPage); //!!!
-    setSearchBarInput(localStorage.getItem('searchBarInput') || '');
+    dispatch(setSearchBarInput(localStorage.getItem('searchBarInput') || ''));
   }, [currentPage]); //!!!
 
   useEffect(() => {
