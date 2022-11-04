@@ -1,5 +1,5 @@
 import './MainPage.scss';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Card } from '../../components/Card/Card';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
@@ -56,26 +56,13 @@ export function MainPage() {
   };
 
   useEffect(() => {
-    dispatch(setSearchBarInput(localStorage.getItem('searchBarInput') || ''));
-    dispatch(
-      getCharacter({
-        name: localStorage.getItem('searchBarInput') || '',
-        page: 1,
-        status: '',
-        gender: '',
-        species: '',
-      })
-    );
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem('searchBarInput', searchBarInput);
   }, [searchBarInput]);
 
   useEffect(() => {
     dispatch(
       getCharacter({
-        name: localStorage.getItem('searchBarInput') || '',
+        name: searchBarInput,
         page: currentPage,
         status: filters.status,
         gender: filters.gender,
