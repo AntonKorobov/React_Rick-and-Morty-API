@@ -1,4 +1,5 @@
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
+import { getCharacter } from 'api/API';
 import { APISingleCharacterInterface, FiltersInterface } from 'data/API_Interface';
 
 export interface GlobalStateInterface {
@@ -102,6 +103,37 @@ const globalStateSlice = createSlice({
         isLoadingError: action.payload,
       };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCharacter.pending, (state) => {
+        return {
+          ...state,
+          isLoading: true,
+          isLoadingError: false,
+          characters: [],
+        };
+      })
+      .addCase(getCharacter.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            characters: action.payload.results,
+            isLoading: false,
+            isLoadingError: false,
+            maxPageNumber: action.payload.info.pages,
+          };
+        }
+      })
+      .addCase(getCharacter.rejected, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            isLoading: false,
+            isLoadingError: true,
+          };
+        }
+      });
   },
 });
 

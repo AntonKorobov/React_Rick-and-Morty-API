@@ -1,23 +1,15 @@
 import './MainPage.scss';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Card } from '../../components/Card/Card';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
-import { API } from 'api/API';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  RootState,
-  setSearchBarInput,
-  setCurrentPage,
-  setMaxPageNumber,
-  setCharacters,
-  setIsLoading,
-  setIsLoadingError,
-} from '../../store';
+import { RootState, setSearchBarInput, setCurrentPage } from '../../store';
+import { getCharacter } from 'api/API';
 
 export function MainPage() {
   const dispatch = useDispatch();
@@ -28,32 +20,6 @@ export function MainPage() {
   const filters = useSelector((state: RootState) => state.filters);
   const isLoading = useSelector((state: RootState) => state.isLoading);
   const isLoadingError = useSelector((state: RootState) => state.isLoadingError);
-
-  const updateCards = async (name: string, page = currentPage) => {
-    dispatch(setIsLoading(true));
-    dispatch(setIsLoadingError(false));
-    dispatch(setCharacters([]));
-
-    const data = await API.getCharacter(
-      name,
-      page,
-      filters.status,
-      filters.gender,
-      filters.species
-    );
-    if (data) {
-      dispatch(setCharacters(data.results));
-      dispatch(setIsLoadingError(false));
-      dispatch(setMaxPageNumber(data.info.pages));
-      console.log(data.results);
-    } else {
-      dispatch(setIsLoading(false));
-      dispatch(setIsLoadingError(true));
-    }
-    setTimeout(() => {
-      dispatch(setIsLoading(false));
-    }, 1000);
-  };
 
   const cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);
@@ -78,12 +44,28 @@ export function MainPage() {
 
   const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('searchBarInput', searchBarInput);
-    updateCards(searchBarInput);
+    dispatch(
+      getCharacter({
+        name: searchBarInput,
+        page: currentPage,
+        status: filters.status,
+        gender: filters.gender,
+        species: filters.species,
+      })
+    );
   };
 
   useEffect(() => {
     dispatch(setSearchBarInput(localStorage.getItem('searchBarInput') || ''));
+    dispatch(
+      getCharacter({
+        name: localStorage.getItem('searchBarInput') || '',
+        page: 1,
+        status: '',
+        gender: '',
+        species: '',
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -91,7 +73,15 @@ export function MainPage() {
   }, [searchBarInput]);
 
   useEffect(() => {
-    updateCards(localStorage.getItem('searchBarInput') || '', currentPage);
+    dispatch(
+      getCharacter({
+        name: localStorage.getItem('searchBarInput') || '',
+        page: currentPage,
+        status: filters.status,
+        gender: filters.gender,
+        species: filters.species,
+      })
+    );
   }, [currentPage]);
 
   return (
