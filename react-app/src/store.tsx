@@ -10,6 +10,8 @@ export interface GlobalStateInterface {
   maxPageNumber: number;
   filters: FiltersInterface;
   currentPath: string;
+  isLoading: boolean;
+  isLoadingError: boolean;
 }
 
 export const initialGlobalState: GlobalStateInterface = {
@@ -25,6 +27,8 @@ export const initialGlobalState: GlobalStateInterface = {
     species: '',
   },
   currentPath: '',
+  isLoading: true,
+  isLoadingError: false,
 };
 
 const globalStateSlice = createSlice({
@@ -86,6 +90,18 @@ const globalStateSlice = createSlice({
         filters: action.payload,
       };
     },
+    setIsLoading: (state, action: PayloadAction<boolean, string>) => {
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    },
+    setIsLoadingError: (state, action: PayloadAction<boolean, string>) => {
+      return {
+        ...state,
+        isLoadingError: action.payload,
+      };
+    },
   },
 });
 
@@ -98,6 +114,8 @@ export const {
   setCharacters,
   setCurrentPath,
   setFilters,
+  setIsLoading,
+  setIsLoadingError,
 } = globalStateSlice.actions;
 
 export const store = configureStore({

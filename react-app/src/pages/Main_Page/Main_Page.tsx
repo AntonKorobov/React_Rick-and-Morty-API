@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from '../../components/Card/Card';
 import './MainPage.scss';
+import React, { useEffect } from 'react';
+import { Card } from '../../components/Card/Card';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
@@ -15,6 +15,8 @@ import {
   setCurrentPage,
   setMaxPageNumber,
   setCharacters,
+  setIsLoading,
+  setIsLoadingError,
 } from '../../store';
 
 export function MainPage() {
@@ -24,13 +26,12 @@ export function MainPage() {
   const maxPageNumber = useSelector((state: RootState) => state.maxPageNumber);
   const characters = useSelector((state: RootState) => state.characters);
   const filters = useSelector((state: RootState) => state.filters);
-
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLoadingError, setIsLoadingError] = useState(false);
+  const isLoading = useSelector((state: RootState) => state.isLoading);
+  const isLoadingError = useSelector((state: RootState) => state.isLoadingError);
 
   const updateCards = async (name: string, page = currentPage) => {
-    setIsLoaded(false);
-    setIsLoadingError(false);
+    dispatch(setIsLoading(true));
+    dispatch(setIsLoadingError(false));
     dispatch(setCharacters([]));
 
     const data = await API.getCharacter(
@@ -42,15 +43,15 @@ export function MainPage() {
     );
     if (data) {
       dispatch(setCharacters(data.results));
-      setIsLoadingError(false);
+      dispatch(setIsLoadingError(false));
       dispatch(setMaxPageNumber(data.info.pages));
       console.log(data.results);
     } else {
-      setIsLoaded(true);
-      setIsLoadingError(true);
+      dispatch(setIsLoading(false));
+      dispatch(setIsLoadingError(true));
     }
     setTimeout(() => {
-      setIsLoaded(true);
+      dispatch(setIsLoading(false));
     }, 1000);
   };
 
@@ -112,7 +113,7 @@ export function MainPage() {
       <PageSelector />
       <SortingSelectors />
       <div className="cards-wrapper">
-        {!isLoaded ? (
+        {isLoading ? (
           <div className="loading-message">{'Loading...'}</div>
         ) : (
           cardGenerator(characters)
