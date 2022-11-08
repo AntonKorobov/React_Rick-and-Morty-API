@@ -8,11 +8,11 @@ import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, setSearchBarInput, setCurrentPage } from '../../store';
+import { RootState, setSearchBarInput, setCurrentPage, AppDispatch } from '../../store';
 import { getCharacter } from 'api/API';
 
 export function MainPage() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
   const currentPage = useSelector((state: RootState) => state.currentPage);
   const maxPageNumber = useSelector((state: RootState) => state.maxPageNumber);
@@ -69,7 +69,7 @@ export function MainPage() {
         species: filters.species,
       })
     );
-  }, [currentPage]);
+  }, [currentPage, dispatch, filters.gender, filters.species, filters.status, searchBarInput]);
 
   return (
     <section className="main-page" data-testid="main-page">

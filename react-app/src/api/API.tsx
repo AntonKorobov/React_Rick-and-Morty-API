@@ -10,26 +10,21 @@ interface GetCharacterInterface {
 }
 
 export const getCharacter = createAsyncThunk<
-  APICharacterInterface | undefined,
-  GetCharacterInterface
+  APICharacterInterface,
+  GetCharacterInterface,
+  { rejectValue: string }
 >(
   'globalState/getCharacter',
-  async (
-    { name, page, status = '', gender = '', species = '' },
-    { rejectWithValue }
-  ): Promise<APICharacterInterface | undefined> => {
-    try {
-      const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}&status=${status}&gender=${gender}&species=${species}`
-      );
-      if (response.status === 200) {
-        const data: APICharacterInterface = await response.json();
-        console.log(data.results);
-        return data;
-      }
-      return rejectWithValue('Error');
-    } catch (error) {
-      throw error;
+  async ({ name, page, status = '', gender = '', species = '' }, { rejectWithValue }) => {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character/?page=${page}&name=${name}&status=${status}&gender=${gender}&species=${species}`
+    );
+    if (response.status === 200) {
+      const data: APICharacterInterface = await response.json();
+      console.log(data.results);
+      return data;
+    } else {
+      return rejectWithValue('Server Error!');
     }
   }
 );
