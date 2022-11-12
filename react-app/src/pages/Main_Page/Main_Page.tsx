@@ -5,7 +5,7 @@ import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
-import SortingSelectors from 'components/Sorting_Selectors/Sorting_Selectors';
+import { SortingSelectors } from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, setSearchBarInput, setCurrentPage, AppDispatch } from '../../store';
@@ -72,15 +72,13 @@ export function MainPage() {
   }, [currentPage, dispatch, filters.gender, filters.species, filters.status, searchBarInput]);
 
   return (
-    <section className="main-page" data-testid="main-page">
-      <h1 className="main-page__h1 h1">Main page</h1>
-      <div className="search-bar-wrapper">
-        <SearchBar
-          onSubmit={searchBarOnSubmit}
-          input={searchBarInput}
-          handleChange={handleChangeSearchBar}
-        />
-      </div>
+    <>
+      <h1 className="h1">Main page</h1>
+      <SearchBar
+        onSubmit={searchBarOnSubmit}
+        input={searchBarInput}
+        handleChange={handleChangeSearchBar}
+      />
       <Pagination
         currentPage={currentPage}
         maxPageNumber={maxPageNumber}
@@ -89,16 +87,12 @@ export function MainPage() {
       />
       <PageSelector />
       <SortingSelectors />
-      <div className="cards-wrapper">
-        {isLoading ? (
-          <div className="loading-message">{'Loading...'}</div>
-        ) : (
-          cardGenerator(characters)
-        )}
+      <ul className="cards-wrapper">
+        {isLoading ? <div className="loading-message">Loading...</div> : cardGenerator(characters)}
         {isLoadingError && (
-          <div className="sorry-message">{`Sorry, we couldn't find any results :(`}</div>
+          <div className="sorry-message">Sorry, we couldn&apos;t find any results :(</div>
         )}
-      </div>
-    </section>
+      </ul>
+    </>
   );
 }

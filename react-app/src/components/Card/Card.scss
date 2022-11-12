@@ -1,12 +1,8 @@
-@import '_colors.module.scss';
+@import '../../styles/colors.module';
 
 .cards-wrapper {
   width: 100%;
-  margin: 50px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem 4%;
+  margin: 5rem auto;
 }
 
 .card {
@@ -15,28 +11,41 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 48%;
-  padding: 1rem 0;
-  box-shadow: 0 7px 5px #d1d1d1;
+  width: 100%;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 5px #d1d1d1;
   background-color: $backgroundColor;
   border: none;
   font-size: 2rem;
+  &:hover {
+    box-shadow: 10px 10px 5px #d1d1d1;
+  }
 }
 
 .card__name {
-  margin: 1rem 0;
-}
-
-.card__modal-button {
-  border: none;
+  margin: 1rem;
 }
 
 .card__img {
   width: 100%;
+  vertical-align: bottom;
 }
+
 .card__description {
   margin: 1rem;
   margin-bottom: 0;
+}
+
+@media (min-width: 480px) {
+  .cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem 4%;
+  }
+  .card {
+    width: 48%;
+  }
 }
 
 @media (min-width: 768px) {

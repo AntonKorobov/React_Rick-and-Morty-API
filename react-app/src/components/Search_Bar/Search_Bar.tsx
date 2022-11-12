@@ -9,7 +9,7 @@ interface SearchBarProps {
 
 export function SearchBar(props: SearchBarProps) {
   return (
-    <form className="search-bar" action="/action_page.php" onSubmit={props.onSubmit}>
+    <form className="search-bar" onSubmit={props.onSubmit}>
       <input
         className="search-bar__input"
         type="search"
@@ -18,7 +18,7 @@ export function SearchBar(props: SearchBarProps) {
         name="searchBarInput"
         onChange={props.handleChange}
         data-testid="search-bar"
-      ></input>
+      />
       <button className="search-bar__submit-button" type="submit">
         <img className="search-bar__img" src="magnifying-glass-solid.svg" alt="search button" />
       </button>

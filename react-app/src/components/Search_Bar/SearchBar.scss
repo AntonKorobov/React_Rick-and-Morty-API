@@ -1,26 +1,35 @@
-@import '_colors.module.scss';
+@import '../../styles/colors.module';
 
 .search-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-bottom: 1rem;
   padding: 1rem;
+  font-size: 2rem;
   border: 0.2rem solid;
+  max-width: 50rem;
+  &:focus-within {
+    box-shadow: 0 0 0 1px #000000;
+  }
 }
 
 .search-bar__input {
-  flex-grow: 1;
-  font-size: 2rem;
+  width: 100%;
   border: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .search-bar__submit-button {
+  border: none;
+  background-color: $backgroundColor;
   &:hover {
     cursor: pointer;
   }
-  border: none;
-  background-color: $backgroundColor;
 }
 
 .search-bar__img {

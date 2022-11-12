@@ -1,9 +1,12 @@
+@import '../../styles/colors.module';
+
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid $grayColor;
 }
 
 .pagination__button {

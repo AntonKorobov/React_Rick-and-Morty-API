@@ -23,32 +23,30 @@ export function CardInfo() {
   }, [characters, currentCharacterIndex, navigate]);
 
   return (
-    <section className="card_info">
-      <div className="modal-window__information">
-        <h2 className="modal-window__name">{characters[currentCharacterIndex].name}</h2>
-        <img
-          className="modal-window__img"
-          src={characters[currentCharacterIndex].image}
-          alt="character picture"
-        />
-        <ul className="modal-window__description">
-          <li className="modal-window__status">
-            <b>status:</b> {characters[currentCharacterIndex].status}
-          </li>
-          <li className="modal-window__species">
-            <b>species:</b> {characters[currentCharacterIndex].species}
-          </li>
-          <li className="modal-window__type">
-            <b>type:</b> {characters[currentCharacterIndex].type}
-          </li>
-          <li className="modal-window__gender">
-            <b>gender:</b> {characters[currentCharacterIndex].gender}
-          </li>
-        </ul>
-      </div>
-      <button className="go-back-button button" onClick={() => navigate(-1)}>
+    <div className="character-info">
+      <h2 className="character-info__name">{characters[currentCharacterIndex].name}</h2>
+      <img
+        className="character-info__img"
+        src={characters[currentCharacterIndex].image}
+        alt="character picture"
+      />
+      <ul className="character-info__description">
+        <li className="character-info__status">
+          <b>status:</b> {characters[currentCharacterIndex].status}
+        </li>
+        <li className="character-info__species">
+          <b>species:</b> {characters[currentCharacterIndex].species}
+        </li>
+        <li className="character-info__type">
+          <b>type:</b> {characters[currentCharacterIndex].type}
+        </li>
+        <li className="character-info__gender">
+          <b>gender:</b> {characters[currentCharacterIndex].gender}
+        </li>
+      </ul>
+      <a href="/" className="go-back-button link">
         Go back
-      </button>
-    </section>
+      </a>
+    </div>
   );
 }

@@ -1,9 +1,25 @@
-.sorting-selectors {
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
+@import '../../styles/colors.module';
+
+.filters-wrapper {
+  margin-top: 1rem;
+  text-align: center;
+  border-bottom: 1px solid $grayColor;
+}
+
+.filters-list__selector {
+  display: block;
+  margin-bottom: 1rem;
   .input-element__select {
+    font-size: 2rem;
     width: 10rem;
     margin: 0 1rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .filters-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

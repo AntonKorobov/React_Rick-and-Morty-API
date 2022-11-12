@@ -1,7 +1,11 @@
+@import '../../styles/colors.module';
+
 .page-selector {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  border-bottom: 1px solid $grayColor;
+  padding-bottom: 1rem;
 }
 
 .current-page-input {

@@ -13,18 +13,16 @@ import { Provider } from 'react-redux';
 export function App() {
   return (
     <Provider store={store}>
-      <div className="app">
-        <Header />
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<MainPage />}></Route>
-            <Route path="/form" element={<Forms />}></Route>
-            <Route path="/about_us" element={<AboutUs />}></Route>
-            <Route path="/card_info" element={<CardInfo />}></Route>
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </div>
-      </div>
+      <Header />
+      <main className="main-container">
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/form" element={<Forms />}></Route>
+          <Route path="/about_us" element={<AboutUs />}></Route>
+          <Route path="/card_info" element={<CardInfo />}></Route>
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </main>
     </Provider>
   );
 }
