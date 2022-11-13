@@ -1,22 +1,45 @@
-import React from 'react';
+import { getCharacter } from 'api/API';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState, setSearchBarInput } from 'store';
 import './SearchBar.scss';
 
-interface SearchBarProps {
-  input: string | number;
-  handleChange: (event: { target: { name: string; value: string } }) => void;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
+export function SearchBar() {
+  const dispatch = useDispatch<AppDispatch>();
+  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
+  const filters = useSelector((state: RootState) => state.filters);
 
-export function SearchBar(props: SearchBarProps) {
+  const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
+    dispatch(setSearchBarInput(event.target.value));
+    localStorage.setItem('searchBarInput', searchBarInput);
+  };
+
+  const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(
+      getCharacter({
+        name: searchBarInput,
+        page: 1,
+        status: filters.status,
+        gender: filters.gender,
+        species: filters.species,
+      })
+    );
+  };
+
+  useEffect(() => {
+    localStorage.setItem('searchBarInput', searchBarInput);
+  }, [searchBarInput]);
+
   return (
-    <form className="search-bar" onSubmit={props.onSubmit}>
+    <form className="search-bar" onSubmit={searchBarOnSubmit}>
       <input
         className="search-bar__input"
         type="search"
-        value={props.input}
+        value={searchBarInput}
         placeholder="Search....."
         name="searchBarInput"
-        onChange={props.handleChange}
+        onChange={handleChangeSearchBar}
         data-testid="search-bar"
       />
       <button className="search-bar__submit-button" type="submit">

@@ -4,9 +4,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 interface GetCharacterInterface {
   name: string;
   page: number;
-  status: string;
-  gender: string;
-  species: string;
+  status?: string;
+  gender?: string;
+  species?: string;
 }
 
 export const getCharacter = createAsyncThunk<
