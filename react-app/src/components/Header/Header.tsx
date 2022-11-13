@@ -1,12 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { RootState } from 'store';
 import './Header.scss';
 
-export function Header() {
-  const currentPath = useSelector((state: RootState) => state.currentPath);
-
+export function Header(props: { currentPage?: string } = { currentPage: '' }) {
   return (
     <header className="header">
       <nav className="header__nav nav">
@@ -26,10 +22,10 @@ export function Header() {
               About us
             </NavLink>
           </li>
-          {currentPath === 'Card information' && (
+          {props.currentPage && (
             <li className="nav__item">
-              <NavLink className="nav__link link" to="/card_info">
-                {currentPath}
+              <NavLink className="nav__link link active" to={''}>
+                {props.currentPage}
               </NavLink>
             </li>
           )}

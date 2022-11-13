@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-import { Header } from 'components/Header/Header';
 import { AboutUs } from 'pages/About_Us/About_Us';
 import { Page404 } from 'pages/Page_404/Page_404';
 import { Routes, Route } from 'react-router-dom';
@@ -13,16 +12,13 @@ import { Provider } from 'react-redux';
 export function App() {
   return (
     <Provider store={store}>
-      <Header />
-      <main className="main-container">
-        <Routes>
-          <Route path="/" element={<MainPage />}></Route>
-          <Route path="/form" element={<Forms />}></Route>
-          <Route path="/about_us" element={<AboutUs />}></Route>
-          <Route path="/character/:id" element={<CardInfo />}></Route>
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<MainPage />}></Route>
+        <Route path="/form" element={<Forms />}></Route>
+        <Route path="/about_us" element={<AboutUs />}></Route>
+        <Route path="/character/:id" element={<CardInfo />}></Route>
+        <Route path="*" element={<Page404 />} />
+      </Routes>
     </Provider>
   );
 }

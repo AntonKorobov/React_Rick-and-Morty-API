@@ -22,7 +22,7 @@ export const Card: FC<CardProps> = (props) => {
       >
         <img className="card__img" src={props.info.image} alt={'image of ' + props.info.name} />
       </Link>
-      <h2 className="card__name">{props.info.name}</h2>
+      <h2 className="card__name h2">{props.info.name}</h2>
     </li>
   );
 };

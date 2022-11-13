@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
 import { getCharacter } from 'api/API';
 import { LoadingMessage } from 'components/LoadingMessage/LoadingMessage';
+import { Header } from 'components/Header/Header';
 
 export function MainPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,15 +40,18 @@ export function MainPage() {
 
   return (
     <>
-      <h1 className="h1">Main page</h1>
-      <SearchBar />
-      <Pagination />
-      <PageSelector />
-      <SortingSelectors />
-      <ul className="cards-wrapper">
-        {isLoading ? <LoadingMessage isLoadingOk={isLoading} /> : cardGenerator(characters)}
-        {isLoadingError && <LoadingMessage isLoadingOk={false} />}
-      </ul>
+      <Header />
+      <main className="main-container">
+        <h1 className="h1">Main page</h1>
+        <SearchBar />
+        <Pagination />
+        <PageSelector />
+        <SortingSelectors />
+        <ul className="cards-wrapper">
+          {isLoading ? <LoadingMessage isLoadingOk={isLoading} /> : cardGenerator(characters)}
+          {isLoadingError && <LoadingMessage isLoadingOk={false} />}
+        </ul>
+      </main>
     </>
   );
 }
