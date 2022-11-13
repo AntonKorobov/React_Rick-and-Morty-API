@@ -10,6 +10,7 @@ import { SortingSelectors } from 'components/Sorting_Selectors/Sorting_Selectors
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
 import { getCharacter } from 'api/API';
+import { LoadingMessage } from 'components/LoadingMessage/LoadingMessage';
 
 export function MainPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -44,10 +45,8 @@ export function MainPage() {
       <PageSelector />
       <SortingSelectors />
       <ul className="cards-wrapper">
-        {isLoading ? <div className="loading-message">Loading...</div> : cardGenerator(characters)}
-        {isLoadingError && (
-          <div className="sorry-message">Sorry, we couldn&apos;t find any results :(</div>
-        )}
+        {isLoading ? <LoadingMessage isLoadingOk={isLoading} /> : cardGenerator(characters)}
+        {isLoadingError && <LoadingMessage isLoadingOk={false} />}
       </ul>
     </>
   );
