@@ -1,51 +1,57 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './CardInfo.scss';
-import { RootState, setCurrentPath } from '../../store';
-import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
+import { routeParams } from 'data/urlType';
+import { APISingleCharacterInterface } from 'data/API_Interface';
+
+const findCharacterIndex = (array: APISingleCharacterInterface[], id: number): number => {
+  let characterIndex = 0;
+  array.map((item, index) => {
+    if (item.id === id) characterIndex = index;
+  });
+  return characterIndex;
+};
 
 export function CardInfo() {
-  const dispatch = useDispatch();
-  const currentCharacterIndex = useSelector((state: RootState) => state.currentCharacterIndex);
+  const routeParams = useParams<routeParams>();
+  const characterId = Number(routeParams.id) || 0;
   const characters = useSelector((state: RootState) => state.characters);
-
   const navigate = useNavigate();
 
+  const characterIndex = findCharacterIndex(characters, characterId);
+
   useEffect(() => {
-    dispatch(setCurrentPath('Card information'));
-    return () => {
-      dispatch(setCurrentPath(''));
-    };
+    if (!characters[characterIndex]) navigate('/');
   }, []);
 
-  useEffect(() => {
-    if (!characters[currentCharacterIndex]) navigate('/main_page'); //!!! could be useless
-  }, [characters, currentCharacterIndex, navigate]);
-
-  return (
+  return !characters.length ? (
+    <></>
+  ) : (
     <div className="character-info">
-      <h2 className="character-info__name">{characters[currentCharacterIndex].name}</h2>
+      <h1 className="character-info__name h1">{characters[characterIndex].name}</h1>
       <img
         className="character-info__img"
-        src={characters[currentCharacterIndex].image}
+        src={characters[characterIndex].image}
         alt="character picture"
       />
       <ul className="character-info__description">
         <li className="character-info__status">
-          <b>status:</b> {characters[currentCharacterIndex].status}
+          <b>status:</b> {characters[characterIndex].status}
         </li>
         <li className="character-info__species">
-          <b>species:</b> {characters[currentCharacterIndex].species}
+          <b>species:</b> {characters[characterIndex].species}
         </li>
         <li className="character-info__type">
-          <b>type:</b> {characters[currentCharacterIndex].type}
+          <b>type:</b> {characters[characterIndex].type}
         </li>
         <li className="character-info__gender">
-          <b>gender:</b> {characters[currentCharacterIndex].gender}
+          <b>gender:</b> {characters[characterIndex].gender}
         </li>
       </ul>
-      <a href="/" className="go-back-button link">
-        Go back
+      <a href="/" className="link">
+        <button className="go-back-button">Go back</button>
       </a>
     </div>
   );

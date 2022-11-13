@@ -17,7 +17,7 @@ export const Card: FC<CardProps> = (props) => {
     <li className="card" data-testid="card">
       <Link
         className={'card__link link'}
-        to="/card_info"
+        to={`/character/${props.info.id}`}
         onClick={() => dispatch(setCurrentCharacterIndex(props.info.id))}
       >
         <img className="card__img" src={props.info.image} alt={'image of ' + props.info.name} />
