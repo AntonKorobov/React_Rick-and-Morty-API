@@ -1,0 +1,22 @@
+@import '../../styles/colors.module';
+
+.footer {
+  background-color: $grayColor;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.footer__link {
+  display: block;
+  max-width: 10rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.social-link__img {
+  width: 100%;
+}
+
+.footer__copyright {
+  font-weight: 600;
+}

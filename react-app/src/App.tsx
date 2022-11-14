@@ -8,6 +8,7 @@ import { Forms } from 'pages/Form/Forms';
 import { CardInfo } from 'pages/Card_Info/Card_Info';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import { Footer } from 'components/Footer/Footer';
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
         <Route path="/character/:id" element={<CardInfo />}></Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
+      <Footer />
     </Provider>
   );
 }
