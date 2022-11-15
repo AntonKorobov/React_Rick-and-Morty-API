@@ -15,6 +15,7 @@ export function App() {
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
+        <Route path="/:page" element={<MainPage />}></Route>
         <Route path="/form" element={<Forms />}></Route>
         <Route path="/about_us" element={<AboutUs />}></Route>
         <Route path="/character/:id" element={<CardInfo />}></Route>

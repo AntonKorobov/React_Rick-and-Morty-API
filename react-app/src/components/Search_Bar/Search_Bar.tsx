@@ -1,6 +1,7 @@
 import { getCharacter } from 'api/API';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { AppDispatch, RootState, setSearchBarInput } from 'store';
 import './SearchBar.scss';
 
@@ -9,9 +10,13 @@ export function SearchBar() {
   const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
   const filters = useSelector((state: RootState) => state.filters);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const nameQuery = searchParams.get('name') || '';
+
   const handleChangeSearchBar = (event: { target: { name?: string; value: string } }) => {
     dispatch(setSearchBarInput(event.target.value));
-    localStorage.setItem('searchBarInput', searchBarInput);
+    // localStorage.setItem('searchBarInput', searchBarInput);
+    setSearchParams({ text: event.target.value });
   };
 
   const searchBarOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +33,7 @@ export function SearchBar() {
   };
 
   useEffect(() => {
-    localStorage.setItem('searchBarInput', searchBarInput);
+    // localStorage.setItem('searchBarInput', searchBarInput);
   }, [searchBarInput]);
 
   return (

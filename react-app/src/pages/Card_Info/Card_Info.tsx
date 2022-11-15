@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './CardInfo.scss';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
-import { routeParams } from 'data/urlType';
+import { routeParams } from 'data/RouterType';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Header } from 'components/Header/Header';
 

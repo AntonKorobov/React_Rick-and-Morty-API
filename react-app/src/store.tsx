@@ -20,7 +20,7 @@ export const initialGlobalState: GlobalStateInterface = {
   characters: [],
   currentCharacterIndex: 0,
   currentPage: 1,
-  searchBarInput: localStorage.getItem('searchBarInput') || '',
+  searchBarInput: '',
   maxPageNumber: 20,
   filters: {
     status: '',

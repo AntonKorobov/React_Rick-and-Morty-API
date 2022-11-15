@@ -8,10 +8,11 @@ import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import { SortingSelectors } from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../store';
+import { RootState, AppDispatch, setCurrentPage, setSearchBarInput } from '../../store';
 import { getCharacter } from 'api/API';
 import { LoadingMessage } from 'components/LoadingMessage/LoadingMessage';
 import { Header } from 'components/Header/Header';
+import { useSearchParams } from 'react-router-dom';
 
 export function MainPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,6 +26,13 @@ export function MainPage() {
   const cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);
   };
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const textQuery = searchParams.get('text') || '';
+
+  useEffect(() => {
+    dispatch(setSearchBarInput(textQuery));
+  }, []);
 
   useEffect(() => {
     dispatch(
