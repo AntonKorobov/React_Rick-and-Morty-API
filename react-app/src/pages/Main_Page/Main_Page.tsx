@@ -27,11 +27,13 @@ export function MainPage() {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const textQuery = searchParams.get('text') || '';
+  const pageQuery = searchParams.get('page') || 1;
 
   useEffect(() => {
     dispatch(setSearchBarInput(textQuery));
+    dispatch(setCurrentPage(Number(pageQuery)));
   }, []);
 
   useEffect(() => {
