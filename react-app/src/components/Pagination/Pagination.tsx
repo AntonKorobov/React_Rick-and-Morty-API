@@ -1,3 +1,4 @@
+import { Button } from 'components/Button/Button';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState, setCurrentPage, setMaxPageNumber } from 'store';
@@ -28,15 +29,15 @@ export function Pagination() {
 
   return (
     <div className="pagination">
-      <button className="pagination__button" onClick={prevPage}>
+      <Button className="pagination__button" onClick={prevPage}>
         PREV
-      </button>
+      </Button>
       <p className="pagination__page-number">
         {currentPage}/{maxPageNumber}
       </p>
-      <button className="pagination__button" onClick={nextPage}>
+      <Button className="pagination__button" onClick={nextPage}>
         NEXT
-      </button>
+      </Button>
     </div>
   );
 }

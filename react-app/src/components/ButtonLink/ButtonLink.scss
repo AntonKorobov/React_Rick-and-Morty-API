@@ -1,0 +1,13 @@
+@import '../../styles/colors.module';
+
+.link-button {
+  background-color: $backgroundColor;
+  border: 1px solid black;
+  text-decoration: none;
+  &:hover {
+    box-shadow: 0 0 5px #d1d1d1;
+  }
+  &:visited {
+    color: black;
+  }
+}
