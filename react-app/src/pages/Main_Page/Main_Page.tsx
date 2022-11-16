@@ -2,13 +2,18 @@ import './MainPage.scss';
 import React, { useEffect } from 'react';
 import { Card } from '../../components/Card/Card';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
-import { APISingleCharacterInterface } from 'data/API_Interface';
+import {
+  APISingleCharacterInterface,
+  CharacterGenderType,
+  CharacterSpeciesType,
+  CharacterStatusType,
+} from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import { SortingSelectors } from 'components/Sorting_Selectors/Sorting_Selectors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch, setCurrentPage, setSearchBarInput } from '../../store';
+import { RootState, AppDispatch, setCurrentPage, setSearchBarInput, setFilters } from '../../store';
 import { getCharacter } from 'api/API';
 import { LoadingMessage } from 'components/LoadingMessage/LoadingMessage';
 import { Header } from 'components/Header/Header';
@@ -30,10 +35,20 @@ export function MainPage() {
   const [searchParams] = useSearchParams();
   const textQuery = searchParams.get('text') || '';
   const pageQuery = searchParams.get('page') || 1;
+  const filterStatusQuery = (searchParams.get('status') || '') as CharacterStatusType;
+  const filterGenderQuery = (searchParams.get('gender' || '') || '') as CharacterGenderType;
+  const filterSpeciesQuery = (searchParams.get('species' || '') || '') as CharacterSpeciesType;
 
   useEffect(() => {
     dispatch(setSearchBarInput(textQuery));
     dispatch(setCurrentPage(Number(pageQuery)));
+    dispatch(
+      setFilters({
+        status: filterStatusQuery,
+        gender: filterGenderQuery,
+        species: filterSpeciesQuery,
+      })
+    );
   }, []);
 
   useEffect(() => {

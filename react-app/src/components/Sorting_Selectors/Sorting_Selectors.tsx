@@ -1,6 +1,7 @@
 import React from 'react';
 import './SortingSelectors.scss';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   CharacterStatus,
@@ -15,6 +16,7 @@ import { RootState, setFilters } from 'store';
 export function SortingSelectors() {
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filters);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <ul className="filters-wrapper filters-list">
@@ -25,11 +27,13 @@ export function SortingSelectors() {
             name="character-status"
             className="input-element__select"
             value={filters.status}
-            onChange={(event: { target: { name: string; value: string } }) =>
+            onChange={(event: { target: { name: string; value: string } }) => {
+              searchParams.set('status', event.target.value);
+              setSearchParams(searchParams);
               dispatch(
                 setFilters({ ...filters, status: event.target.value as CharacterStatusType })
-              )
-            }
+              );
+            }}
           >
             <option className="input-element__option" value={''}>
               {''}
@@ -53,11 +57,13 @@ export function SortingSelectors() {
             name="character-gender"
             className="input-element__select"
             value={filters.gender}
-            onChange={(event: { target: { name: string; value: string } }) =>
+            onChange={(event: { target: { name: string; value: string } }) => {
+              searchParams.set('gender', event.target.value);
+              setSearchParams(searchParams);
               dispatch(
                 setFilters({ ...filters, gender: event.target.value as CharacterGenderType })
-              )
-            }
+              );
+            }}
           >
             <option className="input-element__option" value={''}>
               {''}
@@ -81,11 +87,13 @@ export function SortingSelectors() {
             name="character-species"
             className="input-element__select"
             value={filters.species}
-            onChange={(event: { target: { name: string; value: string } }) =>
+            onChange={(event: { target: { name: string; value: string } }) => {
+              searchParams.set('species', event.target.value);
+              setSearchParams(searchParams);
               dispatch(
                 setFilters({ ...filters, species: event.target.value as CharacterSpeciesType })
-              )
-            }
+              );
+            }}
           >
             <option className="input-element__option" value={''}>
               {''}
