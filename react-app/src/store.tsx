@@ -13,6 +13,7 @@ export interface GlobalStateInterface {
   currentPath: string;
   isLoading: boolean;
   isLoadingError: boolean;
+  lastCardId: number;
 }
 
 export const initialGlobalState: GlobalStateInterface = {
@@ -30,6 +31,7 @@ export const initialGlobalState: GlobalStateInterface = {
   currentPath: '',
   isLoading: true,
   isLoadingError: false,
+  lastCardId: 1,
 };
 
 const globalStateSlice = createSlice({
@@ -103,6 +105,12 @@ const globalStateSlice = createSlice({
         isLoadingError: action.payload,
       };
     },
+    setLastCardId: (state, action: PayloadAction<number, string>) => {
+      return {
+        ...state,
+        lastCardId: action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -148,6 +156,7 @@ export const {
   setFilters,
   setIsLoading,
   setIsLoadingError,
+  setLastCardId,
 } = globalStateSlice.actions;
 
 export const store = configureStore({

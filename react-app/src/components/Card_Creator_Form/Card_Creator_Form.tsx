@@ -4,215 +4,145 @@ import { Card } from '../Card/Card';
 import { FileUpload } from '../File_Upload/File_Upload';
 import './CardCreatorForm.scss';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
-import { RootState, setCards } from 'store';
+import { RootState, setCards, setLastCardId } from 'store';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
-interface ErrorsInterface {
-  name: boolean;
-  status: boolean;
-  species: boolean;
-  type: boolean;
-}
-
-const defaultStringValue = '';
 const defaultFormValues: APISingleCharacterInterface = {
   id: 0,
-  name: defaultStringValue,
-  status: defaultStringValue,
-  species: defaultStringValue,
-  type: defaultStringValue,
-  gender: defaultStringValue,
+  name: '',
+  status: '',
+  species: '',
+  type: '',
+  gender: '',
   origin: {
-    name: defaultStringValue,
-    url: defaultStringValue,
+    name: '',
+    url: '',
   },
   location: {
-    name: defaultStringValue,
-    url: defaultStringValue,
+    name: '',
+    url: '',
   },
-  image: defaultStringValue,
-  episode: [defaultStringValue, defaultStringValue],
-  url: defaultStringValue,
-  created: defaultStringValue,
-};
-
-const defaultErrorStatus: ErrorsInterface = {
-  name: false,
-  status: false,
-  species: false,
-  type: false,
+  image: '',
+  episode: ['', ''],
+  url: '',
+  created: '',
 };
 
 export function CardCreatorForm() {
-  const [errors, setError] = useState<ErrorsInterface>(defaultErrorStatus);
-  const [isSubmitActive, setIsSubmitActive] = useState(false);
   const [isSubmitDone, setIsSubmitDone] = useState(false);
-  const [cardInformation, setCardInformation] =
-    useState<APISingleCharacterInterface>(defaultFormValues);
   const [imageFile, setImageFile] = useState('');
 
   const cards = useSelector((state: RootState) => state.cards);
+  const lastCardId = useSelector((state: RootState) => state.lastCardId);
   const dispatch = useDispatch();
 
-  const handleChangeInput = (event: { target: { name: string; value: string } }) => {
-    const { name, value } = event.target;
-    setCardInformation((prevState) => ({
-      ...prevState,
-      [name as keyof APISingleCharacterInterface]: value,
-    }));
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isDirty, isValid },
+  } = useForm<APISingleCharacterInterface>();
 
-    setIsSubmitActive(true);
-    setError(defaultErrorStatus);
+  const onSubmitHandler: SubmitHandler<APISingleCharacterInterface> = (cardInformation) => {
+    console.log(cardInformation);
+    dispatch(
+      setCards([
+        ...cards,
+        {
+          ...defaultFormValues,
+          name: cardInformation.name,
+          status: cardInformation.status,
+          species: cardInformation.species,
+          type: cardInformation.type,
+          gender: cardInformation.gender,
+          image: imageFile,
+          id: lastCardId,
+        },
+      ])
+    );
+    dispatch(setLastCardId(lastCardId + 1));
+    setIsSubmitDone(true);
+    setTimeout(() => {
+      setIsSubmitDone(false);
+    }, 2000);
+    reset();
   };
 
-  const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
-    console.log(event.currentTarget.files);
-    // setCardInformation((prevState) => { //!!! file disappeared after if check
-    //   if (event.currentTarget.files) {
-    //     return {
-    //       ...prevState,
-    //       image: URL.createObjectURL(event.currentTarget.files[0]),
-    //     };
-    //   }
-    //   return prevState;
-    // });
-    if (event.currentTarget.files) {
-      setImageFile(URL.createObjectURL(event.currentTarget.files[0]));
-    }
-  };
-
-  const validation = (): boolean => {
-    let isValid = true;
-
-    for (const key in defaultErrorStatus) {
-      if (!cardInformation[key as keyof APISingleCharacterInterface]) {
-        isValid = false;
-        setError((prevValue) => ({
-          ...prevValue,
-          [key as keyof ErrorsInterface]: true,
-        }));
-      } else {
-        setError((prevValue) => ({
-          ...prevValue,
-          [key as keyof ErrorsInterface]: false,
-        }));
-      }
-    }
-    return isValid;
-  };
-
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (validation()) {
-      dispatch(
-        setCards([
-          ...cards,
-          {
-            ...defaultFormValues,
-            name: cardInformation.name,
-            status: cardInformation.status,
-            species: cardInformation.species,
-            type: cardInformation.type,
-            gender: cardInformation.gender,
-            image: imageFile,
-            id: cards.length === 0 ? 0 : cards[cards.length - 1].id + 1,
-          },
-        ])
-      );
-      setCardInformation((prevState) => ({
-        ...prevState,
-        id: cardInformation.id + 1,
-      }));
-      setError(defaultErrorStatus);
-
-      // Sets default value
-      setCardInformation((prevState) => ({
-        ...prevState,
-        ...defaultFormValues,
-        id: prevState.id,
-      }));
-
-      setIsSubmitDone(true);
-      setTimeout(() => {
-        setIsSubmitDone(false);
-      }, 2000);
-    } else {
-      console.log('Form inputs incorrect!');
-    }
-    setIsSubmitActive(false);
-  };
-
-  console.log(cardInformation);
+  // const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
+  //   if (event.currentTarget.files) {
+  //     setImageFile(URL.createObjectURL(event.currentTarget.files[0]));
+  //   }
+  // };
 
   return (
-    <form className="card-creator-form" onSubmit={onSubmitHandler}>
+    <form className="card-creator-form" onSubmit={handleSubmit(onSubmitHandler)}>
       <label className="card-creator-form__name input-element">
         Name:
         <input
+          {...register('name', { required: true })}
           type="text"
-          name="name"
           className="input-element__input"
-          value={cardInformation.name}
           placeholder={'Name...'}
-          onChange={handleChangeInput}
         />
-        {errors.name && <ValidationMessage className="input-element" message="Incorrect value" />}
       </label>
+      {errors.name && <ValidationMessage className="input-element" message="Incorrect value" />}
       <label className="card-creator-form__status input-element">
         Status:
         <input
+          {...register('status', { required: true })}
           type="text"
-          name="status"
           className="input-element__input"
-          value={cardInformation.status}
           placeholder={'Status...'}
-          onChange={handleChangeInput}
         />
-        {errors.status && <ValidationMessage className="input-element" message="Incorrect value" />}
       </label>
+      {errors.status && <ValidationMessage className="input-element" message="Incorrect value" />}
       <label className="card-creator-form__species input-element">
         Species:
         <input
+          {...register('species', { required: true })}
           type="text"
-          name="species"
           className="input-element__input"
-          value={cardInformation.species}
           placeholder={'Species...'}
-          onChange={handleChangeInput}
         />
-        {errors.species && (
-          <ValidationMessage className="input-element" message="Incorrect value" />
-        )}
       </label>
+      {errors.species && <ValidationMessage className="input-element" message="Incorrect value" />}
       <label className="card-creator-form__type input-element">
         Type:
         <input
+          {...register('type', { required: true })}
           type="text"
-          name="type"
           className="input-element__input"
-          value={cardInformation.type}
           placeholder={'Type...'}
-          onChange={handleChangeInput}
         />
-        {errors.type && <ValidationMessage className="input-element" message="Incorrect value" />}
       </label>
+      {errors.type && <ValidationMessage className="input-element" message="Incorrect value" />}
       <label className="card-creator-form__gender input-element">
         Gender:
-        <select
-          name="gender"
-          className="input-element__select"
-          value={cardInformation.gender}
-          placeholder="Gender..."
-          onChange={handleChangeInput}
-        >
+        <select {...register('gender')} className="input-element__select" placeholder="Gender...">
           <option value="Unknown">Unknown</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
       </label>
       <div className={'card-creator-form__file-upload file-upload'}>
-        <FileUpload className={'file-upload'} handleUpload={handleUpload} />
-        <img className={'file-upload__img'} src={cardInformation.image} alt={'character image'} />
+        {/* <FileUpload className={'file-upload'} /> */}
+        <input
+          {...register('image')}
+          className={'file-upload__input'}
+          type="file"
+          accept="image/png, image/jpeg"
+        />
+        <img
+          className={'file-upload__img'}
+          src={
+            watch('image') === undefined || watch('image').length === 0
+              ? ''
+              : URL.createObjectURL(watch('image')[0])
+          }
+          alt={'character image'}
+        />
       </div>
       {isSubmitDone && (
         <ValidationMessage
@@ -221,7 +151,11 @@ export function CardCreatorForm() {
           isPositive={true}
         />
       )}
-      <button className="card-creator-form__submit-button" type="submit" disabled={!isSubmitActive}>
+      <button
+        className="card-creator-form__submit-button"
+        type="submit"
+        disabled={!isDirty || !isValid}
+      >
         Create character
       </button>
       <div className="cards-wrapper">
