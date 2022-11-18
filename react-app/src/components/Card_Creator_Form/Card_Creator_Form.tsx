@@ -1,7 +1,6 @@
 import { APISingleCharacterInterface } from '../../data/API_Interface';
 import React, { useState } from 'react';
 import { Card } from '../Card/Card';
-import { FileUpload } from '../File_Upload/File_Upload';
 import './CardCreatorForm.scss';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
 import { RootState, setCards, setLastCardId } from 'store';
@@ -31,7 +30,6 @@ const defaultFormValues: APISingleCharacterInterface = {
 
 export function CardCreatorForm() {
   const [isSubmitDone, setIsSubmitDone] = useState(false);
-  const [imageFile, setImageFile] = useState('');
 
   const cards = useSelector((state: RootState) => state.cards);
   const lastCardId = useSelector((state: RootState) => state.lastCardId);
@@ -41,9 +39,12 @@ export function CardCreatorForm() {
     register,
     handleSubmit,
     reset,
+    setValue,
     watch,
     formState: { errors, isDirty, isValid },
   } = useForm<APISingleCharacterInterface>();
+
+  const cardImage = watch('image');
 
   const onSubmitHandler: SubmitHandler<APISingleCharacterInterface> = (cardInformation) => {
     console.log(cardInformation);
@@ -57,7 +58,7 @@ export function CardCreatorForm() {
           species: cardInformation.species,
           type: cardInformation.type,
           gender: cardInformation.gender,
-          image: imageFile,
+          image: cardImage,
           id: lastCardId,
         },
       ])
@@ -70,11 +71,11 @@ export function CardCreatorForm() {
     reset();
   };
 
-  // const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
-  //   if (event.currentTarget.files) {
-  //     setImageFile(URL.createObjectURL(event.currentTarget.files[0]));
-  //   }
-  // };
+  const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
+    if (event.currentTarget.files) {
+      setValue('image', URL.createObjectURL(event.currentTarget.files[0]));
+    }
+  };
 
   return (
     <form className="card-creator-form" onSubmit={handleSubmit(onSubmitHandler)}>
@@ -127,22 +128,14 @@ export function CardCreatorForm() {
         </select>
       </label>
       <div className={'card-creator-form__file-upload file-upload'}>
-        {/* <FileUpload className={'file-upload'} /> */}
         <input
           {...register('image')}
           className={'file-upload__input'}
           type="file"
           accept="image/png, image/jpeg"
+          onChange={handleUpload}
         />
-        <img
-          className={'file-upload__img'}
-          src={
-            watch('image') === undefined || watch('image').length === 0
-              ? ''
-              : URL.createObjectURL(watch('image')[0])
-          }
-          alt={'character image'}
-        />
+        <img className={'file-upload__img'} src={cardImage || ''} alt={'character image'} />
       </div>
       {isSubmitDone && (
         <ValidationMessage
