@@ -1,11 +1,13 @@
 import { APISingleCharacterInterface } from '../../data/API_Interface';
 import React, { useState } from 'react';
 import { Card } from '../Card/Card';
-import './CardCreatorForm.scss';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
 import { RootState, setCards, setLastCardId } from 'store';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { FileUploader } from 'components/FileUploader/FileUploader';
+
+import './CardCreatorForm.scss';
 
 const defaultFormValues: APISingleCharacterInterface = {
   id: 0,
@@ -39,15 +41,12 @@ export function CardCreatorForm() {
     register,
     handleSubmit,
     reset,
-    setValue,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<APISingleCharacterInterface>();
 
-  const cardImage = watch('image');
+  const [fileReview, setFileReview] = useState('');
 
   const onSubmitHandler: SubmitHandler<APISingleCharacterInterface> = (cardInformation) => {
-    console.log(cardInformation);
     dispatch(
       setCards([
         ...cards,
@@ -58,7 +57,7 @@ export function CardCreatorForm() {
           species: cardInformation.species,
           type: cardInformation.type,
           gender: cardInformation.gender,
-          image: cardImage,
+          image: fileReview,
           id: lastCardId,
         },
       ])
@@ -73,7 +72,7 @@ export function CardCreatorForm() {
 
   const handleUpload = (event: React.FormEvent<HTMLInputElement>): void => {
     if (event.currentTarget.files) {
-      setValue('image', URL.createObjectURL(event.currentTarget.files[0]));
+      setFileReview(URL.createObjectURL(event.currentTarget.files[0]));
     }
   };
 
@@ -127,16 +126,7 @@ export function CardCreatorForm() {
           <option value="Female">Female</option>
         </select>
       </label>
-      <div className={'card-creator-form__file-upload file-upload'}>
-        <input
-          {...register('image')}
-          className={'file-upload__input'}
-          type="file"
-          accept="image/png, image/jpeg"
-          onChange={handleUpload}
-        />
-        <img className={'file-upload__img'} src={cardImage || ''} alt={'character image'} />
-      </div>
+      <FileUploader handleUpload={handleUpload} file={fileReview} />
       {isSubmitDone && (
         <ValidationMessage
           className="input-element"
