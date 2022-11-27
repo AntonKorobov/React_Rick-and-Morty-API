@@ -3,14 +3,7 @@ import './SortingSelectors.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  CharacterStatus,
-  CharacterGender,
-  CharacterStatusType,
-  CharacterGenderType,
-  CharacterSpeciesType,
-  CharacterSpecies,
-} from '../../data/API_Interface';
+import { CharacterStatus, CharacterGender, CharacterSpecies } from '../../data/API_Interface';
 import { RootState, setFilters } from 'store';
 
 export function SortingSelectors() {
@@ -30,9 +23,7 @@ export function SortingSelectors() {
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('status', event.target.value);
               setSearchParams(searchParams);
-              dispatch(
-                setFilters({ ...filters, status: event.target.value as CharacterStatusType })
-              );
+              dispatch(setFilters({ ...filters, status: event.target.value as CharacterStatus }));
             }}
           >
             <option className="input-element__option" value={''}>
@@ -60,9 +51,7 @@ export function SortingSelectors() {
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('gender', event.target.value);
               setSearchParams(searchParams);
-              dispatch(
-                setFilters({ ...filters, gender: event.target.value as CharacterGenderType })
-              );
+              dispatch(setFilters({ ...filters, gender: event.target.value as CharacterGender }));
             }}
           >
             <option className="input-element__option" value={''}>
@@ -90,9 +79,7 @@ export function SortingSelectors() {
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('species', event.target.value);
               setSearchParams(searchParams);
-              dispatch(
-                setFilters({ ...filters, species: event.target.value as CharacterSpeciesType })
-              );
+              dispatch(setFilters({ ...filters, species: event.target.value as CharacterSpecies }));
             }}
           >
             <option className="input-element__option" value={''}>

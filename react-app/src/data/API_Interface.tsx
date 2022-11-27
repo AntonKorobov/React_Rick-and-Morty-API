@@ -11,9 +11,9 @@ export interface APICharacterInterface {
 export interface APISingleCharacterInterface {
   id: number;
   name: string;
-  status: CharacterStatusType;
+  status: CharacterStatus | '';
   species: string;
-  type: CharacterGenderType;
+  type: CharacterGender | '';
   gender: string;
   origin: {
     name: string;
@@ -29,29 +29,25 @@ export interface APISingleCharacterInterface {
   created: string;
 }
 
-export type CharacterStatusType = 'alive' | 'dead' | 'unknown' | '';
-export type CharacterGenderType = 'male' | 'female' | 'unknown' | '';
-export type CharacterSpeciesType = 'Human' | 'Alien' | '';
+export enum CharacterStatus {
+  alive = 'alive',
+  dead = 'dead',
+  unknown = 'unknown',
+}
 
-export const CharacterStatus: { [key: string]: CharacterStatusType } = {
-  alive: 'alive',
-  dead: 'dead',
-  unknown: 'unknown',
-};
+export enum CharacterGender {
+  male = 'male',
+  female = 'female',
+  unknown = 'unknown',
+}
 
-export const CharacterGender: { [key: string]: CharacterGenderType } = {
-  male: 'male',
-  female: 'female',
-  unknown: 'unknown',
-};
-
-export const CharacterSpecies: { [key: string]: CharacterSpeciesType } = {
-  human: 'Human',
-  alien: 'Alien',
-};
+export enum CharacterSpecies {
+  human = 'Human',
+  alien = 'Alien',
+}
 
 export interface FiltersInterface {
-  status: CharacterStatusType;
-  gender: CharacterGenderType;
-  species: CharacterSpeciesType;
+  status: CharacterStatus | '';
+  gender: CharacterGender | '';
+  species: CharacterSpecies | '';
 }

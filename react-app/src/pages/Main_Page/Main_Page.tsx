@@ -4,9 +4,9 @@ import { Card } from '../../components/Card/Card';
 import { SearchBar } from '../../components/Search_Bar/Search_Bar';
 import {
   APISingleCharacterInterface,
-  CharacterGenderType,
-  CharacterSpeciesType,
-  CharacterStatusType,
+  CharacterGender,
+  CharacterSpecies,
+  CharacterStatus,
 } from 'data/API_Interface';
 import { Pagination } from 'components/Pagination/Pagination';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
@@ -35,9 +35,9 @@ export function MainPage() {
   const [searchParams] = useSearchParams();
   const textQuery = searchParams.get('text') || '';
   const pageQuery = searchParams.get('page') || 1;
-  const filterStatusQuery = (searchParams.get('status') || '') as CharacterStatusType;
-  const filterGenderQuery = (searchParams.get('gender' || '') || '') as CharacterGenderType;
-  const filterSpeciesQuery = (searchParams.get('species' || '') || '') as CharacterSpeciesType;
+  const filterStatusQuery = (searchParams.get('status') || '') as CharacterStatus;
+  const filterGenderQuery = (searchParams.get('gender' || '') || '') as CharacterGender;
+  const filterSpeciesQuery = (searchParams.get('species' || '') || '') as CharacterSpecies;
 
   useEffect(() => {
     dispatch(setSearchBarInput(textQuery));
