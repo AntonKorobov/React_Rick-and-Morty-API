@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import './FileUploader.scss';
 
 interface PropsFileUploader {
-  handleUpload: (event: React.FormEvent<HTMLInputElement>) => void;
+  handleUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   file: string;
 }
 

@@ -14,11 +14,11 @@ export function App() {
   return (
     <Provider store={store}>
       <Routes>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="/:page" element={<MainPage />}></Route>
-        <Route path="/form" element={<Forms />}></Route>
-        <Route path="/about_us" element={<AboutUs />}></Route>
-        <Route path="/character/:id" element={<CardInfo />}></Route>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/:page" element={<MainPage />} />
+        <Route path="/form" element={<Forms />} />
+        <Route path="/about_us" element={<AboutUs />} />
+        <Route path="/character/:id" element={<CardInfo />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
       <Footer />

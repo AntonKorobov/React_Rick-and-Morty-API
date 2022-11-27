@@ -12,12 +12,9 @@ export function ValidationMessage(
 ) {
   return (
     <div
-      className={
-        props.className +
-        '__validation-message' +
-        ' validation-message ' +
-        (props.isPositive ? 'validation-message_positive' : 'validation-message_negative')
-      }
+      className={`${props.className}__validation-message validation-message ${
+        props.isPositive ? 'validation-message_positive' : 'validation-message_negative'
+      }`}
       data-testid="validation-message"
     >
       {props.message}

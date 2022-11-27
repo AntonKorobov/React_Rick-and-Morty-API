@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import './SortingSelectors.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -27,7 +27,7 @@ export function SortingSelectors() {
             name="character-status"
             className="input-element__select"
             value={filters.status}
-            onChange={(event: { target: { name: string; value: string } }) => {
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('status', event.target.value);
               setSearchParams(searchParams);
               dispatch(
@@ -57,7 +57,7 @@ export function SortingSelectors() {
             name="character-gender"
             className="input-element__select"
             value={filters.gender}
-            onChange={(event: { target: { name: string; value: string } }) => {
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('gender', event.target.value);
               setSearchParams(searchParams);
               dispatch(
@@ -87,7 +87,7 @@ export function SortingSelectors() {
             name="character-species"
             className="input-element__select"
             value={filters.species}
-            onChange={(event: { target: { name: string; value: string } }) => {
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               searchParams.set('species', event.target.value);
               setSearchParams(searchParams);
               dispatch(
