@@ -12,9 +12,9 @@ export interface APISingleCharacterInterface {
   id: number;
   name: string;
   status: CharacterStatus | '';
-  species: string;
-  type: CharacterGender | '';
-  gender: string;
+  species: CharacterSpecies | '';
+  type: string;
+  gender: CharacterGender | '';
   origin: {
     name: string;
     url: string;

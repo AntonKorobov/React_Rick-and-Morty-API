@@ -21,7 +21,6 @@ export const getCharacter = createAsyncThunk<
     );
     if (response.status === 200) {
       const data: APICharacterInterface = await response.json();
-      console.log(data.results);
       return data;
     } else {
       return rejectWithValue('Server Error!');
