@@ -7,28 +7,28 @@ export function Header(props: { currentPage?: string } = { currentPage: '' }) {
     <header className="header">
       <nav className="header__nav nav">
         <ul className="nav__list">
-          <li className="nav__item">
-            <NavLink end className="nav__link link" to="/">
-              Main page
-            </NavLink>
-          </li>
-          <li className="nav__item">
-            <NavLink className="nav__link link" to="/form">
-              Form
-            </NavLink>
-          </li>
-          <li className="nav__item">
-            <NavLink className="nav__link link" to="/about_us">
-              About us
-            </NavLink>
-          </li>
-          {props.currentPage && (
-            <li className="nav__item">
-              <NavLink className="nav__link link active" to={''}>
-                {props.currentPage}
-              </NavLink>
-            </li>
-          )}
+          <>
+            {[
+              { title: 'Main page', to: '/' },
+              { title: 'Form', to: '/form' },
+              { title: 'About us', to: '/about_us' },
+            ].map((element) => {
+              return (
+                <li className="nav__item" key={element.title}>
+                  <NavLink end className="nav__link link" to={element.to}>
+                    {element.title}
+                  </NavLink>
+                </li>
+              );
+            })}
+            {props.currentPage && (
+              <li className="nav__item">
+                <NavLink className="nav__link link active" to={''}>
+                  {props.currentPage}
+                </NavLink>
+              </li>
+            )}
+          </>
         </ul>
       </nav>
     </header>
