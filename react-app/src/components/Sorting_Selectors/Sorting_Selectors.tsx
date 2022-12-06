@@ -1,14 +1,16 @@
 import React, { ChangeEvent } from 'react';
 import './SortingSelectors.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { CharacterStatus, CharacterGender, CharacterSpecies } from '../../data/API_Interface';
-import { RootState, setFilters } from 'store';
+import { setFilters } from 'store';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 
 export function SortingSelectors() {
   const dispatch = useDispatch();
-  const filters = useSelector((state: RootState) => state.filters);
+  const { filters } = useGlobalStateSelector();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (

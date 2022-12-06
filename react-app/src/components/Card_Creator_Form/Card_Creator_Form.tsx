@@ -2,12 +2,13 @@ import { APISingleCharacterInterface } from '../../data/API_Interface';
 import React, { useState } from 'react';
 import { Card } from '../Card/Card';
 import { ValidationMessage } from '../Validation_Message/Validation_Message';
-import { RootState, setCards, setLastCardId } from 'store';
-import { useSelector, useDispatch } from 'react-redux';
+import { setCards, setLastCardId } from 'store';
+import { useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FileUploader } from 'components/FileUploader/FileUploader';
 
 import './CardCreatorForm.scss';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 
 const defaultFormValues: APISingleCharacterInterface = {
   id: 0,
@@ -32,10 +33,8 @@ const defaultFormValues: APISingleCharacterInterface = {
 
 export function CardCreatorForm() {
   const [isSubmitDone, setIsSubmitDone] = useState(false);
-
-  const cards = useSelector((state: RootState) => state.cards);
-  const lastCardId = useSelector((state: RootState) => state.lastCardId);
   const dispatch = useDispatch();
+  const { cards, lastCardId } = useGlobalStateSelector();
 
   const {
     register,

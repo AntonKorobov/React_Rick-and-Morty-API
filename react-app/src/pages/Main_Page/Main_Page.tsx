@@ -12,21 +12,18 @@ import { Pagination } from 'components/Pagination/Pagination';
 import { PageSelector } from 'components/Page_Selector/Page_Selector';
 import { SortingSelectors } from 'components/Sorting_Selectors/Sorting_Selectors';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch, setCurrentPage, setSearchBarInput, setFilters } from '../../store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, setCurrentPage, setSearchBarInput, setFilters } from '../../store';
 import { getCharacter } from 'api/API';
 import { LoadingMessage } from 'components/LoadingMessage/LoadingMessage';
 import { Header } from 'components/Header/Header';
 import { useSearchParams } from 'react-router-dom';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 
 export function MainPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
-  const currentPage = useSelector((state: RootState) => state.currentPage);
-  const characters = useSelector((state: RootState) => state.characters);
-  const filters = useSelector((state: RootState) => state.filters);
-  const isLoading = useSelector((state: RootState) => state.isLoading);
-  const isLoadingError = useSelector((state: RootState) => state.isLoadingError);
+  const { searchBarInput, currentPage, characters, filters, isLoading, isLoadingError } =
+    useGlobalStateSelector();
 
   const cardGenerator = (array: APISingleCharacterInterface[]): JSX.Element[] => {
     return array.map((elem, index) => <Card key={elem.id} info={array[index]} />);

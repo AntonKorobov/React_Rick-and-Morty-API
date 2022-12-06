@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './CardInfo.scss';
-import { RootState } from '../../store';
-import { useSelector } from 'react-redux';
 import { routeParams } from 'data/RouterType';
 import { APISingleCharacterInterface } from 'data/API_Interface';
 import { Header } from 'components/Header/Header';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 
 const findCharacterIndex = (array: APISingleCharacterInterface[], id: number): number => {
   let characterIndex = 0;
@@ -18,7 +17,7 @@ const findCharacterIndex = (array: APISingleCharacterInterface[], id: number): n
 export function CardInfo() {
   const routeParams = useParams<routeParams>();
   const characterId = Number(routeParams.id) || 0;
-  const characters = useSelector((state: RootState) => state.characters);
+  const { characters } = useGlobalStateSelector();
   const navigate = useNavigate();
 
   const characterIndex = findCharacterIndex(characters, characterId);

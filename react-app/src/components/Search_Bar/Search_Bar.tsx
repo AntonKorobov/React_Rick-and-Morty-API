@@ -1,14 +1,14 @@
 import { getCharacter } from 'api/API';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { AppDispatch, RootState, setSearchBarInput } from 'store';
+import { AppDispatch, setSearchBarInput } from 'store';
 import './SearchBar.scss';
 
 export function SearchBar() {
   const dispatch = useDispatch<AppDispatch>();
-  const searchBarInput = useSelector((state: RootState) => state.searchBarInput);
-  const filters = useSelector((state: RootState) => state.filters);
+  const { filters, searchBarInput } = useGlobalStateSelector();
 
   const [searchParams, setSearchParams] = useSearchParams();
 

@@ -1,15 +1,14 @@
 import { Button } from 'components/Button/Button';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { AppDispatch, RootState, setCurrentPage, setMaxPageNumber } from 'store';
+import { AppDispatch, setCurrentPage, setMaxPageNumber } from 'store';
 import './Pagination.scss';
 
 export function Pagination() {
   const dispatch = useDispatch<AppDispatch>();
-  const currentPage = useSelector((state: RootState) => state.currentPage);
-  const maxPageNumber = useSelector((state: RootState) => state.maxPageNumber);
-  const isLoadingError = useSelector((state: RootState) => state.isLoadingError);
+  const { currentPage, maxPageNumber, isLoadingError } = useGlobalStateSelector();
 
   const [searchParams, setSearchParams] = useSearchParams();
 

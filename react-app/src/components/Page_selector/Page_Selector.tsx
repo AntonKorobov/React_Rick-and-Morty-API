@@ -1,11 +1,11 @@
 import React from 'react';
 import './PageSelector.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, setCurrentPage } from '../../store';
+import { useDispatch } from 'react-redux';
+import { setCurrentPage } from '../../store';
+import { useGlobalStateSelector } from 'hooks/useGlobalStateSelector';
 
 export function PageSelector() {
-  const currentPage = useSelector((state: RootState) => state.currentPage);
-  const maxPageNumber = useSelector((state: RootState) => state.maxPageNumber);
+  const { currentPage, maxPageNumber } = useGlobalStateSelector();
   const dispatch = useDispatch();
 
   return (
