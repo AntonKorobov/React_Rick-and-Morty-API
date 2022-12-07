@@ -10,8 +10,8 @@ export function Header(props: { currentPage?: string } = { currentPage: '' }) {
           <>
             {[
               { title: 'Main page', to: '/' },
-              { title: 'Form', to: '/form' },
-              { title: 'About us', to: '/about_us' },
+              // { title: 'Form', to: '/form' },
+              // { title: 'About me', to: '/about_us' },
             ].map((element) => {
               return (
                 <li className="nav__item" key={element.title}>

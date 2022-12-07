@@ -64,7 +64,7 @@ export function MainPage() {
     <>
       <Header />
       <main className="main-container">
-        <h1 className="h1">Main page</h1>
+        {/* <h1 className="h1">Main page</h1> */}
         <SearchBar />
         <Pagination />
         <PageSelector />

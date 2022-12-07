@@ -6,9 +6,7 @@ export function AboutUs() {
     <>
       <Header />
       <main className="main-container">
-        <div className="about-page">
-          <h1 className="h1">About us page</h1>
-        </div>
+        <h1 className="h1">About me</h1>
       </main>
     </>
   );
