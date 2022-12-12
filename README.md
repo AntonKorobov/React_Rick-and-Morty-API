@@ -1,2 +1,3 @@
-# newanton-REACT2022Q3
-Private repository for @newanton
+# React_Rick-and-Morty-API
+1. Deployment: https://ak-react-redux.netlify.app/
+
